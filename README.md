@@ -1,10 +1,15 @@
 testgame - First pass at making a video game in C++
 ========
 
+Tools
+-----
+
 -Visual Studio 2012
 
 -GLFW
  
+Progress so far...
+----
  
 So far idk what the game's going to be. Right now I'm focused on getting the basic low end stuff down:
 
