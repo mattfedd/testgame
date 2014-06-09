@@ -1,1 +1,4 @@
 *.opensdf
+*.obj
+*.tlog
+*.unsucccessfulbuild
