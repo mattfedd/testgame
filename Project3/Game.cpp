@@ -10,7 +10,7 @@ Game::Game(const char* title, int width, int height)
 	counter_ = 0;
 	running_ = GL_TRUE;
 
-	//camera_ = new Camera();
+	camera_ = new Camera();
 	input_ = new Input();
 
 	initialized_ = Init(title, width, height);
@@ -159,6 +159,6 @@ void GLFWCALL Game::handle_resize(int width,int height)
 
 int Game::getRunning(){ return running_; }
 void Game::setRunning(int val){ running_ = val; }
-//Camera* Game::getCamera(){ return camera_; }
+Camera* Game::getCamera(){ return camera_; }
 Input* Game::getInput(){ return input_; }
 Level* Game::getLevel(){ return level_; }

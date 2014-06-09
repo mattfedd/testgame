@@ -13,6 +13,7 @@ private:
 	GLuint LoadTexture(const char* filename);
 
 public:
+	Texture(void);
 	Texture(const char* filename);
 	~Texture(void);
 

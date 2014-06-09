@@ -2,13 +2,13 @@
 #define GAME_H
 
 #include "Includes.h"
-//#include "Camera.h"
+#include "Camera.h"
 //#include "Level.h"
 #include "Input.h"
 //#include "Drawable.h"
 
+class Camera;
 class Level;
-class Drawable;
 
 class Game
 {
@@ -27,7 +27,7 @@ public:
 	void setRunning(int val);
 	Level* createLevel(std::string filename);
 
-	//Camera* getCamera();
+	Camera* getCamera();
 	Input* getInput();
 	Level* getLevel();
 
@@ -48,7 +48,7 @@ private:
 
 	static void GLFWCALL handle_resize(int width,int height);
 
-	//Camera* camera_;
+	Camera* camera_;
 	Input* input_;
 	Level* level_;
 

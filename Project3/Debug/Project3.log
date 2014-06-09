@@ -1,24 +1,33 @@
-﻿Build started 5/26/2014 5:11:50 PM.
+﻿Build started 6/8/2014 10:35:19 PM.
      1>Project "C:\Users\Matthew\Documents\GitHub\testgame\Project3\Project3.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Entity.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Entity.cpp Game.cpp Input.cpp Sprite.cpp Texture.cpp main.cpp
+         main.cpp
+         Texture.cpp
+         Sprite.cpp
+         Input.cpp
+     1>c:\users\matthew\documents\github\testgame\project3\input.cpp(149): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         Game.cpp
          Entity.cpp
      1>c:\users\matthew\documents\github\testgame\project3\entity.cpp(45): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\matthew\documents\github\testgame\project3\entity.cpp(47): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\matthew\documents\github\testgame\project3\entity.cpp(54): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\matthew\documents\github\testgame\project3\entity.cpp(56): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Matthew\Documents\GitHub\testgame\Debug\ThirdTime.exe" /INCREMENTAL /NOLOGO GLFW.lib glew32d.lib opengl32.lib kernel32.lib user32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Matthew\Documents\GitHub\testgame\Debug\ThirdTime.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Matthew\Documents\GitHub\testgame\Debug\ThirdTime.lib" /MACHINE:X86 Debug\Camera.obj
-         Debug\Entity.obj
-         Debug\EntityManager.obj
-         Debug\Game.obj
-         Debug\Input.obj
-         Debug\main.obj
-         Debug\Screen.obj
-         Debug\ScreenManager.obj
-         Project3.vcxproj -> C:\Users\Matthew\Documents\GitHub\testgame\Debug\ThirdTime.exe
-     1>Done Building Project "C:\Users\Matthew\Documents\GitHub\testgame\Project3\Project3.vcxproj" (Build target(s)).
+         Camera.cpp
+     1>c:\users\matthew\documents\github\testgame\project3\camera.cpp(44): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\matthew\documents\github\testgame\project3\camera.cpp(48): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\matthew\documents\github\testgame\project3\camera.cpp(56): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\matthew\documents\github\testgame\project3\camera.cpp(60): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Generating Code...
+     1>c:\users\matthew\documents\github\testgame\project3\camera.cpp(33): warning C4715: 'Camera::setAttachable' : not all control paths return a value
+     1>c:\users\matthew\documents\github\testgame\project3\sprite.cpp(32): error C4716: 'Sprite::getVertexPoints' : must return a value
+     1>c:\users\matthew\documents\github\testgame\project3\sprite.cpp(37): error C4716: 'Sprite::getTexturePoints' : must return a value
+     1>c:\users\matthew\documents\github\testgame\project3\texture.cpp(22): error C4716: 'Texture::LoadTexture' : must return a value
+     1>c:\users\matthew\documents\github\testgame\project3\texture.cpp(28): error C4716: 'Texture::getWidth' : must return a value
+     1>c:\users\matthew\documents\github\testgame\project3\texture.cpp(38): error C4716: 'Texture::getGLuintTexture' : must return a value
+     1>c:\users\matthew\documents\github\testgame\project3\texture.cpp(33): error C4716: 'Texture::getHeight' : must return a value
+     1>Done Building Project "C:\Users\Matthew\Documents\GitHub\testgame\Project3\Project3.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.30
+Time Elapsed 00:00:05.13

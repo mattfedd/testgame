@@ -2,6 +2,8 @@
 #define ENTITY_H
 
 #include "Includes.h"
+#include "Sprite.h"
+#include "Game.h"
 
 class Entity
 {
@@ -11,12 +13,16 @@ private:
 	int z_;
 	int width_;
 	int height_;
-	int objState_;
 	int maxSpeed_;
 	float dx_;
 	float dy_;
 	float ddx_;
 	float ddy_;
+	
+	bool airState;	//true = airborne, false = ground
+	int actionState; //0,1,2,3,4,5 = stand, walk, jump, crouch, crouch-walk, use item, interact
+
+	Sprite* sprite_;
 
 public:
 	Entity(void);
@@ -49,6 +55,11 @@ public:
 	void setMaxSpeed(int val);
 	//void setRadiusSquared(long val);
 
+	virtual void updateInput();
+	virtual void updateCollisions();
+	virtual void updateGraphics();
+
+	void draw();
 };
 
 

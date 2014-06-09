@@ -60,3 +60,40 @@ void Entity::setDDY(float ddy){ddy_ = ddy; }
 void Entity::setSize(int width, int height){ width_ = width; height_ = height; }
 void Entity::setMaxSpeed(int val){ maxSpeed_ = val; }
 //void Entity::setRadiusSquared(long val){}
+
+void Entity::updateInput()
+{
+
+}
+
+void Entity::updateCollisions()
+{
+
+}
+
+void Entity::updateGraphics()
+{
+
+}
+
+void Entity::draw()
+{
+	if(sprite_ == NULL)
+		return;
+
+	glBindTexture(GL_TEXTURE_2D, sprite_->getTexture()->getGLuintTexture());
+
+	glPushMatrix();
+	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);	
+		
+	glVertexPointer(3, GL_FLOAT, 0, sprite_->getVertexPoints());
+	glTexCoordPointer(2, GL_FLOAT, 0, sprite_->getTexturePoints());
+	glDrawArrays(GL_QUADS, 0, 4);
+	
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glPopMatrix();
+}

@@ -4,6 +4,8 @@
 #include "Includes.h"
 #include "Entity.h"
 
+class Entity;
+
 class Camera
 {
 private:
