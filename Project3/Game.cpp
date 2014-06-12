@@ -3,6 +3,7 @@
 //#include "Collision.h"
 
 Game* Game::instance_;
+Entity* player;
 
 Game::Game(const char* title, int width, int height)
 {
@@ -73,6 +74,8 @@ int Game::Init(const char* title, int width, int height)
 
 void Game::Run()
 {
+	player = new Entity();
+
 	double saved_time = 0;
 	double update_timer = 0;
 	const double update_interval = 1.0/FRAME_RATE;
@@ -122,14 +125,8 @@ void Game::draw()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
-	//std::vector<Drawable*>* drawables = level_->getScreenPtr()->getVectorByLevel(0);
-	//for(std::vector<Drawable*>::iterator it =  drawables->begin(); it !=  drawables->end(); ++it)
-	//{
-	//	(*it)->getAnim()->calcNextFrame();
-	//	(*it)->setAnimFrame((*it)->getAnim());
-	//	(*it)->draw();
-	//}
+	
+	player->draw();
 
 	glfwSwapBuffers();
 }
@@ -161,4 +158,4 @@ int Game::getRunning(){ return running_; }
 void Game::setRunning(int val){ running_ = val; }
 Camera* Game::getCamera(){ return camera_; }
 Input* Game::getInput(){ return input_; }
-Level* Game::getLevel(){ return level_; }
+//Level* Game::getLevel(){ return level_; }

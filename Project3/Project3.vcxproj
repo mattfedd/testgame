@@ -76,7 +76,7 @@
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Spritesheet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -88,7 +88,7 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

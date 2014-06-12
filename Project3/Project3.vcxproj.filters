@@ -39,7 +39,7 @@
     <ClInclude Include="Sprite.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="Spritesheet.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,11 +68,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Game\Header Files</Filter>
+    <ClCompile Include="SpriteSheet.cpp">
+      <Filter>Game\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Game\Header Files</Filter>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Game\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

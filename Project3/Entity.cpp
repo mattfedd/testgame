@@ -2,11 +2,18 @@
 
 Entity::Entity(void)
 {
+	x_ = 0;
+	y_ = 0;
+	z_ = 0;
+
+	width_ = 50;
+	height_ = 120;
 	dx_ = 0;
 	dy_ = 0;
 	ddx_ = 0;
 	ddy_ = 0;
 	maxSpeed_ = 1;
+	sprite_ = new Sprite(width_, height_, new SpriteSheet("tex.tga"));
 }
 Entity::~Entity(void)
 {
@@ -81,10 +88,11 @@ void Entity::draw()
 	if(sprite_ == NULL)
 		return;
 
-	glBindTexture(GL_TEXTURE_2D, sprite_->getTexture()->getGLuintTexture());
+	glBindTexture(GL_TEXTURE_2D, sprite_->getSpriteSheet()->getGLuintTexture());
 
 	glPushMatrix();
-	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
+	//glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
+	glTranslatef(getXNorm(), getYNorm(), 0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);	
 		
