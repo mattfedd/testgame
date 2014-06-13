@@ -75,6 +75,7 @@ int Game::Init(const char* title, int width, int height)
 void Game::Run()
 {
 	player = new Entity();
+	GAME->getCamera()->setAttachable(player);
 
 	double saved_time = 0;
 	double update_timer = 0;
@@ -97,7 +98,8 @@ void Game::Run()
 		{
 			//update
 			//softReset();
-			//checkInputs(); 
+			player->updateInput(); 
+			GAME->getCamera()->update();
 			//checkCollisions();
 			//calcAndApplyResults();
 

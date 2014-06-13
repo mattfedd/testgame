@@ -12,7 +12,7 @@ Entity::Entity(void)
 	dy_ = 0;
 	ddx_ = 0;
 	ddy_ = 0;
-	maxSpeed_ = 1;
+	maxSpeed_ = 10;
 	sprite_ = new Sprite(width_, height_, new SpriteSheet("tex.tga"));
 }
 Entity::~Entity(void)
@@ -70,6 +70,43 @@ void Entity::setMaxSpeed(int val){ maxSpeed_ = val; }
 
 void Entity::updateInput()
 {
+	//move up or down
+	if(GAME->getInput()->getStatus()->upArrow) 
+		setDDY(2.0f);
+	if(GAME->getInput()->getStatus()->downArrow) 
+		setDDY(-2.0f);
+	if(!GAME->getInput()->getStatus()->upArrow && !GAME->getInput()->getStatus()->downArrow) 
+		setDDY(0.0f);
+
+	//move left or right
+	if(GAME->getInput()->getStatus()->rightArrow) 
+		setDDX(2.0f);
+	if(GAME->getInput()->getStatus()->leftArrow) 
+		setDDX(-2.0f);
+	if(!GAME->getInput()->getStatus()->leftArrow && !GAME->getInput()->getStatus()->rightArrow) 
+		setDDX(0.0f);
+
+	float friction = 0.0f;
+	float value = 0.0f;
+
+	friction = getDX() * -0.1;
+	value = getDX() + getDDX() + friction;
+	if(value < 0.5 && value > -0.5) 
+	{
+		value = 0.0f;
+	}
+	setDX(value);
+	
+	friction = getDY() * -0.1;
+	value = getDY() + getDDY() + friction;
+	if(value < 0.5 && value > -0.5) 
+	{
+		value = 0.0f;
+	}
+	setDY(value);
+
+	setX(getX() + getDX());
+	setY(getY() + getDY());
 
 }
 
