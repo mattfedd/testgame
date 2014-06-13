@@ -128,8 +128,8 @@ void Entity::draw()
 	glBindTexture(GL_TEXTURE_2D, sprite_->getSpriteSheet()->getGLuintTexture());
 
 	glPushMatrix();
-	//glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
-	glTranslatef(getXNorm(), getYNorm(), 0);
+	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
+	//glTranslatef(getXNorm(), getYNorm(), 0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);	
 		
