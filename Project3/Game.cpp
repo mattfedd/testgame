@@ -2,8 +2,11 @@
 #include "game.h"
 //#include "Collision.h"
 
+#include "Player.h"
+
 Game* Game::instance_;
-Entity* player;
+Player* player;
+Entity* entity;
 
 Game::Game(const char* title, int width, int height)
 {
@@ -74,7 +77,8 @@ int Game::Init(const char* title, int width, int height)
 
 void Game::Run()
 {
-	player = new Entity();
+	player = new Player();
+	entity = new Entity();
 	GAME->getCamera()->setAttachable(player);
 
 	double saved_time = 0;
@@ -99,6 +103,7 @@ void Game::Run()
 			//update
 			//softReset();
 			player->updateInput(); 
+			entity->updateInput();
 			GAME->getCamera()->update();
 			//checkCollisions();
 			//calcAndApplyResults();
@@ -128,7 +133,9 @@ void Game::draw()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	
+	//player->calcNextFrame();
 	player->draw();
+	entity->draw();
 
 	glfwSwapBuffers();
 }

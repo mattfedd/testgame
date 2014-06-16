@@ -4,7 +4,7 @@
 #include "Includes.h"
 
 /*
- A glorified texture wrapper. Has width and height, yay.
+ A glorified texture wrapper.
  Basically this is supposed to be a shared piece of data 
  for all entities that reference a single spritesheet, so 
  we don't repeat ourselves unnecessarily.
@@ -22,9 +22,6 @@ private:
 public:
 	SpriteSheet(const char* filename);
 	~SpriteSheet(void);
-
-	int getWidth();
-	int getHeight();
 	GLuint getGLuintTexture();
 };
 

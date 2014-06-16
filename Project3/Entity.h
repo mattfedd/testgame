@@ -22,6 +22,7 @@ private:
 	bool airState;	//true = airborne, false = ground
 	int actionState; //0,1,2,3,4,5 = stand, walk, jump, crouch, crouch-walk, use item, interact
 
+protected:
 	Sprite* sprite_;
 
 public:
@@ -61,7 +62,5 @@ public:
 
 	void draw();
 };
-
-
 
 #endif
