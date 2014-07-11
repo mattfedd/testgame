@@ -3,8 +3,10 @@
 //#include "Collision.h"
 
 #include "Player.h"
+#include "Text.h"
 
 Game* Game::instance_;
+Text* text;
 Player* player;
 Entity* entity;
 
@@ -57,6 +59,7 @@ int Game::Init(const char* title, int width, int height)
 	// Initialize GLEW
 	GLenum err = glewInit();
 	glewExperimental=true; // Needed in core profile
+
 	if ( GLEW_OK != err) {
 		fprintf(stderr, "problem with GLEW %d", err);
 		while(running_==GL_TRUE);
@@ -78,7 +81,11 @@ int Game::Init(const char* title, int width, int height)
 void Game::Run()
 {
 	player = new Player();
+	player->setY(200);
 	entity = new Entity();
+	entity->setWidth(2000);
+	text = new Text("Arrow keys to move, Space to jump, R to reset", 45);
+
 	GAME->getCamera()->setAttachable(player);
 
 	double saved_time = 0;
@@ -101,18 +108,23 @@ void Game::Run()
 		if(update_timer >= update_interval)
 		{
 			//update
-			//softReset();
+			if(glfwGetKey('R'))
+			{
+				player->setX(0);
+				player->setY(200);
+			}
+
 			player->updateInput(); 
 			entity->updateInput();
 			GAME->getCamera()->update();
-			//checkCollisions();
-			//calcAndApplyResults();
+
+			checkCollisions();
 
 			//draw
 			draw();
 
 			//framerate stuff
-			printf("%f\n", 1/(glfwGetTime() - last_time));
+			//printf("%f\n", 1/(glfwGetTime() - last_time));
 			update_timer = 0;
 			last_time = glfwGetTime();
 		}
@@ -121,6 +133,66 @@ void Game::Run()
 		//GAME->setRunning(!glfwGetKey( GLFW_KEY_ESC ) && glfwGetWindowParam( GLFW_OPENED ));
 		running_ = !glfwGetKey( GLFW_KEY_ESC ) && glfwGetWindowParam( GLFW_OPENED );
 
+	}
+}
+
+void Game::checkCollisions()
+{
+	//since there's no rotation, just do a two axis test on the rectangles
+
+	//hard coding with player and entity to begin with
+
+	int x1 = player->getX();
+	int y1 = player->getY();
+	int w1 = player->getWidth();
+	int h1 = player->getHeight();
+
+	int x2 = entity->getX();
+	int y2 = entity->getY();
+	int w2 = entity->getWidth();
+	int h2 = entity->getHeight();
+
+	if(x1 > x2 && x1-x2 > w2) //left
+		return;
+	else if(x2 > x1 && x2-x1 > w1)
+		return;
+
+	if(y1 > y2 && y1-y2 > h2)
+		return;
+	else if(y2 > y1 && y2-y1 > h1)
+		return;
+
+	else 
+	{
+		//printf("colliding!!\n");
+		player->colliding = true;
+		//we want player to be affected, and the entity to not move
+		
+		//if(x1 + w1/2 <= x2 + w2 / 2) //if player center x is left of entity center x
+		//{
+		//	//move left enough
+		//	player->setX(x2-w1);
+		//}
+		//else if(x1 + w1/2 > x2 + w2 / 2) //if player center x is right of entity center x
+		//{
+		//	//move right
+		//	player->setX(x2+w2);
+		//}
+
+		if(y1 + h1/2 <= y2 + h2 / 2) //if player center y is below entity center y
+		{
+			//move down
+			//printf("moving down\n");
+			player->setY(y2-h1-1);
+			player->setDY(0);
+		}
+		else if(y1 + h1/2 > y2 + h2 / 2) //if player center y above entity center y
+		{
+			//move up
+			//printf("moving up\n");
+			player->setY(y2+h2);
+			player->setDY(0);
+		}
 	}
 }
 
@@ -134,6 +206,7 @@ void Game::draw()
 	glLoadIdentity();
 	
 	//player->calcNextFrame();
+	text->draw();
 	player->draw();
 	entity->draw();
 

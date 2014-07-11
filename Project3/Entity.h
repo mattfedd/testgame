@@ -11,8 +11,6 @@ private:
 	int x_; //pixel-based position (x,y,z)
 	int y_;
 	int z_;
-	int width_;
-	int height_;
 	int maxSpeed_;
 	float dx_;
 	float dy_;
@@ -24,6 +22,8 @@ private:
 
 protected:
 	Sprite* sprite_;
+	int width_;
+	int height_;
 
 public:
 	Entity(void);
@@ -52,9 +52,13 @@ public:
 	void setDY(float dy);
 	void setDDX(float ddx);
 	void setDDY(float ddy);
+	void setWidth(int w);
+	void setHeight(int h);
 	void setSize(int width, int height);
 	void setMaxSpeed(int val);
 	//void setRadiusSquared(long val);
+
+	void handleCollision(Entity* ent);
 
 	virtual void updateInput();
 	virtual void updateCollisions();

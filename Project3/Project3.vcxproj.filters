@@ -46,7 +46,13 @@
       <Filter>Game\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSprite.h">
-      <Filter>Game</Filter>
+      <Filter>Game\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextSprite.h">
+      <Filter>Game\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Game\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +90,13 @@
       <Filter>Game\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSprite.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSprite.cpp">
+      <Filter>Game\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Game\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

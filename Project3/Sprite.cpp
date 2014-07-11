@@ -6,6 +6,8 @@ Sprite::Sprite(int width, int height, SpriteSheet* ss)
 	totalFrames_ = 0;
 	sheetWidth_ = 256;
 	sheetHeight_ = 256;
+	frameWidth_ = 64;
+	frameHeight_ = 64;
 	width_ = width;
 	height_ = height;
 
@@ -19,23 +21,15 @@ Sprite::Sprite(int width, int height, SpriteSheet* ss)
 
 	GLfloat temp_tex[12] = 
 	{
-		1.0f*info->startX/sheetWidth_,				 	    1.0f*(info->startY + info->frameHeight)/sheetHeight_,
-		1.0f*(info->startX + info->frameWidth)/sheetWidth_, 1.0f*(info->startY + info->frameHeight)/sheetHeight_,
-		1.0f*(info->startX + info->frameWidth)/sheetWidth_, 1.0f*info->startY/sheetHeight_,
+		1.0f*info->startX/sheetWidth_,				 	    1.0f*(info->startY + frameHeight_)/sheetHeight_,
+		1.0f*(info->startX + frameWidth_)/sheetWidth_, 1.0f*(info->startY + frameHeight_)/sheetHeight_,
+		1.0f*(info->startX + frameWidth_)/sheetWidth_, 1.0f*info->startY/sheetHeight_,
 		1.0f*info->startX/sheetWidth_,					    1.0f*info->startY/sheetHeight_,
 	};
 
 	setTexturePoints(temp_tex);
 
-	GLfloat temp_vert[12] = 
-	{
-		0.0f*width/SCREEN_WIDTH,1.0f*height/SCREEN_HEIGHT, 0.0f,
-		1.0f*width/SCREEN_WIDTH,1.0f*height/SCREEN_HEIGHT, 0.0f,
-		1.0f*width/SCREEN_WIDTH,0.0f*height/SCREEN_HEIGHT, 0.0f,
-		0.0f*width/SCREEN_WIDTH,0.0f*height/SCREEN_HEIGHT, 0.0f
-	};
-	
-	setVertexPoints(temp_vert);
+	calcVertexPoints();
 
 	sheet_ = ss;
 }
@@ -103,7 +97,11 @@ AnimInfo* Sprite::getAnimInfoById(ANIM_STATE state)
 			a = a->next;
 	}
 
-	return a;
+	if(a->id != state)
+	{
+		return NULL;
+	}
+	else return a;
 }
 
 void Sprite::calcNextFrame()
@@ -117,8 +115,8 @@ void Sprite::calcNextFrame()
 	{
 		if (frameNum_ >= info->length) frameNum_ = 0;
 
-		int fwidth = info->frameWidth;
-		int fheight = info->frameHeight;
+		int fwidth = frameWidth_;
+		int fheight = frameHeight_;
 		int twidth = sheetWidth_;
 		int theight = sheetHeight_;
 
@@ -153,10 +151,8 @@ void Sprite::addAnimInfo(ANIM_STATE state, int length)
 	AnimInfo* a = new AnimInfo;
 	a->id = state;
 	a->length = length;
-	a->frameWidth = 64;
-	a->frameHeight = 64;
-	a->startX = (totalFrames_ % (sheetWidth_ / a->frameWidth)) * a->frameWidth;
-	a->startY = (totalFrames_ / (sheetWidth_ / a->frameWidth)) * a->frameHeight;
+	a->startX = (totalFrames_ % (sheetWidth_ / frameWidth_)) * frameWidth_;
+	a->startY = (totalFrames_ / (sheetWidth_ / frameWidth_)) * frameHeight_;
 	a->next = NULL;
 	
 	if(spriteInfo_ == NULL)
@@ -172,4 +168,29 @@ void Sprite::addAnimInfo(ANIM_STATE state, int length)
 	}
 	
 	totalFrames_ += length;
+}
+
+void Sprite::setWidth(int w)
+{
+	width_ = w;
+	calcVertexPoints();
+}
+
+void Sprite::setHeight(int h)
+{
+	height_ = h;
+	calcVertexPoints();
+}
+
+void Sprite::calcVertexPoints()
+{
+	GLfloat temp_vert[12] = 
+	{
+		0.0f*width_/SCREEN_WIDTH,1.0f*height_/SCREEN_HEIGHT, 0.0f,
+		1.0f*width_/SCREEN_WIDTH,1.0f*height_/SCREEN_HEIGHT, 0.0f,
+		1.0f*width_/SCREEN_WIDTH,0.0f*height_/SCREEN_HEIGHT, 0.0f,
+		0.0f*width_/SCREEN_WIDTH,0.0f*height_/SCREEN_HEIGHT, 0.0f
+	};
+	
+	setVertexPoints(temp_vert);
 }

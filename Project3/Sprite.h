@@ -10,8 +10,6 @@ struct AnimInfo
 	int length;
 	int startX;
 	int startY;
-	int frameWidth;
-	int frameHeight;
 	AnimInfo* next;
 };
 
@@ -23,10 +21,10 @@ private:
 	
 	SpriteSheet* sheet_;
 
+protected:
 	void setVertexPoints(GLfloat* source);
 	void setTexturePoints(GLfloat* source);
 
-protected:
 	int numAnimations_;
 	int width_;
 	int height_;
@@ -35,6 +33,8 @@ protected:
 	int counter_;
 	int frameNum_;
 	int totalFrames_;
+	int frameWidth_;
+	int frameHeight_;
 
 	ANIM_STATE animState_;
 	AnimInfo* spriteInfo_;
@@ -44,18 +44,24 @@ public:
 	//spritesheet for the texture reference
 	Sprite(int width, int height, SpriteSheet* ss);
 	~Sprite(void);
-
+	
+	void setSpriteSheet(SpriteSheet* tex);
+	SpriteSheet* getSpriteSheet();
 	GLfloat* getVertexPoints();
 	GLfloat* getTexturePoints();
 
-	void setAnimState(ANIM_STATE new_state);
+	//TODO : add getTexture() which just calls the SpriteSheet getGLuintTexture(), so we don't have to expose the spritesheet publicly
 
-	void setSpriteSheet(SpriteSheet* tex);
-	SpriteSheet* getSpriteSheet();
+	void setWidth(int w);
+	void setHeight(int h);
+
+	void setAnimState(ANIM_STATE new_state);
 
 	AnimInfo* getAnimInfoById(ANIM_STATE state);
 	void calcNextFrame();
 	void addAnimInfo(ANIM_STATE state, int length);
+
+	void calcVertexPoints();
 };
 
 #endif

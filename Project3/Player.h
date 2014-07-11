@@ -6,13 +6,17 @@
 class Player : public Entity
 {
 private:
-
+	float gravity;
+	bool goingUp;
+	bool floating;
+	float force;
 
 public:
 	Player(void);
 	~Player(void);
 
 	void updateInput();
+	bool colliding;
 
 };
 

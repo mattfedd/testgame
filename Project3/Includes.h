@@ -11,6 +11,35 @@
 #define GAME Game::instance()
 #define GAME_TITLE "Title"
 
+/*
+DONE:
+	-basic collision
+	-jumping
+
+TODO list:
+	-collision array
+	-sideways collision
+	-terrain/map/level objects
+	-more advanced collision (interpolation, corners, one way collision)
+	-HUD for health etc
+	-game states and transitions
+	-death, pause, non-input states and corresponding triggers/transitions
+	-background/parallax
+	-particles (rain, dirt, sparks, ambient float, 
+	-enemy/sprite
+	-menu screen + manager
+	-level objects
+	-particles
+	-background/parallax
+	-pausing
+	-AI
+	-sound/openAL/ogg
+	-items
+	-weapons/bullets
+	-zones
+*/
+
+
 struct Vert
 {
 	int x;
@@ -68,27 +97,33 @@ enum class ANIM_STATE
 	IDLE_RIGHT,
 	LOOK_LEFT,			//looking functionality
 	LOOK_RIGHT,
-	LOOK_UP,
-	LOOK_DOWN,
+	LOOK_UP_LEFT,
+	LOOK_UP_RIGHT,
+	LOOK_DOWN_LEFT,
+	LOOK_DOWN_RIGHT,
 	LOOK_AROUND,		//can be randomly called for variety in idle animation
 	PUSH_LEFT,			//push against walls, boxes, etc
 	PUSH_RIGHT,
 	GROUND_MOVE_LEFT,	//movement
 	GROUND_MOVE_RIGHT,
-	GROUND_MOVE_UP,		
+	GROUND_MOVE_UP,		//ladder
 	GROUND_MOVE_DOWN,
-	WALL_CLIMB_LEFT,	//climbing
+	WALL_CLIMB_LEFT,	//climbing sideways, not a ladder
 	WALL_CLIMB_RIGHT,
 	WALL_HANG_LEFT,		//hanging
 	WALL_HANG_RIGHT,	//also for sliding down walls
 	AIR_MOVE_LEFT,		//air movement
 	AIR_MOVE_RIGHT,
-	AIR_MOVE_UP,		//for any ascension, including jumping
-	AIR_MOVE_DOWN,		//any falling
+	AIR_MOVE_UP_LEFT,	//for any ascension, including jumping
+	AIR_MOVE_UP_RIGHT,
+	AIR_MOVE_DOWN_LEFT,	//any falling
+	AIR_MOVE_DOWN_RIGHT,
 	ATTACK_LEFT,		//attacks
 	ATTACK_RIGHT,
-	ATTACK_UP,
-	ATTACK_DOWN,
+	ATTACK_UP_LEFT,
+	ATTACK_UP_RIGHT,
+	ATTACK_DOWN_LEFT,
+	ATTACK_DOWN_RIGHT,
 	HURT_LEFT,			//getting hurt
 	HURT_RIGHT,
 	RECOIL_LEFT,		//recoil for whatever reason

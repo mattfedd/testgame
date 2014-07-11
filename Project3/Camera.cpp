@@ -8,7 +8,7 @@ Camera::Camera(void)
 	width_ = SCREEN_WIDTH;
 	height_ = SCREEN_HEIGHT;
 	bufX_ = 160;
-	bufY_ = 160;
+	bufY_ = 200;
 	attachable_ = NULL;
 }
 
