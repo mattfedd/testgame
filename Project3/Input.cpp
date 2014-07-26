@@ -3,7 +3,7 @@
 
 Input::Input(void)
 {
-	Init();
+	//Init();
 	memset(&status_, 0, 50);
 }
 

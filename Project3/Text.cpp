@@ -4,35 +4,20 @@
 
 Text::Text()
 {
-	x = 50;
-	y = 50;
-	ss = new SpriteSheet("Inconsolata.tga");
-	spriteArray = NULL;
-	text = NULL;
-	length = 0;
+	init();
 }
 
-Text::Text(char* text, int length)
+Text::Text(std::string text)
 {
-	x = 50;
-	y = 50;
-	ss = new SpriteSheet("Inconsolata.tga");
-	spriteArray = NULL;
-	this->text = NULL;
-	this->length = 0;
-	setText(text, length);
+	init();
+	setText(text);
 }
 
 Text::~Text()
 {
-	if(text != NULL)
-	{
-		delete[] text;
-	}
-
 	if(this->spriteArray != NULL)
 	{
-		for(int i=0; i<this->length; ++i)
+		for(int i=0; i<text.length(); ++i)
 		{
 			if(spriteArray[i] != NULL)
 			{
@@ -45,30 +30,36 @@ Text::~Text()
 	}
 }
 
-void Text::setText(char* text, int length)
+void Text::init()
 {
-	if(this->length > 0 && this->length == length)
+	x = 0;
+	y = 0;
+	ss = new SpriteSheet("Inconsolata.tga");
+	spriteArray = NULL;
+	text = "";
+	attachable = NULL;
+	textSize = 20;
+}
+
+void Text::setText(std::string val)
+{
+	if(text.length() > 0 && text.length() == val.length())
 	{
 		//determine differences between our text and the arg
-		for(int i=0; i<length; ++i)
+		for(int i=0; i<text.length(); ++i)
 		{
-			if(this->text[i] != text[i])
+			if(this->text[i] != val[i])
 			{
-				changeLetter(i, text[i]);
+				changeLetter(i, val[i]);
 			}
 		}
 		return;
 	}	
 
-	if(this->text != NULL)
-	{
-		delete[] this->text;
-		this->text = NULL;
-	}
 
-	if(this->spriteArray != NULL)
+	if(spriteArray != NULL)
 	{
-		for(int i=0; i<this->length; ++i)
+		for(int i=0; i<text.length(); ++i)
 		{
 			if(spriteArray[i] != NULL)
 			{
@@ -80,16 +71,15 @@ void Text::setText(char* text, int length)
 		spriteArray = NULL;
 	}
 	
-	spriteArray = new TextSprite*[length];
+	text = val;
+	
+	spriteArray = new TextSprite*[text.length()];
 
-	for(int i=0; i<length; ++i)
+	for(int i=0; i<text.length(); ++i)
 	{
-		spriteArray[i] = new TextSprite(20,36,ss);
+		spriteArray[i] = new TextSprite(textSize,textSize*1.8,ss);
 		spriteArray[i]->setLetter(text[i]);
 	}
-
-	this->text = new char[length];
-	this->length = length;
 }
 
 void Text::changeLetter(int index, char c)
@@ -100,13 +90,32 @@ void Text::changeLetter(int index, char c)
 
 int Text::getLength()
 {
-	return length;
+	return text.length();
 }
 
 void Text::setTextSize(float size)
 {
-	if(size > 0);
-	textSize = size;
+	if(size > 0)
+		textSize = size;
+
+	else return;
+
+	int width = size;
+	int height = 1.8 * size;
+
+	for(int i=0; i<text.length(); ++i)
+	{
+		if(spriteArray[i] != NULL) 
+		{
+			spriteArray[i]->setWidth(width);
+			spriteArray[i]->setHeight(height);
+		}
+	}
+}
+
+float Text::getTextSize()
+{
+	return textSize;
 }
 
 void Text::setX(float val)
@@ -129,9 +138,9 @@ float Text::getY()
 	return y;
 }
 
-float Text::getTextSize()
+void Text::attachToEntity(Entity* e)
 {
-	return textSize;
+	attachable = e;
 }
 
 void Text::draw()
@@ -139,14 +148,14 @@ void Text::draw()
 	if(spriteArray == NULL)
 		return;
 
-	for(int i=0; i<length; ++i)
+	for(int i=0; i<text.length(); ++i)
 	{
 		spriteArray[i]->calcLetter();
 		glBindTexture(GL_TEXTURE_2D, spriteArray[i]->getSpriteSheet()->getGLuintTexture());
 
 		glPushMatrix();
-		glTranslatef((1.0f*(x + 20*i)/SCREEN_WIDTH) - GAME->getCamera()->getXNorm(), (1.0f*y/SCREEN_HEIGHT) - GAME->getCamera()->getYNorm(), 0);
-		//glTranslatef(getXNorm(), getYNorm(), 0);
+		if(attachable != NULL) glTranslatef((1.0f*(x + textSize*i)/SCREEN_WIDTH) - attachable->getXNorm()-GAME->getCamera()->getXNorm(), (1.0f*y/SCREEN_HEIGHT) - attachable->getYNorm() - GAME->getCamera()->getYNorm(), 0);
+		else glTranslatef(1.0f*(x + textSize*i)/SCREEN_WIDTH, 1.0f*y/SCREEN_HEIGHT, 0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);	
 		

@@ -6,6 +6,7 @@
 #include "Text.h"
 
 Game* Game::instance_;
+Text* debugText;
 Text* text;
 Player* player;
 Entity* entity;
@@ -82,9 +83,21 @@ void Game::Run()
 {
 	player = new Player();
 	player->setY(200);
+	
 	entity = new Entity();
 	entity->setWidth(2000);
-	text = new Text("Arrow keys to move, Space to jump, R to reset", 45);
+
+	text = new Text("Arrow keys to move, Space to jump, R to reset");
+	text->setX(50);
+	text->setY(50);
+	text->attachToEntity(entity);
+
+	debugText = new Text("debug stuff");
+	debugText->setX(-640);
+	debugText->setY(450);
+	debugText->setTextSize(15);
+
+	//char buffer[14];
 
 	GAME->getCamera()->setAttachable(player);
 
@@ -94,8 +107,11 @@ void Game::Run()
 	double last_time = 0;
 	glfwSetTime(0);
 
+	int counter = 0;
 	//std::vector<Drawable*> drawables = GAME->getLevel()->getScreenPtr()->getForegroundVector();
-
+	
+	std::ostringstream ss;
+	int framerate=0;
 	/* Loop until the user closes the window */
 	while (getRunning())
 	{
@@ -124,7 +140,14 @@ void Game::Run()
 			draw();
 
 			//framerate stuff
+			framerate = 1/(glfwGetTime() - last_time);
 			//printf("%f\n", 1/(glfwGetTime() - last_time));
+			//_itoa_s((int)(1/(glfwGetTime() - last_time)), buffer, 10);
+			//debugText->setText(buffer);
+			ss.str("");
+			ss.clear();
+			ss << framerate;
+			debugText->setText(ss.str());
 			update_timer = 0;
 			last_time = glfwGetTime();
 		}
@@ -209,11 +232,10 @@ void Game::draw()
 	text->draw();
 	player->draw();
 	entity->draw();
+	debugText->draw();
 
 	glfwSwapBuffers();
 }
-
-
 
 void GLFWCALL Game::handle_resize(int width,int height)
 {

@@ -2,26 +2,31 @@
 #define TEXT_H
 
 #include "TextSprite.h"
+#include <string>
+
+class Entity;
 
 class Text 
 {
 private:
-	char* text;
-	int length;
+	std::string text;
 	int x;
 	int y;
 	float textSize;
 	TextSprite** spriteArray;
 	SpriteSheet* ss;
+	bool tiedToCamera;
+	Entity* attachable;
 
 	void changeLetter(int index, char c);
+	void init();
 
 public:
 	Text(void);
-	Text(char* text, int length);
+	Text(std::string s);
 	~Text(void);
 
-	void setText(char* text, int length);
+	void setText(std::string s);
 	int getLength();
 	void setTextSize(float size);
 	void setX(float val);
@@ -29,6 +34,8 @@ public:
 	float getX();
 	float getY();
 	float getTextSize();
+	void setTiedToCamera(bool val);
+	void attachToEntity(Entity* e);
 
 	void draw();
 

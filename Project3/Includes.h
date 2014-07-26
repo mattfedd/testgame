@@ -7,6 +7,7 @@
 #include <math.h>
 #include <vector>
 #include <iterator>
+#include <sstream>
 
 #define GAME Game::instance()
 #define GAME_TITLE "Title"
@@ -15,6 +16,7 @@
 DONE:
 	-basic collision
 	-jumping
+	-text
 
 TODO list:
 	-collision array

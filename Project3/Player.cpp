@@ -31,11 +31,11 @@ void Player::updateInput()
 		setDDY(0.0f);*/
 
 	//move left or right
-	if(GAME->getInput()->getStatus()->rightArrow) 
+	if(glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(2.0f);
-	if(GAME->getInput()->getStatus()->leftArrow) 
+	if(glfwGetKey(GLFW_KEY_LEFT)) 
 		setDDX(-2.0f);
-	if(!GAME->getInput()->getStatus()->leftArrow && !GAME->getInput()->getStatus()->rightArrow) 
+	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(0.0f);
 
 	if(colliding)
@@ -98,7 +98,7 @@ void Player::updateInput()
 	}
 	setDY(value);
 
-	printf("gravity :%f, ddy :%f, dy :%f\n", gravity, getDDY(), getDY());
+	//printf("gravity :%f, ddy :%f, dy :%f\n", gravity, getDDY(), getDY());
 
 	setX(getX() + getDX());
 	setY(getY() + getDY());
