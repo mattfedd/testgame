@@ -67,6 +67,8 @@ GLfloat* Sprite::getTexturePoints()
 
 void Sprite::setAnimState(ANIM_STATE state)
 {
+	if(animState_ == state)
+		return;
 	animState_ = state;
 	counter_ = 0;
 	frameNum_ = 0;
@@ -154,17 +156,18 @@ void Sprite::addAnimInfo(ANIM_STATE state, int length)
 	a->startX = (totalFrames_ % (sheetWidth_ / frameWidth_)) * frameWidth_;
 	a->startY = (totalFrames_ / (sheetWidth_ / frameWidth_)) * frameHeight_;
 	a->next = NULL;
-	
+
+	AnimInfo* temp = spriteInfo_;
 	if(spriteInfo_ == NULL)
 		spriteInfo_ = a;
 	else
 	{
-		while(spriteInfo_->next != NULL)
+		while(temp->next != NULL)
 		{
-			spriteInfo_ = spriteInfo_->next;
+			temp = temp->next;
 		}
 
-		spriteInfo_->next = a;
+		temp->next = a;
 	}
 	
 	totalFrames_ += length;

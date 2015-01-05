@@ -14,6 +14,11 @@ Entity::Entity(void)
 	ddy_ = 0;
 	maxSpeed_ = 30;
 	sprite_ = new Sprite(width_, height_, new SpriteSheet("tex.tga"));
+	collidingTop = false;
+	collidingBottom = false;
+	collidingLeft = false;
+	collidingRight = false;
+	type_ = ENTITY_TYPE::ENTITY;
 }
 Entity::~Entity(void)
 {
@@ -34,6 +39,7 @@ int Entity::getWidth(){ return width_; }
 int Entity::getHeight(){ return height_; }
 int Entity::getMaxSpeed(){ return maxSpeed_; }
 //long Entity::getRadiusSquared(){ return }
+ENTITY_TYPE Entity::getEntityType(){ return type_; }
 
 void Entity::setPosition(int x, int y, int z)
 {
@@ -74,6 +80,7 @@ void Entity::setSize(int width, int height)
 
 void Entity::setMaxSpeed(int val){ maxSpeed_ = val; }
 //void Entity::setRadiusSquared(long val){}
+void Entity::setEntityType(ENTITY_TYPE type){ type_ = type; }
 
 void Entity::handleCollision(Entity* ent)
 {

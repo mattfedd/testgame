@@ -16,7 +16,13 @@ public:
 	~Player(void);
 
 	void updateInput();
-	bool colliding;
+	void handleCollision(Entity* e);
+
+	void crouch();
+	void uncrouch();
+	void attackGroundHigh();
+	void attackGroundMid();
+	void attackGroundLow();
 
 };
 

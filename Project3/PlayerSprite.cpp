@@ -8,12 +8,13 @@ PlayerSprite::PlayerSprite(int width, int height, SpriteSheet* ss) : Sprite(widt
 	sheetWidth_ = 256;
 	sheetHeight_ = 256;
 	frameWidth_ = 64;
-	frameHeight_ = 64;
+	frameHeight_ = 128;
 
 	spriteInfo_ = NULL;
 	
-	addAnimInfo(ANIM_STATE::DEFAULT, 6);
-	addAnimInfo(ANIM_STATE::DEATH, 5);
+	addAnimInfo(ANIM_STATE::DEFAULT, 4);
+	addAnimInfo(ANIM_STATE::DEATH, 3);
+	addAnimInfo(ANIM_STATE::CROUCH, 1);
 
 	setAnimState(ANIM_STATE::DEFAULT);
 }

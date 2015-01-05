@@ -11,9 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E7398659-F23E-4B66-82D7-16F77DCB1720}</ProjectGuid>
-    <RootNamespace>Project3</RootNamespace>
-    <ProjectName>ThirdTime</ProjectName>
+    <ProjectGuid>{153B1155-7564-4455-889F-DE13D4334AF5}</ProjectGuid>
+    <RootNamespace>LevelEditor</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -45,6 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\Matthew\Documents\GitHub\testgame\Project3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,42 +63,30 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>GLFW.lib;glew32d.lib;opengl32.lib;kernel32.lib;user32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityManager.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Includes.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerSprite.h" />
-    <ClInclude Include="Screen.h" />
-    <ClInclude Include="ScreenManager.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Spritesheet.h" />
-    <ClInclude Include="Text.h" />
-    <ClInclude Include="TextSprite.h" />
+    <ClCompile Include="..\Project3\Camera.cpp" />
+    <ClCompile Include="..\Project3\Entity.cpp" />
+    <ClCompile Include="..\Project3\Input.cpp" />
+    <ClCompile Include="..\Project3\Sprite.cpp" />
+    <ClCompile Include="..\Project3\SpriteSheet.cpp" />
+    <ClCompile Include="..\Project3\Text.cpp" />
+    <ClCompile Include="..\Project3\TextSprite.cpp" />
+    <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerSprite.cpp" />
-    <ClCompile Include="Screen.cpp" />
-    <ClCompile Include="ScreenManager.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteSheet.cpp" />
-    <ClCompile Include="Text.cpp" />
-    <ClCompile Include="TextSprite.cpp" />
+    <ClInclude Include="..\Project3\Camera.h" />
+    <ClInclude Include="..\Project3\Entity.h" />
+    <ClInclude Include="..\Project3\Includes.h" />
+    <ClInclude Include="..\Project3\Input.h" />
+    <ClInclude Include="..\Project3\Sprite.h" />
+    <ClInclude Include="..\Project3\Spritesheet.h" />
+    <ClInclude Include="..\Project3\Text.h" />
+    <ClInclude Include="..\Project3\TextSprite.h" />
+    <ClInclude Include="Editor.h" />
+    <ClInclude Include="main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

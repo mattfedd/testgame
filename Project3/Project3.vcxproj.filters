@@ -54,6 +54,9 @@
     <ClInclude Include="Text.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Game\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -96,6 +99,9 @@
       <Filter>Game\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
+      <Filter>Game\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
       <Filter>Game\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

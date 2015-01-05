@@ -17,10 +17,10 @@ DONE:
 	-basic collision
 	-jumping
 	-text
+	-sideways collision
 
 TODO list:
 	-collision array
-	-sideways collision
 	-terrain/map/level objects
 	-more advanced collision (interpolation, corners, one way collision)
 	-HUD for health etc
@@ -39,6 +39,10 @@ TODO list:
 	-items
 	-weapons/bullets
 	-zones
+
+BUGS:
+	-pause doesn't work on animations
+	
 */
 
 
@@ -131,15 +135,20 @@ enum class ANIM_STATE
 	RECOIL_LEFT,		//recoil for whatever reason
 	RECOIL_RIGHT,
 	UPGRADE_LEFT,		//good things happening
-	UPGRADE_RIGHT
+	UPGRADE_RIGHT,
+	CROUCH
 };
 
 //entitties
-enum class ENTITIES
+enum class ENTITY_TYPE
 {
 	PLAYER,
-	ENEMY
+	ENEMY,
+	ENVIRONMENT,
+	ENTITY
+
 	//to be filled out further...
 };
+
 
 #endif

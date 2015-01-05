@@ -24,6 +24,7 @@ protected:
 	Sprite* sprite_;
 	int width_;
 	int height_;
+	ENTITY_TYPE type_;
 
 public:
 	Entity(void);
@@ -43,6 +44,7 @@ public:
 	int getHeight();
 	int getMaxSpeed();
 	//long getRadiusSquared();
+	ENTITY_TYPE getEntityType();
 
 	void setPosition(int x, int y, int z);
 	void setX(int x);
@@ -57,14 +59,19 @@ public:
 	void setSize(int width, int height);
 	void setMaxSpeed(int val);
 	//void setRadiusSquared(long val);
+	void setEntityType(ENTITY_TYPE type);
 
-	void handleCollision(Entity* ent);
+	virtual void handleCollision(Entity* ent);
 
 	virtual void updateInput();
 	virtual void updateCollisions();
 	virtual void updateGraphics();
 
 	void draw();
+	bool collidingTop;
+	bool collidingBottom;
+	bool collidingLeft;
+	bool collidingRight;
 };
 
 #endif

@@ -4,12 +4,15 @@
 
 #include "Player.h"
 #include "Text.h"
+#include "Collision.h"
 
 Game* Game::instance_;
 Text* debugText;
 Text* text;
 Player* player;
 Entity* entity;
+Entity* platform;
+bool paused;
 
 Game::Game(const char* title, int width, int height)
 {
@@ -81,11 +84,18 @@ int Game::Init(const char* title, int width, int height)
 
 void Game::Run()
 {
+	paused = false;
+
 	player = new Player();
 	player->setY(200);
 	
 	entity = new Entity();
 	entity->setWidth(2000);
+
+	platform = new Entity();
+	platform->setX(300);
+	platform->setY(200);
+	platform->setHeight(100);
 
 	text = new Text("Arrow keys to move, Space to jump, R to reset");
 	text->setX(50);
@@ -112,6 +122,7 @@ void Game::Run()
 	
 	std::ostringstream ss;
 	int framerate=0;
+	bool awaitingPauseRelease = false;
 	/* Loop until the user closes the window */
 	while (getRunning())
 	{
@@ -130,20 +141,31 @@ void Game::Run()
 				player->setY(200);
 			}
 
-			player->updateInput(); 
-			entity->updateInput();
-			GAME->getCamera()->update();
+			if(glfwGetKey('P') == GLFW_PRESS && !awaitingPauseRelease)
+			{
+				paused = !paused;
+				awaitingPauseRelease = true;
+			}
+			else if(glfwGetKey('P') == GLFW_RELEASE)
+			{
+				awaitingPauseRelease = false;
+			}
 
-			checkCollisions();
+			if(!paused)
+			{
+				player->updateInput(); 
+				entity->updateInput();
+				GAME->getCamera()->update();
 
+				checkCollisions();
+			}
+			
 			//draw
 			draw();
+			
 
 			//framerate stuff
 			framerate = 1/(glfwGetTime() - last_time);
-			//printf("%f\n", 1/(glfwGetTime() - last_time));
-			//_itoa_s((int)(1/(glfwGetTime() - last_time)), buffer, 10);
-			//debugText->setText(buffer);
 			ss.str("");
 			ss.clear();
 			ss << framerate;
@@ -161,62 +183,8 @@ void Game::Run()
 
 void Game::checkCollisions()
 {
-	//since there's no rotation, just do a two axis test on the rectangles
-
-	//hard coding with player and entity to begin with
-
-	int x1 = player->getX();
-	int y1 = player->getY();
-	int w1 = player->getWidth();
-	int h1 = player->getHeight();
-
-	int x2 = entity->getX();
-	int y2 = entity->getY();
-	int w2 = entity->getWidth();
-	int h2 = entity->getHeight();
-
-	if(x1 > x2 && x1-x2 > w2) //left
-		return;
-	else if(x2 > x1 && x2-x1 > w1)
-		return;
-
-	if(y1 > y2 && y1-y2 > h2)
-		return;
-	else if(y2 > y1 && y2-y1 > h1)
-		return;
-
-	else 
-	{
-		//printf("colliding!!\n");
-		player->colliding = true;
-		//we want player to be affected, and the entity to not move
-		
-		//if(x1 + w1/2 <= x2 + w2 / 2) //if player center x is left of entity center x
-		//{
-		//	//move left enough
-		//	player->setX(x2-w1);
-		//}
-		//else if(x1 + w1/2 > x2 + w2 / 2) //if player center x is right of entity center x
-		//{
-		//	//move right
-		//	player->setX(x2+w2);
-		//}
-
-		if(y1 + h1/2 <= y2 + h2 / 2) //if player center y is below entity center y
-		{
-			//move down
-			//printf("moving down\n");
-			player->setY(y2-h1-1);
-			player->setDY(0);
-		}
-		else if(y1 + h1/2 > y2 + h2 / 2) //if player center y above entity center y
-		{
-			//move up
-			//printf("moving up\n");
-			player->setY(y2+h2);
-			player->setDY(0);
-		}
-	}
+	Collision::checkCollision(player, entity);
+	Collision::checkCollision(player, platform);
 }
 
 void Game::draw()
@@ -232,6 +200,7 @@ void Game::draw()
 	text->draw();
 	player->draw();
 	entity->draw();
+	platform->draw();
 	debugText->draw();
 
 	glfwSwapBuffers();
