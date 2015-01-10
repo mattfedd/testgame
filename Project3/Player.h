@@ -24,6 +24,8 @@ public:
 	void attackGroundMid();
 	void attackGroundLow();
 
+	void initCollideBoxes();
+
 };
 
 

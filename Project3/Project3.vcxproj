@@ -45,6 +45,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,13 +68,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CollideBox.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="DamageBox.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Logging.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="Screen.h" />
@@ -84,8 +89,11 @@
     <ClInclude Include="TextSprite.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollideBox.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="DamageBox.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />

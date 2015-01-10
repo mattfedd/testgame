@@ -4,6 +4,8 @@
 #include "Includes.h"
 #include "Sprite.h"
 #include "Game.h"
+#include "CollideBox.h"
+#include <vector>
 
 class Entity
 {
@@ -26,6 +28,8 @@ protected:
 	int height_;
 	ENTITY_TYPE type_;
 
+	std::vector<CollideBox*> collideBoxes;
+
 public:
 	Entity(void);
 	~Entity(void);
@@ -43,7 +47,6 @@ public:
 	int getWidth();
 	int getHeight();
 	int getMaxSpeed();
-	//long getRadiusSquared();
 	ENTITY_TYPE getEntityType();
 
 	void setPosition(int x, int y, int z);
@@ -58,7 +61,6 @@ public:
 	void setHeight(int h);
 	void setSize(int width, int height);
 	void setMaxSpeed(int val);
-	//void setRadiusSquared(long val);
 	void setEntityType(ENTITY_TYPE type);
 
 	virtual void handleCollision(Entity* ent);
@@ -68,6 +70,9 @@ public:
 	virtual void updateGraphics();
 
 	void draw();
+
+	void initCollideBoxes();
+
 	bool collidingTop;
 	bool collidingBottom;
 	bool collidingLeft;

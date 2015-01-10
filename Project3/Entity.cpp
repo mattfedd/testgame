@@ -47,8 +47,38 @@ void Entity::setPosition(int x, int y, int z)
 	if(y != 0) setY(y);
 	if(z != 0) setZ(z);
 }
-void Entity::setX(int x){ x_ = x; }
-void Entity::setY(int y){ y_ = y; }
+void Entity::setX(int x)
+{ 
+	int dx = x-this->getX();
+	x_ = x; 
+
+	if(collideBoxes.size() == 0)
+	{
+		return;
+	}
+
+	for (int i=0; i<collideBoxes.size(); ++i) 
+	{
+		collideBoxes[i]->setX(collideBoxes[i]->getX() + dx);
+	}
+}
+
+void Entity::setY(int y)
+{ 
+	int dy = y-this->getY();
+	y_ = y; 
+
+	if(collideBoxes.size() == 0) 
+	{
+		return;
+	}
+
+	for (int i=0; i<collideBoxes.size(); ++i)
+	{
+		collideBoxes[i]->setY(collideBoxes[i]->getY() + dy);
+	}
+}
+
 void Entity::setZ(int z){ x_ = z; }
 void Entity::setDX(float dx)
 { 
@@ -81,6 +111,11 @@ void Entity::setSize(int width, int height)
 void Entity::setMaxSpeed(int val){ maxSpeed_ = val; }
 //void Entity::setRadiusSquared(long val){}
 void Entity::setEntityType(ENTITY_TYPE type){ type_ = type; }
+
+void Entity::initCollideBoxes()
+{
+	//collideBoxes = 0;
+}
 
 void Entity::handleCollision(Entity* ent)
 {
@@ -120,6 +155,47 @@ void Entity::draw()
 	glVertexPointer(3, GL_FLOAT, 0, sprite_->getVertexPoints());
 	glTexCoordPointer(2, GL_FLOAT, 0, sprite_->getTexturePoints());
 	glDrawArrays(GL_QUADS, 0, 4);
+
+	#ifdef DEBUG
+
+	for(int i=0; i<collideBoxes.size(); ++i)
+	{
+		if(collideBoxes[i]->isActive())
+		{
+			GLfloat tempVerts[4] = 
+			{
+				0.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,0.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
+				1.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT
+			};
+
+			glLineWidth(2.5); 
+			glColor3f(1.0, 0.0, 0.0);
+		
+			glBegin(GL_LINES);
+			glVertex3f(tempVerts[0], tempVerts[3], 1.0);
+			glVertex3f(tempVerts[2], tempVerts[3], 1.0);
+			glEnd();
+
+			glBegin(GL_LINES);
+			glVertex3f(tempVerts[2], tempVerts[1], 1.0);
+			glVertex3f(tempVerts[0], tempVerts[1], 1.0);
+			glEnd();
+
+			glBegin(GL_LINES);
+			glVertex3f(tempVerts[2], tempVerts[3], 1.0);
+			glVertex3f(tempVerts[2], tempVerts[1], 1.0);
+			glEnd();
+
+			glBegin(GL_LINES);
+			glVertex3f(tempVerts[0], tempVerts[1], 1.0);
+			glVertex3f(tempVerts[0], tempVerts[3], 1.0);
+			glEnd();
+
+			glColor3f(1.0,1.0,1.0);
+		}
+	}
+
+	#endif
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);

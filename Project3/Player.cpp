@@ -14,6 +14,7 @@ Player::Player(void)
 	floating = false;
 	force = 0;
 	type_ = ENTITY_TYPE::PLAYER;
+	initCollideBoxes();
 }
 
 Player::~Player(void)
@@ -182,11 +183,13 @@ void Player::handleCollision(Entity* e)
 void Player::crouch()
 {
 	sprite_->setAnimState(ANIM_STATE::CROUCH);
+	collideBoxes[1]->setActive(false);
 }
 
 void Player::uncrouch()
 {
 	sprite_->setAnimState(ANIM_STATE::DEFAULT);
+	collideBoxes[1]->setActive(true);
 }
 
 void Player::attackGroundHigh()
@@ -202,4 +205,13 @@ void Player::attackGroundMid()
 void Player::attackGroundLow()
 {
 
+}
+
+void Player::initCollideBoxes()
+{
+	//bottom
+	collideBoxes.push_back(new CollideBox(getX(), getY(), getWidth(), getHeight()/2));
+	
+	//top
+	collideBoxes.push_back(new CollideBox(getX(), getY()+getHeight()/2, getWidth(), getHeight()/2));
 }
