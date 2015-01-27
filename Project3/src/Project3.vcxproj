@@ -10,53 +10,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Collision\CollideBox.cpp" />
-    <ClCompile Include="src\Collision\Collision.cpp" />
-    <ClCompile Include="src\Collision\DamageBox.cpp" />
-    <ClCompile Include="src\Collision\Rect.cpp" />
-    <ClCompile Include="src\Core\Camera.cpp" />
-    <ClCompile Include="src\Core\Game.cpp" />
-    <ClCompile Include="src\Core\Input.cpp" />
-    <ClCompile Include="src\Core\Screen.cpp" />
-    <ClCompile Include="src\Core\ScreenManager.cpp" />
-    <ClCompile Include="src\Entity\Entity.cpp" />
-    <ClCompile Include="src\Entity\EntityManager.cpp" />
-    <ClCompile Include="src\Entity\Player.cpp" />
-    <ClCompile Include="src\Entity\Terrain.cpp" />
-    <ClCompile Include="src\Graphics\PlayerSprite.cpp" />
-    <ClCompile Include="src\Graphics\Sprite.cpp" />
-    <ClCompile Include="src\Graphics\SpriteSheet.cpp" />
-    <ClCompile Include="src\Graphics\Text.cpp" />
-    <ClCompile Include="src\Graphics\TextSprite.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Weapons\MeleeWeapon.cpp" />
-    <ClCompile Include="src\Weapons\Weapon.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Collision\CollideBox.h" />
-    <ClInclude Include="src\Collision\DamageBox.h" />
-    <ClInclude Include="src\Collision\Rect.h" />
-    <ClInclude Include="src\Core\Camera.h" />
-    <ClInclude Include="src\Core\Game.h" />
-    <ClInclude Include="src\Core\Includes.h" />
-    <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Core\Logging.h" />
-    <ClInclude Include="src\Core\Screen.h" />
-    <ClInclude Include="src\Core\ScreenManager.h" />
-    <ClInclude Include="src\Entity\Collision.h" />
-    <ClInclude Include="src\Entity\Entity.h" />
-    <ClInclude Include="src\Entity\EntityManager.h" />
-    <ClInclude Include="src\Entity\Player.h" />
-    <ClInclude Include="src\Entity\Terrain.h" />
-    <ClInclude Include="src\Graphics\PlayerSprite.h" />
-    <ClInclude Include="src\Graphics\Sprite.h" />
-    <ClInclude Include="src\Graphics\Spritesheet.h" />
-    <ClInclude Include="src\Graphics\Text.h" />
-    <ClInclude Include="src\Graphics\TextSprite.h" />
-    <ClInclude Include="src\Weapons\MeleeWeapon.h" />
-    <ClInclude Include="src\Weapons\Weapon.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E7398659-F23E-4B66-82D7-16F77DCB1720}</ProjectGuid>
     <RootNamespace>Project3</RootNamespace>
@@ -86,16 +39,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <SourcePath>C:\Users\Matthew\Documents\GitHub\testgame\Project3\src;$(SourcePath)</SourcePath>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Matthew\Documents\GitHub\testgame\Project3\src;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Collision;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Core;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Entity;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Graphics;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\res;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Weapons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -117,6 +67,53 @@
       <AdditionalDependencies>GLFW.lib;glew32d.lib;opengl32.lib;kernel32.lib;user32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CollideBox.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="DamageBox.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Includes.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Logging.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerSprite.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Spritesheet.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TextSprite.h" />
+    <ClInclude Include="Weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CollideBox.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="DamageBox.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerSprite.cpp" />
+    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextSprite.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

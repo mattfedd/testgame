@@ -34,7 +34,7 @@ void Text::init()
 {
 	x = 0;
 	y = 0;
-	ss = new SpriteSheet("Inconsolata.tga");
+	ss = new SpriteSheet("res/Inconsolata.tga");
 	spriteArray = NULL;
 	text = "";
 	attachable = NULL;

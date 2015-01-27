@@ -92,51 +92,41 @@ enum class ENTITY_STATUS
 	DEAD
 };
 
+enum class ATTACK_STATE
+{
+	NONE,
+	ATTACK_LOW,
+	ATTACK_MID,
+	ATTACK_HIGH
+};
+
 //what animation should be playing now?
 enum class ANIM_STATE
 {
 	BIRTH,				//plays when creating object, not always necessary
 	DEATH,				//plays when object dies
 	DEFAULT,			//normal animation, generally for objects with one or zero animations
-	STATIONARY_LEFT,	//standing still
-	STATIONARY_RIGHT,	
-	IDLE_LEFT,			//standing still for a while
-	IDLE_RIGHT,
-	LOOK_LEFT,			//looking functionality
-	LOOK_RIGHT,
-	LOOK_UP_LEFT,
-	LOOK_UP_RIGHT,
-	LOOK_DOWN_LEFT,
-	LOOK_DOWN_RIGHT,
+	STATIONARY,	//standing still	
+	IDLE,			//standing still for a while
+	LOOK,			//looking functionality
+	LOOK_UP,
+	LOOK_DOWN,
 	LOOK_AROUND,		//can be randomly called for variety in idle animation
-	PUSH_LEFT,			//push against walls, boxes, etc
-	PUSH_RIGHT,
-	GROUND_MOVE_LEFT,	//movement
-	GROUND_MOVE_RIGHT,
+	PUSH,			//push against walls, boxes, et
+	GROUND_MOVE,	//movement
 	GROUND_MOVE_UP,		//ladder
 	GROUND_MOVE_DOWN,
-	WALL_CLIMB_LEFT,	//climbing sideways, not a ladder
-	WALL_CLIMB_RIGHT,
-	WALL_HANG_LEFT,		//hanging
-	WALL_HANG_RIGHT,	//also for sliding down walls
-	AIR_MOVE_LEFT,		//air movement
-	AIR_MOVE_RIGHT,
-	AIR_MOVE_UP_LEFT,	//for any ascension, including jumping
-	AIR_MOVE_UP_RIGHT,
-	AIR_MOVE_DOWN_LEFT,	//any falling
-	AIR_MOVE_DOWN_RIGHT,
-	ATTACK_LEFT,		//attacks
-	ATTACK_RIGHT,
-	ATTACK_UP_LEFT,
-	ATTACK_UP_RIGHT,
-	ATTACK_DOWN_LEFT,
-	ATTACK_DOWN_RIGHT,
-	HURT_LEFT,			//getting hurt
-	HURT_RIGHT,
-	RECOIL_LEFT,		//recoil for whatever reason
-	RECOIL_RIGHT,
-	UPGRADE_LEFT,		//good things happening
-	UPGRADE_RIGHT,
+	WALL_CLIMB,	//climbing sideways, not a ladder
+	WALL_HANG,		//hanging
+	AIR_MOVE,		//air movement
+	AIR_MOVE_UP,	//for any ascension, including jumping
+	AIR_MOVE_DOWN,	//any falling
+	ATTACK,		//attacks
+	ATTACK_UP,
+	ATTACK_DOWN,
+	HURT,			//getting hurt
+	RECOIL,		//recoil for whatever reason
+	UPGRADE,		//good things happening
 	CROUCH
 };
 

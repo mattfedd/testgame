@@ -13,7 +13,7 @@ Entity::Entity(void)
 	ddx_ = 0;
 	ddy_ = 0;
 	maxSpeed_ = 30;
-	sprite_ = new Sprite(width_, height_, new SpriteSheet("tex.tga"));
+	sprite_ = new Sprite(width_, height_, new SpriteSheet("res/tex.tga"));
 	collidingTop = false;
 	collidingBottom = false;
 	collidingLeft = false;

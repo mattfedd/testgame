@@ -7,7 +7,7 @@ Player::Player(void)
 {
 	width_ = 50;
 	height_ = 100;
-	sprite_ = new PlayerSprite(width_, height_, new SpriteSheet("tex_2.tga"));
+	sprite_ = new PlayerSprite(width_, height_, new SpriteSheet("res/tex_2.tga"));
 
 	gravity = 1.0;
 	goingUp = false;
@@ -215,7 +215,7 @@ void Player::attackGroundHigh()
 
 void Player::attackGroundMid()
 {
-
+	//sprite_->setAnimState(ANIM_STATE::ATTACK);
 }
 
 void Player::attackGroundLow()

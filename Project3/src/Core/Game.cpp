@@ -159,6 +159,8 @@ void Game::Run()
 				awaitingPauseRelease = false;
 			}
 
+			
+
 			if(!paused)
 			{
 				player->updateInput(); 

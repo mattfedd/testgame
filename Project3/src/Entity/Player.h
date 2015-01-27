@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Entity.h"
+#include "Weapon.h"
 
 class Player : public Entity
 {
@@ -10,6 +11,8 @@ private:
 	bool goingUp;
 	bool floating;
 	float force;
+
+	Weapon* weapon;
 
 public:
 	Player(void);
