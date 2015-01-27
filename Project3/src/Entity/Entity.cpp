@@ -61,6 +61,16 @@ void Entity::setX(int x)
 	{
 		collideBoxes[i]->setX(collideBoxes[i]->getX() + dx);
 	}
+
+	if(damageBoxes.size() == 0)
+	{
+		return;
+	}
+
+	for (int i=0; i<damageBoxes.size(); ++i) 
+	{
+		damageBoxes[i]->setX(damageBoxes[i]->getX() + dx);
+	}
 }
 
 void Entity::setY(int y)
@@ -76,6 +86,16 @@ void Entity::setY(int y)
 	for (int i=0; i<collideBoxes.size(); ++i)
 	{
 		collideBoxes[i]->setY(collideBoxes[i]->getY() + dy);
+	}
+
+	if(damageBoxes.size() == 0) 
+	{
+		return;
+	}
+
+	for (int i=0; i<damageBoxes.size(); ++i)
+	{
+		damageBoxes[i]->setY(damageBoxes[i]->getY() + dy);
 	}
 }
 
@@ -165,6 +185,21 @@ void Entity::updateGraphics()
 
 }
 
+void Entity::addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage)
+{
+	int boxX = getX() + getWidth()/2 + (sprite_->getDirection()==DIRECTION::RIGHT ? 1 : -1)*relativeX - width/2;
+	int boxY = getY() + relativeY;
+
+	DamageBox* box = new DamageBox(boxX, boxY, width, height);
+	
+	if(lifetime > 0)
+		box->setLifeTime(lifetime);
+	
+	box->setDamageAmount(damage);
+
+	damageBoxes.push_back(box);
+}
+
 void Entity::draw()
 {
 	if(sprite_ == NULL)
@@ -192,12 +227,12 @@ void Entity::draw()
 		{
 			GLfloat tempVerts[4] = 
 			{
-				0.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,0.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
+				1.0f*(collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
 				1.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT
 			};
 
 			glLineWidth(2.5); 
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.0, 1.0, 0.0);
 		
 			glBegin(GL_LINES);
 			glVertex3f(tempVerts[0], tempVerts[3], -1.0);
@@ -221,6 +256,41 @@ void Entity::draw()
 
 			glColor3f(1.0,1.0,1.0);
 		}
+	}
+
+	for(int i=0; i<damageBoxes.size(); ++i)
+	{
+		GLfloat tempVerts[4] = 
+		{
+			1.0f*(damageBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(damageBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
+			1.0f*(damageBoxes[i]->getWidth()+damageBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(damageBoxes[i]->getHeight()+damageBoxes[i]->getY()-getY())/SCREEN_HEIGHT
+		};
+
+		glLineWidth(2.5); 
+		glColor3f(1.0, 0.0, 0.0);
+		
+		glBegin(GL_LINES);
+		glVertex3f(tempVerts[0], tempVerts[3], -1.0);
+		glVertex3f(tempVerts[2], tempVerts[3], -1.0);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex3f(tempVerts[2], tempVerts[1], -1.0);
+		glVertex3f(tempVerts[0], tempVerts[1], -1.0);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex3f(tempVerts[2], tempVerts[3], -1.0);
+		glVertex3f(tempVerts[2], tempVerts[1], -1.0);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex3f(tempVerts[0], tempVerts[1], -1.0);
+		glVertex3f(tempVerts[0], tempVerts[3], -1.0);
+		glEnd();
+
+		glColor3f(1.0,1.0,1.0);
+		
 	}
 
 	#endif

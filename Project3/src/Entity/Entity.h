@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Game.h"
 #include "CollideBox.h"
+#include "DamageBox.h"
 #include <vector>
 
 class Entity
@@ -29,6 +30,7 @@ protected:
 	ENTITY_TYPE type_;
 
 	std::vector<CollideBox*> collideBoxes;
+	std::vector<DamageBox*> damageBoxes;
 
 public:
 	Entity(void);
@@ -72,6 +74,7 @@ public:
 	virtual void draw();
 
 	void initCollideBoxes();
+	void addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage);
 
 	bool collidingTop;
 	bool collidingBottom;

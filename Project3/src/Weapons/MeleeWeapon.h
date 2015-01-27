@@ -6,6 +6,11 @@
 class MeleeWeapon : public Weapon
 {
 private:
+	AttackData HighAttack;
+	AttackData MidAttack;
+	AttackData LowAttack;
+
+	void attack(AttackData ad);
 
 public:
 	MeleeWeapon(void);

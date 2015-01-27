@@ -24,17 +24,6 @@ Player::~Player(void)
 
 void Player::updateInput()
 {
-	//move up or down
-	/*if(GAME->getInput()->getStatus()->upArrow) 
-		setDDY(2.0f);
-	if(GAME->getInput()->getStatus()->downArrow) 
-		setDDY(-2.0f);
-	if(!GAME->getInput()->getStatus()->upArrow && !GAME->getInput()->getStatus()->downArrow) 
-		setDDY(0.0f);*/
-
-	//move left or right
-	//if(!glfwGetKey(GLFW_KEY_LEFT) || !glfwGetKey(GLFW_KEY_RIGHT))
-
 	
 	/* TODO : set a priority for the current direction. For instance, if 
 		we're currently moving left and I press right, it does/doesn't switch. 
@@ -42,13 +31,26 @@ void Player::updateInput()
 	*/
 	if(glfwGetKey(GLFW_KEY_RIGHT)) 
 	{
-		sprite_->setDirection(DIRECTION::RIGHT);
-		setDDX(2.0f);
+		if(!weapon->isInUse())
+			sprite_->setDirection(DIRECTION::RIGHT);
+		
+		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
+		{
+			setDDX(1.0f);
+		}
+		else
+			setDDX(2.0f);
 	}
 	else if(glfwGetKey(GLFW_KEY_LEFT)) 
 	{
-		sprite_->setDirection(DIRECTION::LEFT);
-		setDDX(-2.0f);
+		if(!weapon->isInUse())
+			sprite_->setDirection(DIRECTION::LEFT);
+		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
+		{
+			setDDX(-1.0f);
+		}
+		else
+			setDDX(-2.0f);
 	}
 	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(0.0f);
@@ -60,50 +62,101 @@ void Player::updateInput()
 		setDY(0);
 	}	
 
-	if(glfwGetKey(GLFW_KEY_DOWN)&& glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
+	if(!weapon->isInUse())
 	{
-		crouch();
-	}
-	else if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_RELEASE && glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
-	{
-		uncrouch();
-	}
-
-    if(glfwGetKey(GLFW_KEY_SPACE))
-	{
-		if(collidingBottom) 
+		attack_state = ATTACK_STATE::NONE;
+		if(glfwGetKey(GLFW_KEY_DOWN)&& glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
 		{
-			force = 8.5;
-			goingUp = true;
-			if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
+			crouch();
+		}
+		else if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_RELEASE && glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
+		{
+			uncrouch();
+		}
+
+		if(glfwGetKey(GLFW_KEY_SPACE))
+		{
+			if(collidingBottom) 
 			{
-				sprite_->setAnimState(ANIM_STATE::DEATH);
+				force = 8.5;
+				goingUp = true;
+				if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
+				{
+					sprite_->setAnimState(ANIM_STATE::DEATH);
+				}
+			}
+			else 
+			{
+				if(collidingLeft || collidingRight)
+				{
+ 					int q = 0;
+				}
+
+   				if(force >0) force--;
+				if(force < 0) 
+				{
+					force = 0;
+				}
 			}
 		}
-		else 
+		else
 		{
-			if(collidingLeft || collidingRight)
-			{
- 				int q = 0;
-			}
-
-   			if(force >0) force--;
-			if(force < 0) 
+			if(goingUp) 
 			{
 				force = 0;
+				gravity = 2;
+				goingUp = false;
+				sprite_->setAnimState(ANIM_STATE::DEFAULT);
 			}
+		}	
+
+		if(glfwGetKey('X'))
+		{
+			attack_state = ATTACK_STATE::ATTACK_MID;
+			//sprite_->setAnimState(ANIM_STATE::ATTACK);
+		}
+
+		if(glfwGetKey(GLFW_KEY_DOWN) && glfwGetKey('X'))
+		{
+			attack_state = ATTACK_STATE::ATTACK_LOW;
+			//sprite_->setAnimState(ANIM_STATE::ATTACK_LOW);
+		}
+		else if(glfwGetKey(GLFW_KEY_UP) && glfwGetKey('X'))
+		{
+			attack_state = ATTACK_STATE::ATTACK_HIGH;
+			//sprite_->setAnimState(ANIM_STATE::ATTACK_HIGH);
 		}
 	}
-	else
+
+	//state stuff
+	switch(attack_state)
 	{
-		if(goingUp) 
+	case ATTACK_STATE::NONE:
+		break;
+	case ATTACK_STATE::ATTACK_MID:
+		weapon->attackMid();
+		break;
+	case ATTACK_STATE::ATTACK_LOW:
+		weapon->attackLow();
+		break;
+	case ATTACK_STATE::ATTACK_HIGH:
+		weapon->attackHigh();
+		break;
+	default:
+		break;
+	}
+
+	for(int i=0; i<damageBoxes.size(); ++i)
+	{
+		damageBoxes[i]->update();
+		if(damageBoxes[i]->isDead())
 		{
-			force = 0;
-			gravity = 2;
-			goingUp = false;
-			sprite_->setAnimState(ANIM_STATE::DEFAULT);
+			DamageBox* box = damageBoxes[i];
+			damageBoxes.erase(damageBoxes.begin()+i);
+			i--;
+			delete box;
 		}
-	}	
+	}
 
 	float friction = 0.0f;
 	float value = 0.0f;
@@ -231,3 +284,15 @@ void Player::initCollideBoxes()
 	//top
 	collideBoxes.push_back(new CollideBox(getX(), getY()+getHeight()/2, getWidth(), getHeight()/2));
 }
+
+Weapon* Player::getWeapon()
+{
+	return weapon;
+}
+
+void Player::setWeapon(Weapon* weapon)
+{
+	this->weapon = weapon;
+	weapon->setParent(this);
+}
+

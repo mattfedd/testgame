@@ -7,6 +7,10 @@ class DamageBox : public Rect
 {
 private:
 	int damageAmount;
+	int lifetime;
+	bool useLifeTime;
+	bool dead;
+	double spawnTime;
 
 public:
 	DamageBox(int x, int y, int width, int height);
@@ -14,6 +18,11 @@ public:
 
 	int getDamageAmount();
 	void setDamageAmount(int amount);
+
+	void update();
+	bool isDead() { return dead;}
+	void setLifeTime(int lifetime);
+
 
 };
 

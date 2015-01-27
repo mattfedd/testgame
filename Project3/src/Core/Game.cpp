@@ -6,6 +6,7 @@
 #include "Terrain.h"
 #include "Text.h"
 #include "Collision.h"
+#include "MeleeWeapon.h"
 
 Game* Game::instance_;
 Text* debugText;
@@ -94,6 +95,7 @@ void Game::Run()
 	//entityManager.addTextBox(type2, x,y,text, flags);
 
 	player = new Player();
+	player->setWeapon(new MeleeWeapon());
 	player->setY(200);
 	
 	entity = new Terrain();
@@ -105,7 +107,7 @@ void Game::Run()
 	platform->setHeight(220);
 	platform->setWidth(500);
 
-	text = new Text("Arrow keys to move, Space to jump, R to reset");
+	text = new Text("Arrow keys to move, Space to jump, X to attack, R to reset");
 	text->setX(50);
 	text->setY(50);
 	text->attachToEntity(entity);

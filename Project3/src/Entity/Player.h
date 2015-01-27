@@ -12,6 +12,8 @@ private:
 	bool floating;
 	float force;
 
+	ATTACK_STATE attack_state;
+
 	Weapon* weapon;
 
 public:
@@ -28,6 +30,11 @@ public:
 	void attackGroundLow();
 
 	void initCollideBoxes();
+
+	Weapon* getWeapon();
+	void setWeapon(Weapon* weapon);
+
+	//void addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage);
 
 };
 
