@@ -12,6 +12,7 @@
 #define GAME Game::instance()
 #define GAME_TITLE "Title"
 
+
 /*
 DONE:
 	-basic collision
@@ -148,6 +149,12 @@ enum class ENTITY_TYPE
 	ENTITY
 
 	//to be filled out further...
+};
+
+enum class DIRECTION
+{
+	RIGHT, 
+	LEFT
 };
 
 

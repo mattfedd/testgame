@@ -4,6 +4,7 @@
 #include "Includes.h"
 #include "SpriteSheet.h"
 
+//#include "Game.h"
 struct AnimInfo
 {
 	ANIM_STATE id;
@@ -35,6 +36,7 @@ protected:
 	int totalFrames_;
 	int frameWidth_;
 	int frameHeight_;
+	DIRECTION dir_;
 
 	ANIM_STATE animState_;
 	AnimInfo* spriteInfo_;
@@ -54,8 +56,14 @@ public:
 
 	void setWidth(int w);
 	void setHeight(int h);
+	void setDirection(DIRECTION direction);
+	DIRECTION getDirection() {return dir_;}
 
 	void setAnimState(ANIM_STATE new_state);
+	ANIM_STATE getAnimState() {return animState_;}
+
+	int getFrameWidth() { return frameWidth_; }
+	int getFrameHeight() { return frameHeight_; }
 
 	AnimInfo* getAnimInfoById(ANIM_STATE state);
 	void calcNextFrame();

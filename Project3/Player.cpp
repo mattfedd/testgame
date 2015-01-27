@@ -33,10 +33,23 @@ void Player::updateInput()
 		setDDY(0.0f);*/
 
 	//move left or right
+	//if(!glfwGetKey(GLFW_KEY_LEFT) || !glfwGetKey(GLFW_KEY_RIGHT))
+
+	
+	/* TODO : set a priority for the current direction. For instance, if 
+		we're currently moving left and I press right, it does/doesn't switch. 
+		Same for right to left. 
+	*/
 	if(glfwGetKey(GLFW_KEY_RIGHT)) 
+	{
+		sprite_->setDirection(DIRECTION::RIGHT);
 		setDDX(2.0f);
-	if(glfwGetKey(GLFW_KEY_LEFT)) 
+	}
+	else if(glfwGetKey(GLFW_KEY_LEFT)) 
+	{
+		sprite_->setDirection(DIRECTION::LEFT);
 		setDDX(-2.0f);
+	}
 	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(0.0f);
 
@@ -62,7 +75,10 @@ void Player::updateInput()
 		{
 			force = 8.5;
 			goingUp = true;
-			sprite_->setAnimState(ANIM_STATE::DEATH);
+			if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
+			{
+				sprite_->setAnimState(ANIM_STATE::DEATH);
+			}
 		}
 		else 
 		{

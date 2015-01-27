@@ -69,7 +69,7 @@ public:
 	virtual void updateCollisions();
 	virtual void updateGraphics();
 
-	void draw();
+	virtual void draw();
 
 	void initCollideBoxes();
 

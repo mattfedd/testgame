@@ -31,6 +31,8 @@ public:
 	Input* getInput();
 	Level* getLevel();
 
+	bool isPaused();
+
 	int initialized_;
 
 	GLuint vertexbuffer;

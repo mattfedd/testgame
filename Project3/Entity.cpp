@@ -100,8 +100,36 @@ void Entity::setDY(float dy)
 }
 void Entity::setDDX(float ddx){ddx_ = ddx; }
 void Entity::setDDY(float ddy){ddy_ = ddy; }
-void Entity::setWidth(int w){ width_ = w; sprite_->setWidth(w);}
-void Entity::setHeight(int h){ height_ = h; sprite_->setHeight(h);}
+void Entity::setWidth(int w)
+{ 
+	width_ = w; 
+	sprite_->setWidth(w);
+	
+	if(collideBoxes.size() == 0) 
+	{
+		return;
+	}
+
+	for (int i=0; i<collideBoxes.size(); ++i)
+	{
+		collideBoxes[i]->setWidth(w);
+	}
+}
+void Entity::setHeight(int h)
+{ 
+	height_ = h; 
+	sprite_->setHeight(h);
+		
+	if(collideBoxes.size() == 0) 
+	{
+		return;
+	}
+
+	for (int i=0; i<collideBoxes.size(); ++i)
+	{
+		collideBoxes[i]->setHeight(h);
+	}
+}
 void Entity::setSize(int width, int height)
 { 
 	setWidth(width);
@@ -142,7 +170,7 @@ void Entity::draw()
 	if(sprite_ == NULL)
 		return;
 
-	sprite_->calcNextFrame();
+	if(!GAME->isPaused()) sprite_->calcNextFrame();
 
 	glBindTexture(GL_TEXTURE_2D, sprite_->getSpriteSheet()->getGLuintTexture());
 
@@ -150,7 +178,7 @@ void Entity::draw()
 	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
 	//glTranslatef(getXNorm(), getYNorm(), 0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);	
+	glEnableClientState(GL_VERTEX_ARRAY);
 		
 	glVertexPointer(3, GL_FLOAT, 0, sprite_->getVertexPoints());
 	glTexCoordPointer(2, GL_FLOAT, 0, sprite_->getTexturePoints());
@@ -172,23 +200,23 @@ void Entity::draw()
 			glColor3f(1.0, 0.0, 0.0);
 		
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[0], tempVerts[3], 1.0);
-			glVertex3f(tempVerts[2], tempVerts[3], 1.0);
+			glVertex3f(tempVerts[0], tempVerts[3], -1.0);
+			glVertex3f(tempVerts[2], tempVerts[3], -1.0);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[2], tempVerts[1], 1.0);
-			glVertex3f(tempVerts[0], tempVerts[1], 1.0);
+			glVertex3f(tempVerts[2], tempVerts[1], -1.0);
+			glVertex3f(tempVerts[0], tempVerts[1], -1.0);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[2], tempVerts[3], 1.0);
-			glVertex3f(tempVerts[2], tempVerts[1], 1.0);
+			glVertex3f(tempVerts[2], tempVerts[3], -1.0);
+			glVertex3f(tempVerts[2], tempVerts[1], -1.0);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[0], tempVerts[1], 1.0);
-			glVertex3f(tempVerts[0], tempVerts[3], 1.0);
+			glVertex3f(tempVerts[0], tempVerts[1], -1.0);
+			glVertex3f(tempVerts[0], tempVerts[3], -1.0);
 			glEnd();
 
 			glColor3f(1.0,1.0,1.0);

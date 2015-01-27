@@ -16,10 +16,11 @@ Sprite::Sprite(int width, int height, SpriteSheet* ss)
 	frameNum_ = 0;
 	counter_ = 0;
 	animState_ = ANIM_STATE::DEFAULT;
+	dir_ = DIRECTION::RIGHT;
 
 	AnimInfo* info = getAnimInfoById(ANIM_STATE::DEFAULT);
 
-	GLfloat temp_tex[12] = 
+	GLfloat temp_tex[12] =
 	{
 		1.0f*info->startX/sheetWidth_,				 	    1.0f*(info->startY + frameHeight_)/sheetHeight_,
 		1.0f*(info->startX + frameWidth_)/sheetWidth_, 1.0f*(info->startY + frameHeight_)/sheetHeight_,
@@ -101,7 +102,7 @@ AnimInfo* Sprite::getAnimInfoById(ANIM_STATE state)
 
 	if(a->id != state)
 	{
-		return NULL;
+		return spriteInfo_;
 	}
 	else return a;
 }
@@ -138,6 +139,25 @@ void Sprite::calcNextFrame()
 			1.0f*(x + fwidth)/twidth, 1.0f*(y+ fheight)/theight,
 			1.0f*x/twidth,			  1.0f*(y+ fheight)/theight,
 		};
+
+		if(dir_ == DIRECTION::LEFT)
+		{
+			GLfloat temp = temp_tex[0];
+			temp_tex[0] = temp_tex[2];
+			temp_tex[2] = temp;
+
+			temp = temp_tex[1];
+			temp_tex[1] = temp_tex[3];
+			temp_tex[3] = temp;
+
+			temp = temp_tex[4];
+			temp_tex[4] = temp_tex[6];
+			temp_tex[6] = temp;
+
+			temp = temp_tex[5];
+			temp_tex[5] = temp_tex[7];
+			temp_tex[7] = temp;
+		}
 
 		setTexturePoints(temp_tex);
 		frameNum_++;
@@ -183,6 +203,17 @@ void Sprite::setHeight(int h)
 {
 	height_ = h;
 	calcVertexPoints();
+}
+
+void Sprite::setDirection(DIRECTION direction) 
+{
+	if(dir_ != direction)
+	{
+		dir_ = direction;
+		counter_ = 0;
+		calcNextFrame();
+		frameNum_--;
+	}	
 }
 
 void Sprite::calcVertexPoints()

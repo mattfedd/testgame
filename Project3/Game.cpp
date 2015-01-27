@@ -3,6 +3,7 @@
 //#include "Collision.h"
 
 #include "Player.h"
+#include "Terrain.h"
 #include "Text.h"
 #include "Collision.h"
 
@@ -10,8 +11,8 @@ Game* Game::instance_;
 Text* debugText;
 Text* text;
 Player* player;
-Entity* entity;
-Entity* platform;
+Terrain* entity;
+Terrain* platform;
 bool paused;
 
 Game::Game(const char* title, int width, int height)
@@ -86,16 +87,23 @@ void Game::Run()
 {
 	paused = false;
 
+	//entityManager.addPlayer(x,y);
+	//entityManager.addEnemy(type1,x,y);
+	//entityManager.addTerrain(type1, x,y,width,height);
+	//entityManager.addTerrain(type1, x,y,width,height);
+	//entityManager.addTextBox(type2, x,y,text, flags);
+
 	player = new Player();
 	player->setY(200);
 	
-	entity = new Entity();
+	entity = new Terrain();
 	entity->setWidth(2000);
 
-	platform = new Entity();
+	platform = new Terrain();
 	platform->setX(300);
-	platform->setY(200);
-	platform->setHeight(100);
+	platform->setY(80);
+	platform->setHeight(220);
+	platform->setWidth(500);
 
 	text = new Text("Arrow keys to move, Space to jump, R to reset");
 	text->setX(50);
@@ -232,3 +240,5 @@ void Game::setRunning(int val){ running_ = val; }
 Camera* Game::getCamera(){ return camera_; }
 Input* Game::getInput(){ return input_; }
 //Level* Game::getLevel(){ return level_; }
+
+bool Game::isPaused() {return paused; }

@@ -60,15 +60,16 @@
     <ClInclude Include="Logging.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DamageBox.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollideBox.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Game\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -125,5 +126,6 @@
     <ClCompile Include="CollideBox.cpp">
       <Filter>Game\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp" />
   </ItemGroup>
 </Project>
