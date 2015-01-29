@@ -37,7 +37,7 @@ float Entity::getDY(){ return dy_; }
 float Entity::getDDX(){ return ddx_; }
 float Entity::getDDY(){ return ddy_; }
 int Entity::getWidth(){ return width_; }
-int Entity::getHeight(){ return height_+4; }
+int Entity::getHeight(){ return height_; }
 int Entity::getMaxSpeed(){ return maxSpeed_; }
 //long Entity::getRadiusSquared(){ return }
 ENTITY_TYPE Entity::getEntityType(){ return type_; }
@@ -166,7 +166,7 @@ void Entity::initCollideBoxes()
 	//collideBoxes = 0;
 }
 
-void Entity::handleCollision(Entity* ent)
+void Entity::handleCollision(Entity* ent, CollideBox* us, CollideBox* e)
 {
 	//check what we're colliding with, then react appropriately
 }

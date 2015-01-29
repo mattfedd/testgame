@@ -180,19 +180,23 @@ void Player::updateInput()
 	collidingRight = false;
 }
 
-void Player::handleCollision(Entity* e)
+void Player::handleCollision(Entity *ent, CollideBox* us, CollideBox* e)
 {
-	int x1 = getX();
-	int y1 = getY();
-	int w1 = getWidth();
-	int h1 = getHeight();
+	//for each collidebox
+	//check which part is colliding
+	//then set flags
+
+	int x1 = us->getX();
+	int y1 = us->getY();
+	int w1 = us->getWidth();
+	int h1 = us->getHeight();
 
 	int x2 = e->getX();
 	int y2 = e->getY();
 	int w2 = e->getWidth();
 	int h2 = e->getHeight();
 
-	if(e->getEntityType() == ENTITY_TYPE::TERRAIN) 
+	if(ent->getEntityType() == ENTITY_TYPE::TERRAIN) 
 	{
 		float depthX = 100000;
 		float depthY = 100000;

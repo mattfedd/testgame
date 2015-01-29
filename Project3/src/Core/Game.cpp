@@ -93,7 +93,7 @@ void Game::Run()
 	scene->getPlayer()->setWeapon(new MeleeWeapon());
 	
 	scene->addTerrain(0,0, 2000, 50);
-	scene->addTerrain(300,140,500,20);
+	scene->addTerrain(300,100,500,100);
 
 	text = new Text("Arrow keys to move, Space to jump, X to attack, R to reset");
 	text->setX(-1*SCREEN_WIDTH + 30);

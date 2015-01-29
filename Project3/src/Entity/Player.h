@@ -21,7 +21,7 @@ public:
 	~Player(void);
 
 	void updateInput();
-	void handleCollision(Entity* e);
+	void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
 	void crouch();
 	void uncrouch();

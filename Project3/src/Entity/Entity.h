@@ -65,7 +65,7 @@ public:
 	void setMaxSpeed(int val);
 	void setEntityType(ENTITY_TYPE type);
 
-	virtual void handleCollision(Entity* ent);
+	virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
 	virtual void updateInput();
 	virtual void updateCollisions();
@@ -74,6 +74,7 @@ public:
 	virtual void draw();
 
 	void initCollideBoxes();
+	std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}
 	void addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage);
 
 	bool collidingTop;
