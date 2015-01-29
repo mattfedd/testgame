@@ -4,6 +4,7 @@
 Terrain::Terrain(void)
 {
 	collideBoxes.push_back(new CollideBox(0,0,10,10));
+	type_ = ENTITY_TYPE::TERRAIN;
 }
 
 

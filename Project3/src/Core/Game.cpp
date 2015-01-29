@@ -103,8 +103,8 @@ void Game::Run()
 
 	platform = new Terrain();
 	platform->setX(300);
-	platform->setY(80);
-	platform->setHeight(220);
+	platform->setY(100);
+	platform->setHeight(100);
 	platform->setWidth(500);
 
 	text = new Text("Arrow keys to move, Space to jump, X to attack, R to reset");
@@ -113,8 +113,8 @@ void Game::Run()
 	text->attachToEntity(entity);
 
 	debugText = new Text("debug stuff");
-	debugText->setX(-640);
-	debugText->setY(450);
+	debugText->setX(-1*SCREEN_WIDTH + 30);
+	debugText->setY(SCREEN_HEIGHT-30);
 	debugText->setTextSize(15);
 
 	//char buffer[14];
@@ -128,7 +128,6 @@ void Game::Run()
 	glfwSetTime(0);
 
 	int counter = 0;
-	//std::vector<Drawable*> drawables = GAME->getLevel()->getScreenPtr()->getForegroundVector();
 	
 	std::ostringstream ss;
 	int framerate=0;
@@ -175,12 +174,12 @@ void Game::Run()
 			//draw
 			draw();
 			
-
 			//framerate stuff
 			framerate = 1/(glfwGetTime() - last_time);
 			ss.str("");
 			ss.clear();
-			ss << framerate;
+			//ss << framerate;
+			ss << player->getY();
 			debugText->setText(ss.str());
 			update_timer = 0;
 			last_time = glfwGetTime();
