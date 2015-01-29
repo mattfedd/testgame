@@ -40,7 +40,7 @@ void Player::updateInput()
 			setDDX(1.0f);
 		}
 		else
-			setDDX(2.0f);
+			setDDX(3.0f);
 	}
 	else if(glfwGetKey(GLFW_KEY_LEFT)) 
 	{
@@ -51,7 +51,7 @@ void Player::updateInput()
 			setDDX(-1.0f);
 		}
 		else
-			setDDX(-2.0f);
+			setDDX(-3.0f);
 	}
 	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(0.0f);
@@ -152,7 +152,7 @@ void Player::updateInput()
 	float value = 0.0f;
 	setDDY(force -gravity);
 
-	friction = (collidingBottom && !(collidingLeft && collidingRight)) ? getDX() * -0.15 : getDX()*-0.1;	
+	friction = (collidingBottom && !(collidingLeft && collidingRight)) ? getDX() * -0.2 : getDX()*-0.15;	
 	
 	value = getDX() + getDDX() + friction;
 	if(value < 0.5 && value > -0.5) 

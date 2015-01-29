@@ -7,13 +7,12 @@
 #include "Text.h"
 #include "Collision.h"
 #include "MeleeWeapon.h"
+#include "EntityManager.h"
 
 Game* Game::instance_;
 Text* debugText;
 Text* text;
-Player* player;
-Terrain* entity;
-Terrain* platform;
+EntityManager* scene;
 bool paused;
 
 Game::Game(const char* title, int width, int height)
@@ -88,38 +87,22 @@ void Game::Run()
 {
 	paused = false;
 
-	//entityManager.addPlayer(x,y);
-	//entityManager.addEnemy(type1,x,y);
-	//entityManager.addTerrain(type1, x,y,width,height);
-	//entityManager.addTerrain(type1, x,y,width,height);
-	//entityManager.addTextBox(type2, x,y,text, flags);
+	scene = new EntityManager();
 
-	player = new Player();
-	player->setWeapon(new MeleeWeapon());
-	player->setY(200);
+	scene->addPlayer(10,200);
+	scene->getPlayer()->setWeapon(new MeleeWeapon());
 	
-	entity = new Terrain();
-	entity->setWidth(2000);
-
-	platform = new Terrain();
-	platform->setX(300);
-	platform->setY(100);
-	platform->setHeight(100);
-	platform->setWidth(500);
+	scene->addTerrain(0,0, 2000, 50);
+	scene->addTerrain(300,140,500,20);
 
 	text = new Text("Arrow keys to move, Space to jump, X to attack, R to reset");
-	text->setX(50);
-	text->setY(50);
-	text->attachToEntity(entity);
+	text->setX(-1*SCREEN_WIDTH + 30);
+	text->setY(-1*SCREEN_HEIGHT +30);
 
 	debugText = new Text("debug stuff");
 	debugText->setX(-1*SCREEN_WIDTH + 30);
 	debugText->setY(SCREEN_HEIGHT-30);
 	debugText->setTextSize(15);
-
-	//char buffer[14];
-
-	GAME->getCamera()->setAttachable(player);
 
 	double saved_time = 0;
 	double update_timer = 0;
@@ -146,8 +129,8 @@ void Game::Run()
 			//update
 			if(glfwGetKey('R'))
 			{
-				player->setX(0);
-				player->setY(200);
+				scene->getPlayer()->setX(0);
+				scene->getPlayer()->setY(200);
 			}
 
 			if(glfwGetKey('P') == GLFW_PRESS && !awaitingPauseRelease)
@@ -164,8 +147,8 @@ void Game::Run()
 
 			if(!paused)
 			{
-				player->updateInput(); 
-				entity->updateInput();
+				scene->getPlayer()->updateInput(); 
+				//scene->getPlayer()->updateInput();
 				GAME->getCamera()->update();
 
 				checkCollisions();
@@ -179,7 +162,7 @@ void Game::Run()
 			ss.str("");
 			ss.clear();
 			//ss << framerate;
-			ss << player->getY();
+			ss << scene->getPlayer()->getY();
 			debugText->setText(ss.str());
 			update_timer = 0;
 			last_time = glfwGetTime();
@@ -194,24 +177,19 @@ void Game::Run()
 
 void Game::checkCollisions()
 {
-	Collision::checkCollision(player, entity);
-	Collision::checkCollision(player, platform);
+	scene->checkAllCollisions();
 }
 
 void Game::draw()
 {
-	//iterate through Drawables, call draw()
 	//maybe do a check inside of draw to see if we need to push the matrix
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	
-	//player->calcNextFrame();
+	scene->drawAllEntities();
 	text->draw();
-	player->draw();
-	entity->draw();
-	platform->draw();
 	debugText->draw();
 
 	glfwSwapBuffers();

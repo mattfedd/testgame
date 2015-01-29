@@ -20,6 +20,7 @@ Entity::Entity(void)
 	collidingRight = false;
 	type_ = ENTITY_TYPE::ENTITY;
 }
+
 Entity::~Entity(void)
 {
 
@@ -36,7 +37,7 @@ float Entity::getDY(){ return dy_; }
 float Entity::getDDX(){ return ddx_; }
 float Entity::getDDY(){ return ddy_; }
 int Entity::getWidth(){ return width_; }
-int Entity::getHeight(){ return height_; }
+int Entity::getHeight(){ return height_+4; }
 int Entity::getMaxSpeed(){ return maxSpeed_; }
 //long Entity::getRadiusSquared(){ return }
 ENTITY_TYPE Entity::getEntityType(){ return type_; }

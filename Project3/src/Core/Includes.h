@@ -8,10 +8,12 @@
 #include <vector>
 #include <iterator>
 #include <sstream>
+#include "Logging.h"
 
 #define GAME Game::instance()
 #define GAME_TITLE "Title"
 
+#define MAX_VECTOR_SIZE 256
 
 /*
 DONE:
@@ -19,6 +21,10 @@ DONE:
 	-jumping
 	-text
 	-sideways collision
+	-pausing
+	-tiled textures (terrain)
+	-better platforming collision
+	-basic attacks/hitboxes
 
 TODO list:
 	-collision array
@@ -32,9 +38,7 @@ TODO list:
 	-enemy/sprite
 	-menu screen + manager
 	-level objects
-	-particles
 	-background/parallax
-	-pausing
 	-AI
 	-sound/openAL/ogg
 	-items
@@ -42,7 +46,7 @@ TODO list:
 	-zones
 
 BUGS:
-	-pause doesn't work on animations
+	-jumping and immediately attacking makes you fly
 	
 */
 
@@ -58,7 +62,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int Z_CAP = 100;
 const float FRAME_RATE = 60.0;
-const float ANIM_LIMITER = 20.0;  //how many game frames to wait between animation frame updates
+const float ANIM_LIMITER = 10.0;  //how many game frames to wait between animation frame updates
 
 const int COLLIDE_MAX = 10;
 
