@@ -1,7 +1,6 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "Includes.h"
 #include "Entity.h"
 
 class Weapon

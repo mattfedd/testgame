@@ -2,64 +2,59 @@
 #define GAME_H
 
 #include "Includes.h"
+#include "Entity.h"
 #include "Camera.h"
-//#include "Level.h"
-#include "Input.h"
-//#include "Drawable.h"
-
-class Camera;
-class Level;
+#include "Player.h"
+#include "Spawner.h"
+#include <map>
 
 class Game
 {
+private:
+	Game();
+	void Update();
+	void CheckCollisions();
+	void Draw();
+
+
+	Camera camera_;
+	Player player_;
+
+	Spawner spawner_;
+
+	bool paused_;
+
+	std::map<std::string, SpriteSheet*> spriteSheets;
+
+	std::vector<Entity*> terrainContainer;
+
 public:
 	static Game* instance()
 	{
-		if(instance_ == NULL) instance_ = new Game(GAME_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
+		if(instance_ == NULL) instance_ = new Game();
 		return instance_;
 	}
 	~Game();
 
+	void Setup(); //level, savestate
 	void Run();
-	//void Quit(); //necessary yet?
 
-	int getRunning();
-	void setRunning(int val);
-	Level* createLevel(std::string filename);
+	void Destroy();
+	void PauseMenu();
+	void AddEntity(Entity* e);
 
-	Camera* getCamera();
-	Input* getInput();
-	Level* getLevel();
+	void setPause(bool p) {paused_ = p;}
+	bool isPaused() {return paused_;}
 
-	bool isPaused();
+	SpriteSheet* getSpriteSheet(std::string filename);
 
-	int initialized_;
+	Camera* getCamera() {return &camera_; }
+	Player* getPlayer() {return &player_; }
 
-	GLuint vertexbuffer;
+	Spawner* getSpawner() {return &spawner_;};
 
-private:
-	Game(const char* title, int width, int height);
-	int Init(const char* title, int width, int height);
-	
-	//Run()
-	void softReset();
-	void checkInputs(); 
-	void checkCollisions();
-	void calcAndApplyResults();
-	void draw();
-
-	static void GLFWCALL handle_resize(int width,int height);
-
-	Camera* camera_;
-	Input* input_;
-	Level* level_;
-
-	float size_;
-	int running_;
-	int counter_;
-
-	static Game *instance_;
+	static Game* instance_;
 
 };
 
-#endif
+#endif // GAME_H

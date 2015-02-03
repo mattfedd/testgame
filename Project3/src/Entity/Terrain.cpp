@@ -1,5 +1,5 @@
 #include "Terrain.h"
-
+#include "Game.h"
 
 Terrain::Terrain(void)
 {
@@ -22,7 +22,7 @@ void Terrain::draw()
 	glBindTexture(GL_TEXTURE_2D, sprite_->getSpriteSheet()->getGLuintTexture());
 
 	glPushMatrix();
-	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), 0);
+	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), getZ());
 	//glTranslatef(getXNorm(), getYNorm(), 0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -67,8 +67,8 @@ void Terrain::draw()
 	{
 		if(j+frameH > height_ && height_%frameH >0)
 		{
-			vertexPoints[1] -= truncateY;
-			vertexPoints[4] -= truncateY;
+			vertexPoints[1] -= truncateY+0.005;
+			vertexPoints[4] -= truncateY+0.005;
 			texturePoints[1] += truncateY;
 			texturePoints[3] += truncateY;
 		}
@@ -111,6 +111,23 @@ void Terrain::draw()
 	}
 	//end tile code
 
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glPopMatrix();
+
+	#ifdef DEBUG
+	debugDraw();
+	#endif
+
+}
+
+void Terrain::debugDraw()
+{
+	glBindTexture(GL_TEXTURE_2D, NULL);
+	glPushMatrix();
+	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), getZ());
+
 	//draw the borders around the box
 	for(int i=0; i<collideBoxes.size(); ++i)
 	{
@@ -118,7 +135,7 @@ void Terrain::draw()
 		{
 			GLfloat tempVerts[4] = 
 			{
-				0.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,0.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
+				1.0f*(collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
 				1.0f*(collideBoxes[i]->getWidth()+collideBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(collideBoxes[i]->getHeight()+collideBoxes[i]->getY()-getY())/SCREEN_HEIGHT
 			};
 
@@ -126,32 +143,76 @@ void Terrain::draw()
 			glColor3f(1.0, 0.0, 0.0);
 		
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[0], tempVerts[3], -1.0);
-			glVertex3f(tempVerts[2], tempVerts[3], -1.0);
+			glVertex2f(tempVerts[0], tempVerts[3]);
+			glVertex2f(tempVerts[2], tempVerts[3]);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[2], tempVerts[1], -1.0);
-			glVertex3f(tempVerts[0], tempVerts[1], -1.0);
+			glVertex2f(tempVerts[2], tempVerts[1]);
+			glVertex2f(tempVerts[0], tempVerts[1]);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[2], tempVerts[3], -1.0);
-			glVertex3f(tempVerts[2], tempVerts[1], -1.0);
+			glVertex2f(tempVerts[2], tempVerts[3]);
+			glVertex2f(tempVerts[2], tempVerts[1]);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(tempVerts[0], tempVerts[1], -1.0);
-			glVertex3f(tempVerts[0], tempVerts[3], -1.0);
+			glVertex2f(tempVerts[0], tempVerts[1]);
+			glVertex2f(tempVerts[0], tempVerts[3]);
 			glEnd();
 
 			glColor3f(1.0,1.0,1.0);
 		}
 	}
 
-
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glPopMatrix();
+}
+
+/*-------------------------------------------------------------------------------------------------------------
+----------------------------------------------SPRITE STUFF-----------------------------------------------------
+--------------------------------------------------------------------------------------------------------------- */
+
+TerrainGreenSprite::TerrainGreenSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)
+{
+	totalFrames_ = 0;
+	numAnimations_ = 0;
+	sheetWidth_ = 256;
+	sheetHeight_ = 256;
+	frameWidth_ = 64;
+	frameHeight_ = 64;
+
+	spriteInfo_ = NULL;
+	
+	addAnimInfo(ANIM_STATE::DEFAULT, 1);
+	setAnimState(ANIM_STATE::DEFAULT);
+}
+
+TerrainGreenSprite::~TerrainGreenSprite()
+{
+
+}
+
+TerrainOrangeSprite::TerrainOrangeSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)
+{
+	totalFrames_ = 0;
+	numAnimations_ = 0;
+	sheetWidth_ = 256;
+	sheetHeight_ = 256;
+	frameWidth_ = 64;
+	frameHeight_ = 64;
+
+	spriteInfo_ = NULL;
+
+	addAnimInfo(ANIM_STATE::NONE, 1);	
+	addAnimInfo(ANIM_STATE::DEFAULT, 1);
+	setAnimState(ANIM_STATE::DEFAULT);
+}
+
+TerrainOrangeSprite::~TerrainOrangeSprite()
+{
+
 }

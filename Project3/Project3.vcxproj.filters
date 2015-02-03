@@ -21,31 +21,13 @@
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Game.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Input.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Screen.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\ScreenManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\Entity\Entity.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\EntityManager.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity\Player.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity\Terrain.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\PlayerSprite.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Sprite.cpp">
@@ -69,6 +51,11 @@
     <ClCompile Include="src\Weapons\Weapon.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Core.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Game.cpp" />
+    <ClCompile Include="src\Core\Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Collision\CollideBox.h">
@@ -83,37 +70,19 @@
     <ClInclude Include="src\Core\Camera.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Game.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Includes.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Input.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Logging.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Screen.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\ScreenManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Entity\Entity.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity\EntityManager.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity\Player.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Entity\Terrain.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\PlayerSprite.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Sprite.h">
@@ -135,5 +104,11 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Collision\Collision.h" />
+    <ClInclude Include="src\Core\Core.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Game.h" />
+    <ClInclude Include="src\Core\EntityData.h" />
+    <ClInclude Include="src\Core\Spawner.h" />
   </ItemGroup>
 </Project>

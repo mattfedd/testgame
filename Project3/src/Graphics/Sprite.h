@@ -63,7 +63,9 @@ public:
 	ANIM_STATE getAnimState() {return animState_;}
 
 	int getFrameWidth() { return frameWidth_; }
+	void setFrameWidth(int f) { frameWidth_ = f;}
 	int getFrameHeight() { return frameHeight_; }
+	void setFrameHeight(int f) { frameHeight_ = f;}
 
 	AnimInfo* getAnimInfoById(ANIM_STATE state);
 	void calcNextFrame();

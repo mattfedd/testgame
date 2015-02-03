@@ -38,6 +38,14 @@ public:
 
 };
 
+class PlayerSprite : public Sprite
+{
+public:
+	PlayerSprite(int width, int height, SpriteSheet* ss);
+	~PlayerSprite(void);
+};
+
+
 
 
 #endif

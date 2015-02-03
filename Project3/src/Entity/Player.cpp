@@ -1,13 +1,14 @@
 
 #include "Player.h"
-#include "PlayerSprite.h"
+//#include "PlayerSprite.h"
+#include "Game.h"
 #include <math.h>
 
 Player::Player(void)
 {
 	width_ = 70;
 	height_ = 140;
-	sprite_ = new PlayerSprite(width_, height_, new SpriteSheet("res/tex_2.tga"));
+	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
 
 	gravity = 1.0;
 	goingUp = false;
@@ -15,6 +16,8 @@ Player::Player(void)
 	force = 0;
 	type_ = ENTITY_TYPE::PLAYER;
 	initCollideBoxes();
+	setZ(-0.5);
+	weapon = NULL;
 }
 
 Player::~Player(void)
@@ -32,7 +35,7 @@ void Player::updateInput()
 
 	if(glfwGetKey(GLFW_KEY_RIGHT)) 
 	{
-		if(!weapon->isInUse())
+		if(weapon != NULL && !weapon->isInUse())
 			sprite_->setDirection(DIRECTION::RIGHT);
 		
 		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
@@ -40,18 +43,24 @@ void Player::updateInput()
 			setDDX(1.0f);
 		}
 		else
+		{
+			sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
 			setDDX(3.0f);
+		}
 	}
 	else if(glfwGetKey(GLFW_KEY_LEFT)) 
 	{
- 		if(!weapon->isInUse())
+ 		if(weapon != NULL && !weapon->isInUse())
 			sprite_->setDirection(DIRECTION::LEFT);
 		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
 		{
 			setDDX(-1.0f);
 		}
 		else
+		{
+			sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
 			setDDX(-3.0f);
+		}
 	}
 	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
 		setDDX(0.0f);
@@ -64,7 +73,7 @@ void Player::updateInput()
 	}	
 
 
-	if(!weapon->isInUse())
+	if(weapon == NULL || (weapon != NULL && !weapon->isInUse()))
 	{
 		attack_state = ATTACK_STATE::NONE;
 		if(glfwGetKey(GLFW_KEY_DOWN)&& glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
@@ -119,21 +128,24 @@ void Player::updateInput()
 	}
 
 	//state stuff
-	switch(attack_state)
+	if(weapon != NULL)
 	{
-	case ATTACK_STATE::NONE:
-		break;
-	case ATTACK_STATE::ATTACK_MID:
-		weapon->attackMid();
-		break;
-	case ATTACK_STATE::ATTACK_LOW:
-		weapon->attackLow();
-		break;
-	case ATTACK_STATE::ATTACK_HIGH:
-		weapon->attackHigh();
-		break;
-	default:
-		break;
+		switch(attack_state)
+		{
+		case ATTACK_STATE::NONE:
+			break;
+		case ATTACK_STATE::ATTACK_MID:
+			weapon->attackMid();
+			break;
+		case ATTACK_STATE::ATTACK_LOW:
+			weapon->attackLow();
+			break;
+		case ATTACK_STATE::ATTACK_HIGH:
+			weapon->attackHigh();
+			break;
+		default:
+			break;
+		}
 	}
 
 	for(int i=0; i<damageBoxes.size(); ++i)
@@ -222,7 +234,7 @@ void Player::handleCollision(Entity *ent, CollideBox* us, CollideBox* e)
 			depthY = y1 - y2 - h2+1;
 			collidingBottom = true;
 		}
-
+		
     	if(abs(depthX) < abs(depthY))
 		{
 			setX(getX() + depthX);
@@ -244,7 +256,12 @@ void Player::crouch()
 
 void Player::uncrouch()
 {
-	sprite_->setAnimState(ANIM_STATE::DEFAULT);
+	if(getDX() > 0 || getDX() < 0)
+	{
+		sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
+	}
+	else
+		sprite_->setAnimState(ANIM_STATE::DEFAULT);
 	collideBoxes[1]->setActive(true);
 }
 
@@ -283,3 +300,28 @@ void Player::setWeapon(Weapon* weapon)
 	weapon->setParent(this);
 }
 
+/*-------------------------------------------------------------------------------------------------------------
+----------------------------------------------SPRITE STUFF-----------------------------------------------------
+--------------------------------------------------------------------------------------------------------------- */
+PlayerSprite::PlayerSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)
+{
+	totalFrames_ = 0;
+	numAnimations_ = 0;
+	sheetWidth_ = 256;
+	sheetHeight_ = 256;
+	frameWidth_ = 64;
+	frameHeight_ = 128;
+
+	spriteInfo_ = NULL;
+	
+	addAnimInfo(ANIM_STATE::DEFAULT, 1);
+	addAnimInfo(ANIM_STATE::GROUND_MOVE, 3);
+	addAnimInfo(ANIM_STATE::CROUCH, 1);
+
+	setAnimState(ANIM_STATE::GROUND_MOVE);
+}
+
+PlayerSprite::~PlayerSprite()
+{
+
+}

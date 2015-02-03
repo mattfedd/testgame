@@ -3,7 +3,6 @@
 
 #include "Includes.h"
 #include "Sprite.h"
-#include "Game.h"
 #include "CollideBox.h"
 #include "DamageBox.h"
 #include <vector>
@@ -64,6 +63,7 @@ public:
 	void setSize(int width, int height);
 	void setMaxSpeed(int val);
 	void setEntityType(ENTITY_TYPE type);
+	void setSprite(Sprite* s) {sprite_ = s;}
 
 	virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
@@ -72,6 +72,7 @@ public:
 	virtual void updateGraphics();
 
 	virtual void draw();
+	virtual void debugDraw();
 
 	void initCollideBoxes();
 	std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}

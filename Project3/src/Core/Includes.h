@@ -47,9 +47,11 @@ TODO list:
 
 BUGS:
 	-jumping and immediately attacking makes you fly
+	-collidingTop triggers on bottom colliding box when both are active - need a way to get topmost one and check that only?
 	
+NOTES:
+	-sprite class could benefit from some container, like the way spritesheet works. Might not be good to allocate a new one for every object.
 */
-
 
 struct Vert
 {
@@ -67,6 +69,20 @@ const float ANIM_LIMITER = 10.0;  //how many game frames to wait between animati
 const int COLLIDE_MAX = 10;
 
 const int HBOX_MAX = 10;
+
+const int DRAW_DISTANCE_BG         = -50;
+const int DRAW_DISTANCE_PARALLAX_A = -40;
+const int DRAW_DISTANCE_PARALLAX_B = -30;
+const int DRAW_DISTANCE_ITEM       = -20;
+const int DRAW_DISTANCE_ENEMY      = -10;
+const int DRAW_DISTANCE_TERRAIN    = 0;
+const int DRAW_DISTANCE_PLAYER     = 10;
+const int DRAW_DISTANCE_BULLET     = 20;
+const int DRAW_DISTANCE_LIGHT_BEAM = 30;
+const int DRAW_DISTANCE_FOREGROUND = 40;
+
+const int DRAW_DISTANCE_MENU_BG    = 50;
+const int DRAW_DISTANCE_MENU_ITEMS = 60;
 
 enum class COLLIDING_SIDE
 {
@@ -107,6 +123,7 @@ enum class ATTACK_STATE
 //what animation should be playing now?
 enum class ANIM_STATE
 {
+	NONE,
 	BIRTH,				//plays when creating object, not always necessary
 	DEATH,				//plays when object dies
 	DEFAULT,			//normal animation, generally for objects with one or zero animations
@@ -137,14 +154,21 @@ enum class ANIM_STATE
 //entitties
 enum class ENTITY_TYPE
 {
-	PLAYER,
+	STATIC_BG,
+	PARALLAX_BG_A,
+	PARALLAX_BG_B,
+	ITEM,
 	ENEMY,
 	TERRAIN,
+	PLAYER,
 	BULLET,
-	ENVIRONMENT,
+	LIGHT_BEAM,
+	FOREGOUND,
+	HUD,
+	PAUSE_MENU_BG,
+	PAUSE_MENU_CONTENT,
+	PAUSE_MENU_TOP,
 	ENTITY
-
-	//to be filled out further...
 };
 
 enum class DIRECTION

@@ -12,6 +12,21 @@ public:
 	~Terrain(void);
 
 	virtual void draw();
+	virtual void debugDraw();
+};
+
+class TerrainGreenSprite : public Sprite
+{
+public:
+	TerrainGreenSprite(int width, int height, SpriteSheet* ss);
+	~TerrainGreenSprite(void);
+};
+
+class TerrainOrangeSprite : public Sprite
+{
+public:
+	TerrainOrangeSprite(int width, int height, SpriteSheet* ss);
+	~TerrainOrangeSprite(void);
 };
 
 #endif
