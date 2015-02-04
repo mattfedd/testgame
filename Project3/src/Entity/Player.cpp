@@ -6,7 +6,7 @@
 
 Player::Player(void)
 {
-	width_ = 70;
+	width_ = 140;
 	height_ = 140;
 	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
 
@@ -283,10 +283,10 @@ void Player::attackGroundLow()
 void Player::initCollideBoxes()
 {
 	//bottom
-	collideBoxes.push_back(new CollideBox(getX(), getY(), getWidth(), getHeight()/2));
+	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2 -25, getY(), 50, getHeight()/2));
 	
 	//top
-	collideBoxes.push_back(new CollideBox(getX(), getY()+getHeight()/2, getWidth(), getHeight()/2));
+	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2 -25, getY()+getHeight()/2, 50, getHeight()/2));
 }
 
 Weapon* Player::getWeapon()
@@ -307,9 +307,9 @@ PlayerSprite::PlayerSprite(int width, int height, SpriteSheet* ss) : Sprite(widt
 {
 	totalFrames_ = 0;
 	numAnimations_ = 0;
-	sheetWidth_ = 256;
+	sheetWidth_ = 512;
 	sheetHeight_ = 256;
-	frameWidth_ = 64;
+	frameWidth_ = 128;
 	frameHeight_ = 128;
 
 	spriteInfo_ = NULL;

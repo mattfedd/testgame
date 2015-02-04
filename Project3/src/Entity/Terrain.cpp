@@ -140,7 +140,7 @@ void Terrain::debugDraw()
 			};
 
 			glLineWidth(2.5); 
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.0, 1.0, 0.0);
 		
 			glBegin(GL_LINES);
 			glVertex2f(tempVerts[0], tempVerts[3]);

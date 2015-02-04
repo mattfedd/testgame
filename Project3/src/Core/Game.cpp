@@ -25,7 +25,7 @@ Game::~Game()
 void Game::Setup()
 {
 	AddEntity(spawner_.createTerrain("green", 0,-20,2000,120));
-	AddEntity(spawner_.createTerrain("orange", 400,150,500,100));
+	AddEntity(spawner_.createTerrain("orange", 400,150,500,150));
 }
 
 void Game::Run()
