@@ -15,6 +15,7 @@ Entity::Entity(void)
 	ddy_ = 0;
 	maxSpeed_ = 30;
 	sprite_ = NULL;//new Sprite(width_, height_, GAME->getSpriteSheet("res/tex.tga"));
+	health_ = 10;
 	collidingTop = false;
 	collidingBottom = false;
 	collidingLeft = false;
@@ -24,6 +25,20 @@ Entity::Entity(void)
 
 Entity::~Entity(void)
 {
+	for(int i=0; i<collideBoxes.size(); ++i)
+	{
+		delete collideBoxes[i];
+	}
+
+	for(int i=0; i<damageBoxes.size(); ++i)
+	{
+		delete damageBoxes[i];
+	}
+
+	for(int i=0; i<invulnerableBoxes.size(); ++i)
+	{
+		delete invulnerableBoxes[i];
+	}
 
 }
 
@@ -54,24 +69,28 @@ void Entity::setX(int x)
 	int dx = x-this->getX();
 	x_ = x; 
 
-	if(collideBoxes.size() == 0)
+	if(collideBoxes.size() != 0)
 	{
-		return;
+		for (int i=0; i<collideBoxes.size(); ++i) 
+		{
+			collideBoxes[i]->setX(collideBoxes[i]->getX() + dx);
+		}
 	}
 
-	for (int i=0; i<collideBoxes.size(); ++i) 
+	if(damageBoxes.size() != 0)
 	{
-		collideBoxes[i]->setX(collideBoxes[i]->getX() + dx);
+		for (int i=0; i<damageBoxes.size(); ++i) 
+		{
+			damageBoxes[i]->setX(damageBoxes[i]->getX() + dx);
+		}
 	}
 
-	if(damageBoxes.size() == 0)
+	if(invulnerableBoxes.size() != 0)
 	{
-		return;
-	}
-
-	for (int i=0; i<damageBoxes.size(); ++i) 
-	{
-		damageBoxes[i]->setX(damageBoxes[i]->getX() + dx);
+		for (int i=0; i<invulnerableBoxes.size(); ++i) 
+		{
+			invulnerableBoxes[i]->setX(invulnerableBoxes[i]->getX() + dx);
+		}
 	}
 }
 
@@ -98,6 +117,16 @@ void Entity::setY(int y)
 	for (int i=0; i<damageBoxes.size(); ++i)
 	{
 		damageBoxes[i]->setY(damageBoxes[i]->getY() + dy);
+	}
+
+	if(invulnerableBoxes.size() == 0)
+	{
+		return;
+	}
+
+	for (int i=0; i<invulnerableBoxes.size(); ++i) 
+	{
+		invulnerableBoxes[i]->setY(invulnerableBoxes[i]->getY() + dy);
 	}
 }
 
@@ -162,7 +191,7 @@ void Entity::setMaxSpeed(int val){ maxSpeed_ = val; }
 //void Entity::setRadiusSquared(long val){}
 void Entity::setEntityType(ENTITY_TYPE type){ type_ = type; }
 
-void Entity::initCollideBoxes()
+void Entity::initCollisionBoxes()
 {
 	//collideBoxes = 0;
 }
@@ -204,6 +233,16 @@ void Entity::addDamageBox(int relativeX, int relativeY, int width, int height, i
 	damageBoxes.push_back(box);
 }
 
+void Entity::applyDamage(int amount)
+{
+	health_ = health_ - amount;
+	if(health_ <= 0)
+	{
+		this->setAnimState(ANIM_STATE::DEATH);
+	}
+}
+
+
 void Entity::draw()
 {
 	if(sprite_ == NULL)
@@ -240,6 +279,40 @@ void Entity::debugDraw()
 	glPushMatrix();
 	glTranslatef(getXNorm() - GAME->getCamera()->getXNorm(), getYNorm() - GAME->getCamera()->getYNorm(), getZ());
 	
+	for(int i=0; i<invulnerableBoxes.size(); ++i)
+	{
+		GLfloat tempVerts[4] = 
+		{
+			1.0f*(invulnerableBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(invulnerableBoxes[i]->getY()-getY())/SCREEN_HEIGHT,
+			1.0f*(invulnerableBoxes[i]->getWidth()+invulnerableBoxes[i]->getX()-getX())/SCREEN_WIDTH,1.0f*(invulnerableBoxes[i]->getHeight()+invulnerableBoxes[i]->getY()-getY())/SCREEN_HEIGHT
+		};
+
+		glLineWidth(1.5); 
+		glColor3f(0.0, 0.0, 1.0);
+
+		glBegin(GL_LINES);
+		glVertex2f(tempVerts[0], tempVerts[3]);
+		glVertex2f(tempVerts[2], tempVerts[3]);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex2f(tempVerts[2], tempVerts[1]);
+		glVertex2f(tempVerts[0], tempVerts[1]);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex2f(tempVerts[2], tempVerts[3]);
+		glVertex2f(tempVerts[2], tempVerts[1]);
+		glEnd();
+
+		glBegin(GL_LINES);
+		glVertex2f(tempVerts[0], tempVerts[1]);
+		glVertex2f(tempVerts[0], tempVerts[3]);
+		glEnd();
+
+		glColor3f(1.0,1.0,1.0);
+	}
+
 	for(int i=0; i<collideBoxes.size(); ++i)
 	{
 		if(collideBoxes[i]->isActive())

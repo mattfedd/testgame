@@ -53,9 +53,9 @@ NOTES:
 	-sprite class could benefit from some container, like the way spritesheet works. Might not be good to allocate a new one for every object.
 
 TODO
-	-fix character control/movement
-	-add health and death
-	-add invulnerable boxes
+	-fix character control/movement (done)
+	-add health and death (done ish)
+	-add invulnerable boxes (done ish)
 	-add items
 	-add interaction
 	-add textboxes

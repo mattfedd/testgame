@@ -14,6 +14,7 @@
     <ClCompile Include="src\Collision\CollideBox.cpp" />
     <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\Collision\DamageBox.cpp" />
+    <ClCompile Include="src\Collision\InvulnerableBox.cpp" />
     <ClCompile Include="src\Collision\Rect.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="src\Collision\CollideBox.h" />
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Collision\DamageBox.h" />
+    <ClInclude Include="src\Collision\InvulnerableBox.h" />
     <ClInclude Include="src\Collision\Rect.h" />
     <ClInclude Include="src\Core\Camera.h" />
     <ClInclude Include="src\Core\Core.h" />

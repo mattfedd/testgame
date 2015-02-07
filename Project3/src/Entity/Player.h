@@ -51,7 +51,7 @@ public:
 	void attackGroundMid();
 	void attackGroundLow();
 
-	void initCollideBoxes();
+	void initCollisionBoxes();
 
 	Weapon* getWeapon();
 	void setWeapon(Weapon* weapon);

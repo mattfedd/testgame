@@ -4,14 +4,16 @@ Enemy::Enemy()
 {
 	width_ = 140;
 	height_ = 140;
-	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
+	sprite_ = NULL;
 
 	/*gravity = 1.0;
 	goingUp = false;
 	floating = false;
 	force = 0;*/
+	health_ = 20;
 	type_ = ENTITY_TYPE::ENEMY;
-	initCollideBoxes();
+	setAnimState(ANIM_STATE::DEFAULT);
+	initCollisionBoxes();
 	setZ(-0.5);
 	weapon = NULL;
 }
@@ -80,9 +82,10 @@ void Enemy::handleCollision(Entity* ent, CollideBox* us, CollideBox* e)
 	}
 }
 
-void Enemy::initCollideBoxes()
+void Enemy::initCollisionBoxes()
 {
 	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2-30, getY(), 60, getHeight()));
+	invulnerableBoxes.push_back(new InvulnerableBox(getX()+getWidth()/2, getY()+getHeight()/2, 30, getHeight()));
 }
 
 EnemyBasicSprite::EnemyBasicSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)

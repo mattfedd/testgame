@@ -52,6 +52,13 @@ void Game::Update()
 	for(int i=0; i<enemyContainer.size(); ++i)
 	{
 		enemyContainer[i]->updateInput();
+		if(enemyContainer[i]->getAnimState() == ANIM_STATE::DEATH)
+		{
+			Entity* e = enemyContainer[i];
+			enemyContainer.erase(enemyContainer.begin()+i);
+			i--;
+			delete e;
+		}
 	}
 }
 
@@ -65,6 +72,11 @@ void Game::CheckCollisions()
 		{
 			Collision::checkCollision(enemyContainer[j], terrainContainer[i]);
 		}
+	}
+
+	for(int j=0; j<enemyContainer.size(); ++j)
+	{
+		Collision::checkCollision(enemyContainer[j], &player_);
 	}
 }
 

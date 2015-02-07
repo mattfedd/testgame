@@ -9,6 +9,7 @@ Player::Player(void)
 	width_ = 140;
 	height_ = 140;
 	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
+	health_ = 50;
 
 	gravity = 1.0;
 	goingUp = false;
@@ -16,7 +17,7 @@ Player::Player(void)
 	force = 0;
 	type_ = ENTITY_TYPE::PLAYER;
 	setAnimState(ANIM_STATE::DEFAULT);
-	initCollideBoxes();
+	initCollisionBoxes();
 	setZ(-0.5);
 	weapon = NULL;	
 	
@@ -215,9 +216,9 @@ void Player::updateInput()
 			if(permissions_.canSwitchDirection)
 			{
 				if(glfwGetKey(GLFW_KEY_RIGHT))
-					sprite_->setDirection(DIRECTION::RIGHT);
+					setDirection(DIRECTION::RIGHT);
 				else if (glfwGetKey(GLFW_KEY_LEFT))
-					sprite_->setDirection(DIRECTION::LEFT);
+					setDirection(DIRECTION::LEFT);
 			}
 		
 			if(state_.isCrouching)
@@ -449,7 +450,7 @@ void Player::attackGroundLow()
 
 }
 
-void Player::initCollideBoxes()
+void Player::initCollisionBoxes()
 {
 	//bottom
 	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2 -25, getY(), 50, getHeight()/2));

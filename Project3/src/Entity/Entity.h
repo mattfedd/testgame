@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "CollideBox.h"
 #include "DamageBox.h"
+#include "InvulnerableBox.h"
 #include <vector>
 
 class Entity
@@ -24,11 +25,14 @@ protected:
 	Sprite* sprite_;
 	int width_;
 	int height_;
+	int health_;
 	ENTITY_TYPE type_;
 	ANIM_STATE animState;
+	DIRECTION direction_;
 
 	std::vector<CollideBox*> collideBoxes;
 	std::vector<DamageBox*> damageBoxes;
+	std::vector<InvulnerableBox*> invulnerableBoxes;
 
 public:
 	Entity(void);
@@ -49,6 +53,7 @@ public:
 	int getMaxSpeed();
 	ENTITY_TYPE getEntityType();
 	ANIM_STATE getAnimState();
+	DIRECTION getDirection() {return direction_;};
 
 	void setPosition(int x, int y, int z);
 	void setX(int x);
@@ -69,6 +74,12 @@ public:
 		if (sprite_ != NULL)
 			sprite_->setAnimState(state);
 	}
+	void setDirection(DIRECTION dir)
+	{
+		direction_ = dir;
+		if (sprite_ != NULL)
+			sprite_->setDirection(dir);
+	}
 
 	virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
@@ -79,8 +90,12 @@ public:
 	virtual void draw();
 	virtual void debugDraw();
 
-	void initCollideBoxes();
+	void initCollisionBoxes();
 	std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}
+	std::vector<DamageBox*> getDamageBoxes() {return damageBoxes;}
+	std::vector<InvulnerableBox*> getInvulnerableBoxes() {return invulnerableBoxes;}
+
+	virtual void applyDamage(int amount);
 	void addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage);
 
 	bool collidingTop;

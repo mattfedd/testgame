@@ -14,7 +14,7 @@ public:
 
 	void updateInput();
 
-	void initCollideBoxes();
+	void initCollisionBoxes();
 	void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 	Weapon* getWeapon();
 	void setWeapon(Weapon* weapon);

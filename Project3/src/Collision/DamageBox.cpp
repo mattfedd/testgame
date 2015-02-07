@@ -48,3 +48,17 @@ void DamageBox::update()
 		}
 	}
 }
+
+void DamageBox::addHitEntity(Entity* e)
+{
+	hitEntities.push_back(e);
+}
+
+bool DamageBox::isInHitEntities(Entity* e)
+{
+	for (int i=0; i<hitEntities.size(); ++i)
+	{
+		if(hitEntities[i] = e)
+			return true;
+	}
+}
