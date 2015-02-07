@@ -19,6 +19,7 @@
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Core\Spawner.cpp" />
+    <ClCompile Include="src\Entity\Enemy.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\Entity\Terrain.cpp" />
@@ -42,6 +43,7 @@
     <ClInclude Include="src\Core\Includes.h" />
     <ClInclude Include="src\Core\Logging.h" />
     <ClInclude Include="src\Core\Spawner.h" />
+    <ClInclude Include="src\Entity\Enemy.h" />
     <ClInclude Include="src\Entity\Entity.h" />
     <ClInclude Include="src\Entity\Player.h" />
     <ClInclude Include="src\Entity\Terrain.h" />

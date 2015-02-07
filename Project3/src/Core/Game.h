@@ -27,6 +27,7 @@ private:
 	std::map<std::string, SpriteSheet*> spriteSheets;
 
 	std::vector<Entity*> terrainContainer;
+	std::vector<Entity*> enemyContainer;
 
 public:
 	static Game* instance()
@@ -37,7 +38,7 @@ public:
 	~Game();
 
 	void Setup(); //level, savestate
-	void Run();
+	void Run(bool paused);
 
 	void Destroy();
 	void PauseMenu();

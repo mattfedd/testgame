@@ -11,6 +11,7 @@ struct AnimInfo
 	int length;
 	int startX;
 	int startY;
+	bool repeat;
 	AnimInfo* next;
 };
 
@@ -69,7 +70,7 @@ public:
 
 	AnimInfo* getAnimInfoById(ANIM_STATE state);
 	void calcNextFrame();
-	void addAnimInfo(ANIM_STATE state, int length);
+	void addAnimInfo(ANIM_STATE state, int length, bool repeats = true);
 
 	void calcVertexPoints();
 };

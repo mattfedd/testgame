@@ -6,7 +6,6 @@
 class MeleeWeapon : public Weapon
 {
 private:
-	AttackData HighAttack;
 	AttackData MidAttack;
 	AttackData LowAttack;
 
@@ -18,7 +17,6 @@ public:
 
 	virtual void attackMid();
 	virtual void attackLow();
-	virtual void attackHigh();
 };
 
 #endif

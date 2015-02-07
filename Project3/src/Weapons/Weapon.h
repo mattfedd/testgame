@@ -39,7 +39,6 @@ public:
 
 	virtual void attackMid() = 0;
 	virtual void attackLow() = 0;
-	virtual void attackHigh() = 0;
 
 	bool isInUse() {return inUse;}
 	void setParent(Entity* p) {parent = p;}

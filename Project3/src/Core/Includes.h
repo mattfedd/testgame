@@ -25,11 +25,11 @@ DONE:
 	-tiled textures (terrain)
 	-better platforming collision
 	-basic attacks/hitboxes
+	-collision array
+	-more advanced collision (interpolation, corners, one way collision)
 
 TODO list:
-	-collision array
 	-terrain/map/level objects
-	-more advanced collision (interpolation, corners, one way collision)
 	-HUD for health etc
 	-game states and transitions
 	-death, pause, non-input states and corresponding triggers/transitions
@@ -51,6 +51,22 @@ BUGS:
 	
 NOTES:
 	-sprite class could benefit from some container, like the way spritesheet works. Might not be good to allocate a new one for every object.
+
+TODO
+	-fix character control/movement
+	-add health and death
+	-add invulnerable boxes
+	-add items
+	-add interaction
+	-add textboxes
+	
+	-redo terrain objects to have more customizable terrain options
+		-top edge textures
+		-left edge textures
+		-right edge textures
+		-middle randomize pool
+		-etc
+
 */
 
 struct Vert
@@ -67,22 +83,8 @@ const float FRAME_RATE = 60.0;
 const float ANIM_LIMITER = 10.0;  //how many game frames to wait between animation frame updates
 
 const int COLLIDE_MAX = 10;
-
 const int HBOX_MAX = 10;
-
-const int DRAW_DISTANCE_BG         = -50;
-const int DRAW_DISTANCE_PARALLAX_A = -40;
-const int DRAW_DISTANCE_PARALLAX_B = -30;
-const int DRAW_DISTANCE_ITEM       = -20;
-const int DRAW_DISTANCE_ENEMY      = -10;
-const int DRAW_DISTANCE_TERRAIN    = 0;
-const int DRAW_DISTANCE_PLAYER     = 10;
-const int DRAW_DISTANCE_BULLET     = 20;
-const int DRAW_DISTANCE_LIGHT_BEAM = 30;
-const int DRAW_DISTANCE_FOREGROUND = 40;
-
-const int DRAW_DISTANCE_MENU_BG    = 50;
-const int DRAW_DISTANCE_MENU_ITEMS = 60;
+const int IBOX_MAX = 10;
 
 enum class COLLIDING_SIDE
 {
@@ -124,31 +126,30 @@ enum class ATTACK_STATE
 enum class ANIM_STATE
 {
 	NONE,
-	BIRTH,				//plays when creating object, not always necessary
+	SPAWN,				//plays when creating object, not always necessary
 	DEATH,				//plays when object dies
-	DEFAULT,			//normal animation, generally for objects with one or zero animations
-	STATIONARY,	//standing still	
-	IDLE,			//standing still for a while
-	LOOK,			//looking functionality
-	LOOK_UP,
-	LOOK_DOWN,
-	LOOK_AROUND,		//can be randomly called for variety in idle animation
+	DEFAULT,			//normal animation, generally for objects with one or zero animations	
+	IDLE1,			//standing still for a while
+	IDLE2,
 	PUSH,			//push against walls, boxes, et
-	GROUND_MOVE,	//movement
-	GROUND_MOVE_UP,		//ladder
-	GROUND_MOVE_DOWN,
-	WALL_CLIMB,	//climbing sideways, not a ladder
-	WALL_HANG,		//hanging
-	AIR_MOVE,		//air movement
-	AIR_MOVE_UP,	//for any ascension, including jumping
+	STAND_MOVE,		//movement
+	CROUCH_MOVE,
+	CLIMB,			//ladder
+	AIR_MOVE_UP,	//for air ascension, including jumping
 	AIR_MOVE_DOWN,	//any falling
-	ATTACK,		//attacks
-	ATTACK_UP,
-	ATTACK_DOWN,
-	HURT,			//getting hurt
-	RECOIL,		//recoil for whatever reason
+	CROUCH_AIR_MOVE_UP,
+	CROUCH_AIR_MOVE_DOWN,
+	GROUND_ATTACK,		//attacks
+	GROUND_CROUCH_ATTACK,
+	AIR_ATTACK,
+	AIR_ATTACK_DOWN,
+	GROUND_MAGIC,
+	AIR_MAGIC,
+	CROUCH_MAGIC,
+	DAMAGED,			//getting hurt
 	UPGRADE,		//good things happening
-	CROUCH
+	CROUCH,
+	VICTORY
 };
 
 //entitties
@@ -160,11 +161,13 @@ enum class ENTITY_TYPE
 	ITEM,
 	ENEMY,
 	TERRAIN,
+	NPC,
 	PLAYER,
 	BULLET,
 	LIGHT_BEAM,
 	FOREGOUND,
 	HUD,
+	TEXTBOX,
 	PAUSE_MENU_BG,
 	PAUSE_MENU_CONTENT,
 	PAUSE_MENU_TOP,

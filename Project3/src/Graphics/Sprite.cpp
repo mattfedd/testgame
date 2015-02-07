@@ -116,7 +116,14 @@ void Sprite::calcNextFrame()
 
 	if(counter_ == 0)
 	{
-		if (frameNum_ >= info->length) frameNum_ = 0;
+		if (frameNum_ >= info->length) 
+		{
+			if(info->repeat)
+				frameNum_ = 0;
+			else(info = getAnimInfoById(ANIM_STATE::DEFAULT));
+
+			if(info == NULL) return;
+		}
 
 		int fwidth = frameWidth_;
 		int fheight = frameHeight_;
@@ -166,7 +173,7 @@ void Sprite::calcNextFrame()
 	counter_ = (counter_ + 1 ) % (int)ANIM_LIMITER;
 }
 
-void Sprite::addAnimInfo(ANIM_STATE state, int length)
+void Sprite::addAnimInfo(ANIM_STATE state, int length, bool repeats)
 {
 	numAnimations_++;
 
@@ -175,6 +182,7 @@ void Sprite::addAnimInfo(ANIM_STATE state, int length)
 	a->length = length;
 	a->startX = (totalFrames_ % (sheetWidth_ / frameWidth_)) * frameWidth_;
 	a->startY = (totalFrames_ / (sheetWidth_ / frameWidth_)) * frameHeight_;
+	a->repeat = repeats;
 	a->next = NULL;
 
 	AnimInfo* temp = spriteInfo_;

@@ -26,12 +26,16 @@ void Game::Setup()
 {
 	AddEntity(spawner_.createTerrain("green", 0,-20,2000,120));
 	AddEntity(spawner_.createTerrain("orange", 400,150,500,150));
+	AddEntity(spawner_.createEnemy("basic", 1000, 120));
 }
 
-void Game::Run()
+void Game::Run(bool paused)
 {
-	Update();
-	CheckCollisions();
+	if(!paused)
+	{
+		Update();
+		CheckCollisions();
+	}
 	Draw();
 }
 
@@ -44,6 +48,11 @@ void Game::Update()
 	//{
 	//	terrainContainer[i]->updateInput();
 	//}
+
+	for(int i=0; i<enemyContainer.size(); ++i)
+	{
+		enemyContainer[i]->updateInput();
+	}
 }
 
 void Game::CheckCollisions()
@@ -51,6 +60,11 @@ void Game::CheckCollisions()
 	for(int i=0; i<terrainContainer.size(); ++i)
 	{
 		Collision::checkCollision(&player_, terrainContainer[i]);
+		
+		for(int j=0; j<enemyContainer.size(); ++j)
+		{
+			Collision::checkCollision(enemyContainer[j], terrainContainer[i]);
+		}
 	}
 }
 
@@ -67,6 +81,11 @@ void Game::Draw()
 	for(int i=0; i<terrainContainer.size(); ++i)
 	{
 		terrainContainer[i]->draw();
+	}
+
+	for(int i=0; i<enemyContainer.size(); ++i)
+	{
+		enemyContainer[i]->draw();
 	}
 
 	glfwSwapBuffers();
@@ -89,8 +108,11 @@ void Game::AddEntity(Entity* e)
 	case ENTITY_TYPE::TERRAIN:
 		terrainContainer.push_back(e);
 		break;
+	case ENTITY_TYPE::ENEMY:
+		enemyContainer.push_back(e);
+		break;
 	default:
-		LOGVS("GAME", "Just tried to add an un-logged entity type");
+		LOGES("GAME", "Just tried to add an un-logged entity type");
 		break;
 	}
 }

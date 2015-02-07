@@ -10,7 +10,6 @@ Core::Core()
 	//set gamestate
 	//get playerstate
 	//get savestate
-	
 	GAME->Setup();
 }
 
@@ -66,6 +65,7 @@ void Core::Run()
 			//update
 			if(glfwGetKey('R'))
 			{
+				LOGVS("CORE", "Reset");
 				GAME->getPlayer()->setX(0);
 				GAME->getPlayer()->setY(200);
 			}
@@ -74,24 +74,17 @@ void Core::Run()
 			{
 				paused_ = !paused_;
 				awaitingPauseRelease = true;
+				LOGV("CORE", "Pause %d", paused_);
 			}
 			else if(glfwGetKey('P') == GLFW_RELEASE)
 			{
 				awaitingPauseRelease = false;
 			}
 
-			if(!paused_)
-			{
-				//switch states here
-				GAME->Run();
-			}
-			
-			//draw
-			//DrawDebug();
-
+			GAME->Run(paused_);
 
 			framerate = 1/(glfwGetTime() - last_time);
-			LOGV("CORE", "%d fps", framerate);
+			//LOGV("CORE", "%d fps", framerate);
 			ss.str("");
 			ss.clear();
 			ss << framerate;
@@ -110,7 +103,7 @@ void Core::Run()
 void Core::DrawDebug()
 {
 	//maybe do a check inside of draw to see if we need to push the matrix
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	

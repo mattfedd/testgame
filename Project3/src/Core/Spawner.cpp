@@ -11,6 +11,20 @@ Spawner::~Spawner(void)
 }
 
 
+Enemy* Spawner::createEnemy(std::string id, int x, int y)
+{
+	Enemy* e = new Enemy();
+	e->setX(x);
+	e->setY(y);
+
+	if(id.compare("basic") == 0)
+	{
+		e->setSprite(new EnemyBasicSprite(e->getWidth(), e->getHeight(), GAME->getSpriteSheet("res/player.tga")));
+	}
+
+	return e;
+}
+
 Terrain* Spawner::createTerrain(std::string id, int x, int y, int width, int height)
 {
 	Terrain* t = new Terrain();

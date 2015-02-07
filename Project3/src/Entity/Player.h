@@ -16,6 +16,28 @@ private:
 
 	Weapon* weapon;
 
+	struct PlayerPermissions {
+		bool canAttack;
+		bool canUseMagic;
+		bool canJump;
+		bool canCrouch;
+		bool canMove;
+		bool canSwitchDirection;
+		bool canInteract;
+		bool canTakeDamage;
+	};
+
+	struct PlayerState {
+		bool isAttacking;
+		bool isCastingSpell;
+		bool isInAir;
+		bool isCrouching;
+		bool isMoving;
+	};
+
+	PlayerPermissions permissions_;
+	PlayerState state_;
+
 public:
 	Player(void);
 	~Player(void);

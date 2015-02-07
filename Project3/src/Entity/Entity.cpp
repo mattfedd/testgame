@@ -40,8 +40,8 @@ float Entity::getDDY(){ return ddy_; }
 int Entity::getWidth(){ return width_; }
 int Entity::getHeight(){ return height_; }
 int Entity::getMaxSpeed(){ return maxSpeed_; }
-//long Entity::getRadiusSquared(){ return }
 ENTITY_TYPE Entity::getEntityType(){ return type_; }
+ANIM_STATE Entity::getAnimState(){ return animState; }
 
 void Entity::setPosition(int x, int y, int z)
 {
@@ -170,6 +170,8 @@ void Entity::initCollideBoxes()
 void Entity::handleCollision(Entity* ent, CollideBox* us, CollideBox* e)
 {
 	//check what we're colliding with, then react appropriately
+
+
 }
 
 void Entity::updateInput()

@@ -53,6 +53,7 @@ int initWindow()
 
 	glfwSetWindowSizeCallback(handle_resize); //callback function of GLFW to handle window resize
 	glfwSetKeyCallback(handle_keypress); //callback function to handle keypress
+	LOGVS("MAIN", "Initialized GLFW.");
 	return 0;
 }
 
@@ -63,7 +64,9 @@ void checkAssets()
 
 void startCore()
 {
+	LOGVS("MAIN", "Initializing Core and setting up Game.");
 	Core core = Core();
+	LOGVS("MAIN", "Running...");
 	core.Run();
 }
 

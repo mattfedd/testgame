@@ -19,14 +19,13 @@ private:
 	float ddx_;
 	float ddy_;
 	
-	bool airState;	//true = airborne, false = ground
-	int actionState; //0,1,2,3,4,5 = stand, walk, jump, crouch, crouch-walk, use item, interact
 
 protected:
 	Sprite* sprite_;
 	int width_;
 	int height_;
 	ENTITY_TYPE type_;
+	ANIM_STATE animState;
 
 	std::vector<CollideBox*> collideBoxes;
 	std::vector<DamageBox*> damageBoxes;
@@ -49,6 +48,7 @@ public:
 	int getHeight();
 	int getMaxSpeed();
 	ENTITY_TYPE getEntityType();
+	ANIM_STATE getAnimState();
 
 	void setPosition(int x, int y, int z);
 	void setX(int x);
@@ -64,6 +64,11 @@ public:
 	void setMaxSpeed(int val);
 	void setEntityType(ENTITY_TYPE type);
 	void setSprite(Sprite* s) {sprite_ = s;}
+	void setAnimState(ANIM_STATE state) {
+		animState = state;
+		if (sprite_ != NULL)
+			sprite_->setAnimState(state);
+	}
 
 	virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 

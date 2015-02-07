@@ -56,6 +56,7 @@
     </ClCompile>
     <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Core\Spawner.cpp" />
+    <ClCompile Include="src\Entity\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Collision\CollideBox.h">
@@ -110,5 +111,6 @@
     <ClInclude Include="src\Core\Game.h" />
     <ClInclude Include="src\Core\EntityData.h" />
     <ClInclude Include="src\Core\Spawner.h" />
+    <ClInclude Include="src\Entity\Enemy.h" />
   </ItemGroup>
 </Project>

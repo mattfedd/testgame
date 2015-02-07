@@ -5,36 +5,24 @@ MeleeWeapon::MeleeWeapon(void) : Weapon()
 	inUse = false;
 	
 	//TODO: make this data come from an external file
-	HitboxData* high1 = new HitboxData();
-	high1->relativeX = 50;
-	high1->relativeY = 120;
-	high1->width = 50;
-	high1->height = 50;
-	high1->delayUntilSpawn = 100;
-	high1->lifetime = 200;
-	high1->damage = 10;
-	high1->next = NULL;
-
-	HighAttack.lifetime = 400;
-	HighAttack.hitboxes = high1;
 
 	HitboxData* mid1 = new HitboxData();
-	mid1->relativeX = 100;
+	mid1->relativeX = 65;
 	mid1->relativeY = 50;
-	mid1->width = 50;
+	mid1->width = 100;
 	mid1->height = 50;
-	mid1->delayUntilSpawn = 250;
-	mid1->lifetime = 1000;
+	mid1->delayUntilSpawn = 100;
+	mid1->lifetime = 200;
 	mid1->damage = 10;
 	mid1->next = NULL;
 
-	MidAttack.lifetime = 1500;
+	MidAttack.lifetime = 450;
 	MidAttack.hitboxes = mid1;
 
 	HitboxData* low1 = new HitboxData();
-	low1->relativeX = 100;
+	low1->relativeX = 65;
 	low1->relativeY = 20;
-	low1->width = 50;
+	low1->width = 100;
 	low1->height = 50;
 	low1->delayUntilSpawn = 250;
 	low1->lifetime = 400;
@@ -68,11 +56,6 @@ void MeleeWeapon::attackMid()
 void MeleeWeapon::attackLow()
 {
 	attack(LowAttack);
-}
-
-void MeleeWeapon::attackHigh()
-{
-	attack(HighAttack);
 }
 
 void MeleeWeapon::attack(AttackData ad)

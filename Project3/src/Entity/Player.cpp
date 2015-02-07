@@ -15,9 +15,25 @@ Player::Player(void)
 	floating = false;
 	force = 0;
 	type_ = ENTITY_TYPE::PLAYER;
+	setAnimState(ANIM_STATE::DEFAULT);
 	initCollideBoxes();
 	setZ(-0.5);
-	weapon = NULL;
+	weapon = NULL;	
+	
+	permissions_.canAttack = false;
+	permissions_.canCrouch = false;
+	permissions_.canInteract = false;
+	permissions_.canJump = false;
+	permissions_.canMove = false;
+	permissions_.canSwitchDirection = false;
+	permissions_.canTakeDamage = false;
+	permissions_.canUseMagic = false;
+
+	state_.isAttacking = false;
+	state_.isCastingSpell = false;
+	state_.isCrouching = false;
+	state_.isInAir = false;
+	state_.isMoving = false;
 }
 
 Player::~Player(void)
@@ -32,59 +48,193 @@ void Player::updateInput()
 		we're currently moving left and I press right, it does/doesn't switch. 
 		Same for right to left. 
 	*/
+	ANIM_STATE tempState = ANIM_STATE::DEFAULT;
 
-	if(glfwGetKey(GLFW_KEY_RIGHT)) 
-	{
-		if(weapon != NULL && !weapon->isInUse())
-			sprite_->setDirection(DIRECTION::RIGHT);
-		
-		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
-		{
-			setDDX(1.0f);
-		}
-		else
-		{
-			sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
-			setDDX(3.0f);
-		}
-	}
-	else if(glfwGetKey(GLFW_KEY_LEFT)) 
-	{
- 		if(weapon != NULL && !weapon->isInUse())
-			sprite_->setDirection(DIRECTION::LEFT);
-		if(sprite_->getAnimState() == ANIM_STATE::CROUCH)
-		{
-			setDDX(-1.0f);
-		}
-		else
-		{
-			sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
-			setDDX(-3.0f);
-		}
-	}
-	if(!glfwGetKey(GLFW_KEY_LEFT) && !glfwGetKey(GLFW_KEY_RIGHT)) 
-		setDDX(0.0f);
+	permissions_.canAttack = true;
+	permissions_.canCrouch = true;
+	permissions_.canInteract = true;
+	permissions_.canJump = true;
+	permissions_.canMove = true;
+	permissions_.canSwitchDirection = true;
+	permissions_.canTakeDamage = true;
+	permissions_.canUseMagic = true;
 
 	if(collidingBottom && !(collidingRight || collidingLeft))
 	{
+		state_.isInAir = false;
 		gravity = 2;
 		setDDY(0);
 		setDY(0);
 	}	
-
-
-	if(weapon == NULL || (weapon != NULL && !weapon->isInUse()))
+	if(getDY()>0)
 	{
-		attack_state = ATTACK_STATE::NONE;
-		if(glfwGetKey(GLFW_KEY_DOWN)&& glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
+		state_.isInAir = true;
+	}
+	if((int)getDX() != 0)
+	{
+		state_.isMoving = true;
+	}
+	else
+	{
+		state_.isMoving = false;
+	}
+
+	if(state_.isCrouching && !state_.isAttacking)
+	{			
+		if(state_.isInAir)
+		{
+			if(getDY() > 0)
+			{
+				//tempState = ANIM_STATE::CROUCH_AIR_MOVE_UP;
+			}
+			else
+			{
+				//tempState = ANIM_STATE::CROUCH_AIR_MOVE_DOWN;
+			}
+		}
+		else
+		{
+			if(state_.isMoving)
+			{
+				tempState = ANIM_STATE::CROUCH_MOVE;
+			}
+			else
+			{
+				tempState = ANIM_STATE::CROUCH;
+			}
+		}
+	}
+	else if(!state_.isAttacking)
+	{
+		if(state_.isInAir)
+		{
+			if(getDY() > 0)
+			{
+				//tempState = ANIM_STATE::AIR_MOVE_UP;
+			}
+			else
+			{
+				//tempState = ANIM_STATE::AIR_MOVE_DOWN;
+			}
+		}
+		else
+		{
+			if(state_.isMoving)
+				tempState = ANIM_STATE::STAND_MOVE;
+			else
+				tempState = ANIM_STATE::DEFAULT;
+		}
+	}
+
+	//if(state_.isAttacking)
+	//{
+	//	if(goingUp) 
+	//	{
+	//		force = 0;
+	//		gravity = 2;
+	//		goingUp = false;
+	//	}
+	//}
+	
+	switch(animState)
+	{
+	case ANIM_STATE::DEFAULT:
+		break;
+	case ANIM_STATE::IDLE1:
+		break;
+	case ANIM_STATE::STAND_MOVE:
+		break;
+	case ANIM_STATE::AIR_MOVE_UP:				//jumping
+		permissions_.canCrouch = false;
+		break;
+	case ANIM_STATE::AIR_MOVE_DOWN:				//falling
+		break;
+	case ANIM_STATE::CROUCH_AIR_MOVE_UP:		//jumping while crouched
+		permissions_.canCrouch = false;
+		break;
+	case ANIM_STATE::CROUCH_AIR_MOVE_DOWN:		//falling while crouched
+		break;
+	case ANIM_STATE::CROUCH:
+		break;
+	case ANIM_STATE::CROUCH_MOVE:
+		break;
+	case ANIM_STATE::GROUND_ATTACK:
+	case ANIM_STATE::GROUND_CROUCH_ATTACK:
+	case ANIM_STATE::AIR_ATTACK:
+	case ANIM_STATE::AIR_ATTACK_DOWN:
+		permissions_.canCrouch = false;
+		permissions_.canSwitchDirection = false;
+		//permissions_.canJump = false;
+		permissions_.canUseMagic = false;
+		permissions_.canInteract = false;
+		break;
+	case ANIM_STATE::GROUND_MAGIC:
+	case ANIM_STATE::AIR_MAGIC:
+	case ANIM_STATE::CROUCH_MAGIC:
+		permissions_.canCrouch = false;
+		permissions_.canSwitchDirection = false;
+		//permissions_.canJump = false;
+		permissions_.canAttack = false;
+		permissions_.canInteract = false;
+		break;
+	case ANIM_STATE::PUSH:
+		break;
+	case ANIM_STATE::SPAWN:
+		permissions_.canMove = false;
+		break;
+	case ANIM_STATE::DEATH:
+		permissions_.canMove = false;
+		break;
+	case ANIM_STATE::DAMAGED:
+		break;
+	case ANIM_STATE::CLIMB:
+		break;
+	case ANIM_STATE::VICTORY:
+		permissions_.canMove = false;
+		break;
+	}
+
+	if(permissions_.canCrouch)
+	{
+		if(glfwGetKey(GLFW_KEY_DOWN))
 		{
 			crouch();
+			tempState = ANIM_STATE::CROUCH;
 		}
-		else if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_RELEASE && glfwGetKey(GLFW_KEY_SPACE) == GLFW_RELEASE)
+		else if(glfwGetKey(GLFW_KEY_DOWN) == GLFW_RELEASE && state_.isCrouching)
 		{
 			uncrouch();
-		}
+			tempState = ANIM_STATE::DEFAULT;
+		}	
+	}
 
+	if(permissions_.canMove)
+	{
+		if(glfwGetKey(GLFW_KEY_RIGHT) || glfwGetKey(GLFW_KEY_LEFT)) 
+		{
+			if(permissions_.canSwitchDirection)
+			{
+				if(glfwGetKey(GLFW_KEY_RIGHT))
+					sprite_->setDirection(DIRECTION::RIGHT);
+				else if (glfwGetKey(GLFW_KEY_LEFT))
+					sprite_->setDirection(DIRECTION::LEFT);
+			}
+		
+			if(state_.isCrouching)
+			{			
+				setDDX(1.0f * ((int)glfwGetKey(GLFW_KEY_RIGHT)*1 + (int)glfwGetKey(GLFW_KEY_LEFT)*-1) );
+			}
+			else
+			{
+				setDDX(3.0f* ((int)glfwGetKey(GLFW_KEY_RIGHT)*1 + (int)glfwGetKey(GLFW_KEY_LEFT)*-1));
+			}
+		}
+		else
+			setDDX(0.0f);
+	}
+
+	if(permissions_.canJump)
+	{
 		if(glfwGetKey(GLFW_KEY_SPACE))
 		{
 			if(collidingBottom && (int)getDY() == 0)
@@ -109,21 +259,44 @@ void Player::updateInput()
 				force = 0;
 				gravity = 2;
 				goingUp = false;
-				if(sprite_->getAnimState() != ANIM_STATE::CROUCH)
-					sprite_->setAnimState(ANIM_STATE::DEFAULT);
 			}
 		}	
+	}
 
+	
+
+	if(permissions_.canAttack && (weapon !=NULL && !weapon->isInUse()))
+	{
+		attack_state = ATTACK_STATE::NONE;
+		state_.isAttacking = false;
 		if(glfwGetKey('X'))
 		{
-			attack_state = ATTACK_STATE::ATTACK_MID;
-			//sprite_->setAnimState(ANIM_STATE::ATTACK);
-		}
-
-		if(glfwGetKey(GLFW_KEY_DOWN) && glfwGetKey('X'))
-		{
-			attack_state = ATTACK_STATE::ATTACK_LOW;
-			//sprite_->setAnimState(ANIM_STATE::ATTACK_LOW);
+			if(state_.isInAir)
+			{
+				if(glfwGetKey(GLFW_KEY_DOWN))
+				{
+					setAnimState(ANIM_STATE::AIR_ATTACK_DOWN);
+					attack_state = ATTACK_STATE::ATTACK_MID;
+				}
+				else
+				{
+					setAnimState(ANIM_STATE::AIR_ATTACK);
+					attack_state = ATTACK_STATE::ATTACK_MID;
+				}
+			}
+			else
+			{
+				if(state_.isCrouching)
+				{
+					setAnimState(ANIM_STATE::GROUND_CROUCH_ATTACK);
+					attack_state = ATTACK_STATE::ATTACK_LOW;
+				}
+				else
+				{
+					setAnimState(ANIM_STATE::GROUND_ATTACK);
+					attack_state = ATTACK_STATE::ATTACK_MID;
+				}
+			}
 		}
 	}
 
@@ -136,12 +309,11 @@ void Player::updateInput()
 			break;
 		case ATTACK_STATE::ATTACK_MID:
 			weapon->attackMid();
+			state_.isAttacking = true;
 			break;
 		case ATTACK_STATE::ATTACK_LOW:
 			weapon->attackLow();
-			break;
-		case ATTACK_STATE::ATTACK_HIGH:
-			weapon->attackHigh();
+			state_.isAttacking = true;
 			break;
 		default:
 			break;
@@ -190,6 +362,8 @@ void Player::updateInput()
 	collidingBottom = false;
 	collidingLeft = false;
 	collidingRight = false;
+
+	if(!state_.isAttacking) setAnimState(tempState);
 }
 
 void Player::handleCollision(Entity *ent, CollideBox* us, CollideBox* e)
@@ -250,18 +424,13 @@ void Player::handleCollision(Entity *ent, CollideBox* us, CollideBox* e)
 
 void Player::crouch()
 {
-	sprite_->setAnimState(ANIM_STATE::CROUCH);
+	state_.isCrouching = true;
 	collideBoxes[1]->setActive(false);
 }
 
 void Player::uncrouch()
-{
-	if(getDX() > 0 || getDX() < 0)
-	{
-		sprite_->setAnimState(ANIM_STATE::GROUND_MOVE);
-	}
-	else
-		sprite_->setAnimState(ANIM_STATE::DEFAULT);
+{	
+	state_.isCrouching = false;
 	collideBoxes[1]->setActive(true);
 }
 
@@ -315,10 +484,10 @@ PlayerSprite::PlayerSprite(int width, int height, SpriteSheet* ss) : Sprite(widt
 	spriteInfo_ = NULL;
 	
 	addAnimInfo(ANIM_STATE::DEFAULT, 1);
-	addAnimInfo(ANIM_STATE::GROUND_MOVE, 3);
+	addAnimInfo(ANIM_STATE::STAND_MOVE, 3);
 	addAnimInfo(ANIM_STATE::CROUCH, 1);
 
-	setAnimState(ANIM_STATE::GROUND_MOVE);
+	setAnimState(ANIM_STATE::STAND_MOVE);
 }
 
 PlayerSprite::~PlayerSprite()

@@ -2,6 +2,7 @@
 #define SPAWNER_H
 
 #include "Terrain.h"
+#include "Enemy.h"
 #include <string>
 
 //#include "EntityData.h"
@@ -16,7 +17,7 @@ public:
 	Spawner();
 	~Spawner();
 
-	// Enemy* createEnemy(String id, int x, int y)
+	Enemy* createEnemy(std::string id, int x, int y);
 	Entity* createNPC(std::string id, int x, int y);
 	Terrain* createTerrain(std::string id, int x, int y, int width, int height);
 	// Item* createItem(String id, int x, int y)
