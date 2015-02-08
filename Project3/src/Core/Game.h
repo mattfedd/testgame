@@ -31,6 +31,7 @@ private:
 
 	std::vector<Entity*> terrainContainer;
 	std::vector<Entity*> enemyContainer;
+	std::vector<Entity*> itemContainer;
 
 public:
 	static Game* instance()

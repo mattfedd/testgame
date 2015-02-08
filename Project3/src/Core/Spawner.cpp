@@ -44,3 +44,18 @@ Terrain* Spawner::createTerrain(std::string id, int x, int y, int width, int hei
 
 	return t;
 }
+
+Item* Spawner::createItem(std::string id, int x, int y)
+{
+	Item* i = NULL;
+
+	if(id.compare("smallHeart") == 0)
+	{
+		i = new HealthPickupItem(5);
+		i->setX(x);
+		i->setY(y);
+		i->setSprite(new HealthPickupItemSprite(i->getWidth(), i->getHeight(), GAME->getSpriteSheet("res/HUD.tga")));
+	}
+
+	return i;
+}

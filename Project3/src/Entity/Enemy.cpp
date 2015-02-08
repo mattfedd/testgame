@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Game.h"
 
 Enemy::Enemy()
 {
@@ -87,6 +88,12 @@ void Enemy::initCollisionBoxes()
 	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2-30, getY(), 60, getHeight()));
 	invulnerableBoxes.push_back(new InvulnerableBox(getX()+getWidth()/2, getY()+getHeight()/2, 30, getHeight()));
 }
+
+void Enemy::onDeath()
+{
+	GAME->AddEntity(GAME->getSpawner()->createItem("smallHeart", getX()+getWidth()/2, getY()+getHeight()/2));
+}
+
 
 EnemyBasicSprite::EnemyBasicSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)
 {

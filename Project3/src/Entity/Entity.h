@@ -93,12 +93,15 @@ public:
 	virtual void draw();
 	virtual void debugDraw();
 
+	virtual void onDeath();
+
 	void initCollisionBoxes();
 	std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}
 	std::vector<DamageBox*> getDamageBoxes() {return damageBoxes;}
 	std::vector<InvulnerableBox*> getInvulnerableBoxes() {return invulnerableBoxes;}
 
-	virtual void applyDamage(int amount);
+	virtual void applyDamage(unsigned int amount);
+	void addHealth(unsigned int amount);
 	void addDamageBox(int relativeX, int relativeY, int width, int height, int lifetime, int damage);
 
 	bool collidingTop;

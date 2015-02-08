@@ -27,26 +27,24 @@ DONE:
 	-basic attacks/hitboxes
 	-collision array
 	-more advanced collision (interpolation, corners, one way collision)
+	-HUD for health etc
+	-enemy/sprite
+	-items
 
 TODO list:
 	-terrain/map/level objects
-	-HUD for health etc
 	-game states and transitions
 	-death, pause, non-input states and corresponding triggers/transitions
 	-background/parallax
 	-particles (rain, dirt, sparks, ambient float, 
-	-enemy/sprite
 	-menu screen + manager
 	-level objects
-	-background/parallax
 	-AI
 	-sound/openAL/ogg
-	-items
 	-weapons/bullets
 	-zones
 
 BUGS:
-	-jumping and immediately attacking makes you fly
 	-collidingTop triggers on bottom colliding box when both are active - need a way to get topmost one and check that only?
 	
 NOTES:
@@ -56,7 +54,7 @@ TODO
 	-fix character control/movement (done)
 	-add health and death (done ish)
 	-add invulnerable boxes (done ish)
-	-add items
+	-add items (done, still need some physics in the update function)
 	-add interaction
 	-add textboxes
 	-improve animations and attacks

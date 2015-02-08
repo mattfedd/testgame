@@ -29,6 +29,7 @@ void Game::Setup()
 	AddEntity(spawner_.createTerrain("green", 0,-20,2000,120));
 	AddEntity(spawner_.createTerrain("orange", 400,150,500,150));
 	AddEntity(spawner_.createEnemy("basic", 1000, 120));
+	AddEntity(spawner_.createItem("smallHeart", 300, 150));
 }
 
 void Game::Run(bool paused)
@@ -58,7 +59,20 @@ void Game::Update()
 		if(enemyContainer[i]->getAnimState() == ANIM_STATE::DEATH)
 		{
 			Entity* e = enemyContainer[i];
+			e->onDeath();
 			enemyContainer.erase(enemyContainer.begin()+i);
+			i--;
+			delete e;
+		}
+	}
+
+	for(int i=0; i<itemContainer.size(); ++i)
+	{
+		itemContainer[i]->updateInput();
+		if(itemContainer[i]->getAnimState() == ANIM_STATE::DEATH)
+		{
+			Entity* e = itemContainer[i];
+			itemContainer.erase(itemContainer.begin()+i);
 			i--;
 			delete e;
 		}
@@ -77,9 +91,14 @@ void Game::CheckCollisions()
 		}
 	}
 
-	for(int j=0; j<enemyContainer.size(); ++j)
+	for(int i=0; i<enemyContainer.size(); ++i)
 	{
-		Collision::checkCollision(enemyContainer[j], &player_);
+		Collision::checkCollision(enemyContainer[i], &player_);
+	}
+
+	for(int i=0; i<itemContainer.size(); ++i)
+	{
+		Collision::checkCollision(itemContainer[i], &player_);
 	}
 }
 
@@ -101,6 +120,11 @@ void Game::Draw()
 	for(int i=0; i<enemyContainer.size(); ++i)
 	{
 		enemyContainer[i]->draw();
+	}
+
+	for(int i=0; i<itemContainer.size(); ++i)
+	{
+		itemContainer[i]->draw();
 	}
 
 	hud_->draw();
@@ -127,6 +151,9 @@ void Game::AddEntity(Entity* e)
 		break;
 	case ENTITY_TYPE::ENEMY:
 		enemyContainer.push_back(e);
+		break;
+	case ENTITY_TYPE::ITEM:
+		itemContainer.push_back(e);
 		break;
 	default:
 		LOGES("GAME", "Just tried to add an un-logged entity type");

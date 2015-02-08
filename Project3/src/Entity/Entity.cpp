@@ -234,7 +234,7 @@ void Entity::addDamageBox(int relativeX, int relativeY, int width, int height, i
 	damageBoxes.push_back(box);
 }
 
-void Entity::applyDamage(int amount)
+void Entity::applyDamage(unsigned int amount)
 {
 	health_ = health_ - amount;
 	if(health_ <= 0)
@@ -243,6 +243,22 @@ void Entity::applyDamage(int amount)
 	}
 }
 
+void Entity::addHealth(unsigned int amount)
+{
+	if(health_ + amount > maxHealth_)
+	{
+		health_ = maxHealth_;
+	}
+	else 
+	{
+		health_ += amount;
+	}
+}
+
+void Entity::onDeath()
+{
+
+}
 
 void Entity::draw()
 {

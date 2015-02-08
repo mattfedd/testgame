@@ -3,6 +3,7 @@
 
 #include "Terrain.h"
 #include "Enemy.h"
+#include "Item.h"
 #include <string>
 
 //#include "EntityData.h"
@@ -20,7 +21,7 @@ public:
 	Enemy* createEnemy(std::string id, int x, int y);
 	Entity* createNPC(std::string id, int x, int y);
 	Terrain* createTerrain(std::string id, int x, int y, int width, int height);
-	// Item* createItem(String id, int x, int y)
+	Item* createItem(std::string id, int x, int y);
 	Entity* createProp(std::string id, int x, int y);
 	// ParticleEmitter* createParticleEmitter(String id, int x, int y)
 	// Bullet* createBullet(String id, int x, int y, float dx, float dy)

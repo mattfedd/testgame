@@ -18,6 +18,7 @@ public:
 	void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 	Weapon* getWeapon();
 	void setWeapon(Weapon* weapon);
+	virtual void onDeath();
 };
 
 class EnemyBasicSprite : public Sprite
