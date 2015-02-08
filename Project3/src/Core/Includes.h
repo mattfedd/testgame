@@ -59,6 +59,8 @@ TODO
 	-add items
 	-add interaction
 	-add textboxes
+	-improve animations and attacks
+	-add weapon with new animations and hitboxes...
 	
 	-redo terrain objects to have more customizable terrain options
 		-top edge textures

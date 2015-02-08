@@ -26,6 +26,7 @@ protected:
 	int width_;
 	int height_;
 	int health_;
+	int maxHealth_;
 	ENTITY_TYPE type_;
 	ANIM_STATE animState;
 	DIRECTION direction_;
@@ -51,6 +52,8 @@ public:
 	int getWidth();
 	int getHeight();
 	int getMaxSpeed();
+	int getHealth() {return health_;}
+	int getMaxHealth() {return maxHealth_;}
 	ENTITY_TYPE getEntityType();
 	ANIM_STATE getAnimState();
 	DIRECTION getDirection() {return direction_;};

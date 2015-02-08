@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Collision.h"
 #include "MeleeWeapon.h"
+#include "HUD.h"
 
 Game* Game::instance_;
 
@@ -15,6 +16,7 @@ Game::Game()
 	player_.setWeapon(new MeleeWeapon());
 	player_.setX(0);
 	player_.setY(200);
+	hud_ = new HUD();
 }
 
 Game::~Game()
@@ -43,6 +45,7 @@ void Game::Update()
 {
 	player_.updateInput();
 	camera_.update();
+	hud_->updateInput();
 
 	//for(int i=0; i<terrainContainer.size(); ++i)
 	//{
@@ -99,6 +102,8 @@ void Game::Draw()
 	{
 		enemyContainer[i]->draw();
 	}
+
+	hud_->draw();
 
 	glfwSwapBuffers();
 }

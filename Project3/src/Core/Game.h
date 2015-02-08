@@ -8,6 +8,8 @@
 #include "Spawner.h"
 #include <map>
 
+class HUD;
+
 class Game
 {
 private:
@@ -19,6 +21,7 @@ private:
 
 	Camera camera_;
 	Player player_;
+	HUD* hud_;
 
 	Spawner spawner_;
 

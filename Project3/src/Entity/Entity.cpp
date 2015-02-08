@@ -15,7 +15,8 @@ Entity::Entity(void)
 	ddy_ = 0;
 	maxSpeed_ = 30;
 	sprite_ = NULL;//new Sprite(width_, height_, GAME->getSpriteSheet("res/tex.tga"));
-	health_ = 10;
+	health_ = 25;
+	maxHealth_ = 50;
 	collidingTop = false;
 	collidingBottom = false;
 	collidingLeft = false;
@@ -261,7 +262,6 @@ void Entity::draw()
 	glVertexPointer(3, GL_FLOAT, 0, sprite_->getVertexPoints());
 	glTexCoordPointer(2, GL_FLOAT, 0, sprite_->getTexturePoints());
 	glDrawArrays(GL_QUADS, 0, 4);
-
 	
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);

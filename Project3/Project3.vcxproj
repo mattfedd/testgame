@@ -22,6 +22,7 @@
     <ClCompile Include="src\Core\Spawner.cpp" />
     <ClCompile Include="src\Entity\Enemy.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
+    <ClCompile Include="src\Entity\HUD.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\Entity\Terrain.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\Core\Spawner.h" />
     <ClInclude Include="src\Entity\Enemy.h" />
     <ClInclude Include="src\Entity\Entity.h" />
+    <ClInclude Include="src\Entity\HUD.h" />
     <ClInclude Include="src\Entity\Player.h" />
     <ClInclude Include="src\Entity\Terrain.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />

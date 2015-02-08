@@ -9,7 +9,8 @@ Player::Player(void)
 	width_ = 140;
 	height_ = 140;
 	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
-	health_ = 50;
+	health_ = 25;
+	maxHealth_ = 50;
 
 	gravity = 1.0;
 	goingUp = false;
