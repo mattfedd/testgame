@@ -100,34 +100,28 @@ void Entity::setY(int y)
 	int dy = y-this->getY();
 	y_ = y; 
 
-	if(collideBoxes.size() == 0) 
+	if(collideBoxes.size() != 0) 
 	{
-		return;
+		for (int i=0; i<collideBoxes.size(); ++i)
+		{
+			collideBoxes[i]->setY(collideBoxes[i]->getY() + dy);
+		}
 	}
 
-	for (int i=0; i<collideBoxes.size(); ++i)
+	if(damageBoxes.size() != 0) 
 	{
-		collideBoxes[i]->setY(collideBoxes[i]->getY() + dy);
+		for (int i=0; i<damageBoxes.size(); ++i)
+		{
+			damageBoxes[i]->setY(damageBoxes[i]->getY() + dy);
+		}
 	}
 
-	if(damageBoxes.size() == 0) 
+	if(invulnerableBoxes.size() != 0)
 	{
-		return;
-	}
-
-	for (int i=0; i<damageBoxes.size(); ++i)
-	{
-		damageBoxes[i]->setY(damageBoxes[i]->getY() + dy);
-	}
-
-	if(invulnerableBoxes.size() == 0)
-	{
-		return;
-	}
-
-	for (int i=0; i<invulnerableBoxes.size(); ++i) 
-	{
-		invulnerableBoxes[i]->setY(invulnerableBoxes[i]->getY() + dy);
+		for (int i=0; i<invulnerableBoxes.size(); ++i) 
+		{
+			invulnerableBoxes[i]->setY(invulnerableBoxes[i]->getY() + dy);
+		}
 	}
 }
 
@@ -236,6 +230,7 @@ void Entity::addDamageBox(int relativeX, int relativeY, int width, int height, i
 
 void Entity::applyDamage(unsigned int amount)
 {
+	LOGI("ENTITY", "Dealt %d damage to %d, current health is %d out of %d", amount, getEntityType(), getHealth(), getMaxHealth());
 	health_ = health_ - amount;
 	if(health_ <= 0)
 	{

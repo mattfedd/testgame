@@ -86,12 +86,13 @@ void Enemy::handleCollision(Entity* ent, CollideBox* us, CollideBox* e)
 void Enemy::initCollisionBoxes()
 {
 	collideBoxes.push_back(new CollideBox(getX()+getWidth()/2-30, getY(), 60, getHeight()));
-	invulnerableBoxes.push_back(new InvulnerableBox(getX()+getWidth()/2, getY()+getHeight()/2, 30, getHeight()));
+	invulnerableBoxes.push_back(new InvulnerableBox(getX()+getWidth()/2, getY()+getHeight()/2-10, 40, getHeight()/2-4));
 }
 
 void Enemy::onDeath()
 {
 	GAME->AddEntity(GAME->getSpawner()->createItem("smallHeart", getX()+getWidth()/2, getY()+getHeight()/2));
+	LOGI("ENEMY", "Death triggered on %d", getEntityType());
 }
 
 

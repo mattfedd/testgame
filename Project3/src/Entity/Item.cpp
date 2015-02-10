@@ -56,6 +56,7 @@ void HealthPickupItem::initCollisionBoxes()
 void HealthPickupItem::onCollect()
 {
 	GAME->getPlayer()->addHealth(healthRestored);
+	LOGI("HEALTH_PICKUP", "Restoring %d health, current health is %d out of %d", healthRestored, GAME->getPlayer()->getHealth(), GAME->getPlayer()->getMaxHealth());
 }
 
 HealthPickupItemSprite::HealthPickupItemSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)

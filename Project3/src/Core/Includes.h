@@ -53,7 +53,7 @@ NOTES:
 TODO
 	-fix character control/movement (done)
 	-add health and death (done ish)
-	-add invulnerable boxes (done ish)
+	-add invulnerable boxes (done ish, still need to add functionality to all collision boxes for direction)
 	-add items (done, still need some physics in the update function)
 	-add interaction
 	-add textboxes
@@ -80,7 +80,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int Z_CAP = 100;
 const float FRAME_RATE = 60.0;
-const float ANIM_LIMITER = 10.0;  //how many game frames to wait between animation frame updates
+const float ANIM_LIMITER = 4.0;  //how many game frames to wait between animation frame updates
 
 const int COLLIDE_MAX = 10;
 const int HBOX_MAX = 10;
