@@ -48,8 +48,8 @@ void Terrain::draw()
 	GLfloat startX = vertexPoints[9];
 	GLfloat startY = vertexPoints[10];
 
-	int frameW = sprite_->getFrameWidth()*2;
-	int frameH = sprite_->getFrameHeight()*2;
+	int frameW = sprite_->getFrameWidth()/2;
+	int frameH = sprite_->getFrameHeight()/2;
 
 	GLfloat dx = frameW * 1.0 / SCREEN_WIDTH;
 	GLfloat dy = frameH * 1.0 / SCREEN_HEIGHT;
@@ -83,7 +83,7 @@ void Terrain::draw()
 				texturePoints[2] -= truncateX;
 				texturePoints[4] -= truncateX;
 			}
-
+			//glColor3f(1.0f*i/width_, 1.0f*i/width_,1.0f*i/width_);
 			glVertexPointer(3, GL_FLOAT, 0, vertexPoints);
 			glDrawArrays(GL_QUADS, 0, 4);
 		

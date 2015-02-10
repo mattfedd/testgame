@@ -6,8 +6,8 @@
 
 Player::Player(void)
 {
-	width_ = 140;
-	height_ = 140;
+	width_ = 200;
+	height_ = 200;
 	sprite_ = NULL;//new PlayerSprite(width_, height_, GAME->getSpriteSheet("res/tex_2.tga"));
 	health_ = 25;
 	maxHealth_ = 50;

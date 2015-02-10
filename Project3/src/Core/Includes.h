@@ -76,7 +76,7 @@ struct Vert
 	Vert* next;
 };
 
-const int SCREEN_WIDTH = 640;
+const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 480;
 const int Z_CAP = 100;
 const float FRAME_RATE = 60.0;
