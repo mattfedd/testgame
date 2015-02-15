@@ -66,8 +66,8 @@ void Core::Run()
 			if(glfwGetKey('R'))
 			{
 				LOGVS("CORE", "Reset");
-				GAME->getPlayer()->setX(0);
-				GAME->getPlayer()->setY(200);
+				//GAME->getPlayer()->setX(0);
+				//GAME->getPlayer()->setY(200);
 			}
 
 			if(glfwGetKey('P') == GLFW_PRESS && !awaitingPauseRelease)

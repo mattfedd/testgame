@@ -21,8 +21,8 @@ void Camera::update()
 {
 	if(attachable_ == NULL) return;
 
-	setX(attachable_->getX());
-	setY(attachable_->getY());
+	//setX(attachable_->getX());
+	//setY(attachable_->getY());
 }
 
 bool Camera::setAttachable(Entity* entity)
@@ -47,6 +47,8 @@ void Camera::setX(int playerX)
 	{
 		x_ = playerX + bufX_; // + playerDX
 	}
+	else
+		x_ = playerX;
 }
 
 void Camera::setY(int playerY)
@@ -59,4 +61,6 @@ void Camera::setY(int playerY)
 	{
 		y_ = playerY + bufY_; // + playerDY
 	}
+	else
+		y_ = playerY;
 }

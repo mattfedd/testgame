@@ -93,9 +93,9 @@ void MeleeWeapon::attack(AttackData ad)
 	HitboxData* h = ad.hitboxes;
 	if(delta > h->delayUntilSpawn && !h->added)
 	{
-		parent->addDamageBox(h->relativeX, h->relativeY, 
+		/*parent->addDamageBox(h->relativeX, h->relativeY, 
 			h->width, h->height, 
-			h->lifetime, h->damage);
+			h->lifetime, h->damage);*/
 		h->added = true;
 	}
 
@@ -104,9 +104,9 @@ void MeleeWeapon::attack(AttackData ad)
 		h = h->next;
 		if(delta > h->delayUntilSpawn && !h->added)
 		{
-			parent->addDamageBox(h->relativeX, h->relativeY, 
+			/*parent->addDamageBox(h->relativeX, h->relativeY, 
 				h->width, h->height, 
-				h->lifetime, h->damage);
+				h->lifetime, h->damage);*/
 			h->added = true;
 		}
 	}

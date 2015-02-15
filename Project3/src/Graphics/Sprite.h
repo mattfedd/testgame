@@ -45,6 +45,7 @@ protected:
 public:
 	//we need width and height for the general vertex points
 	//spritesheet for the texture reference
+	Sprite() : width_(0), height_(0), sheet_(NULL) {}
 	Sprite(int width, int height, SpriteSheet* ss);
 	~Sprite(void);
 	

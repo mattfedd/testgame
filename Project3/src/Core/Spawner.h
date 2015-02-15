@@ -1,9 +1,6 @@
 #ifndef SPAWNER_H
 #define SPAWNER_H
 
-#include "Terrain.h"
-#include "Enemy.h"
-#include "Item.h"
 #include <string>
 
 //#include "EntityData.h"
@@ -18,11 +15,11 @@ public:
 	Spawner();
 	~Spawner();
 
-	Enemy* createEnemy(std::string id, int x, int y);
-	Entity* createNPC(std::string id, int x, int y);
-	Terrain* createTerrain(std::string id, int x, int y, int width, int height);
-	Item* createItem(std::string id, int x, int y);
-	Entity* createProp(std::string id, int x, int y);
+	//Enemy* createEnemy(std::string id, int x, int y);
+	//Entity* createNPC(std::string id, int x, int y);
+	//Terrain* createTerrain(std::string id, int x, int y, int width, int height);
+	//Item* createItem(std::string id, int x, int y);
+	//Entity* createProp(std::string id, int x, int y);
 	// ParticleEmitter* createParticleEmitter(String id, int x, int y)
 	// Bullet* createBullet(String id, int x, int y, float dx, float dy)
 

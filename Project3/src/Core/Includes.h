@@ -69,15 +69,9 @@ TODO
 
 */
 
-struct Vert
-{
-	int x;
-	int y;
-	Vert* next;
-};
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1080/2;
+const int SCREEN_HEIGHT = 720/2;
 const int Z_CAP = 100;
 const float FRAME_RATE = 60.0;
 const float ANIM_LIMITER = 4.0;  //how many game frames to wait between animation frame updates
@@ -85,6 +79,27 @@ const float ANIM_LIMITER = 4.0;  //how many game frames to wait between animatio
 const int COLLIDE_MAX = 10;
 const int HBOX_MAX = 10;
 const int IBOX_MAX = 10;
+
+const int NUM_COMPONENTS = 16;
+const int CONTAINER_SIZE = 32;
+
+enum COMPONENT_ID : unsigned int
+{
+	POSITION_ID = 0,
+	VELOCITY_ID,
+	HEALTH_ID,
+	SPRITE_ID,
+	STATE_ID,
+	WEAPON_ID,
+	INTERACTABLE_ID,
+	TEXT_ID,
+	DEATH_TIMER_ID,
+	WORLD_COLLISIONS_ID,
+	ENTITY_COLLISIONS_ID,
+	DAMAGE_COLLISIONS_ID,
+	GRAVITY_ID,
+	PHYSICS_ID
+};
 
 enum class COLLIDING_SIDE
 {

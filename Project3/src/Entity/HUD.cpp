@@ -3,11 +3,11 @@
 
 HUD::HUD()
 {
-	setEntityType(ENTITY_TYPE::HUD);
-	setWidth(SCREEN_WIDTH);
-	setHeight(SCREEN_HEIGHT);
-	setX(-1*SCREEN_WIDTH/10);
-	setY(SCREEN_HEIGHT/10);
+	//setEntityType(ENTITY_TYPE::HUD);
+	//setWidth(SCREEN_WIDTH);
+	//setHeight(SCREEN_HEIGHT);
+	//setX(-1*SCREEN_WIDTH/10);
+	//setY(SCREEN_HEIGHT/10);
 	
 	heartHealthAmt_ = 10;
 	heartSize_ = 32;
@@ -22,37 +22,37 @@ HUD::~HUD()
 
 void HUD::updateInput()
 {
-	int playerMaxHealth = GAME->getPlayer()->getMaxHealth();
-	while(playerMaxHealth/heartHealthAmt_ > hearts.size())
-	{
-		Heart h = Heart();
-		h.sprite = new HeartSprite(heartSize_, heartSize_, GAME->getSpriteSheet("res/HUD.tga"));
-		h.x = hearts.size() * heartSize_ + heartStartX_;
-		h.y = hearts.size()/10 *heartSize_ + heartStartY_;
-		hearts.push_back(h);
-	}
+	//int playerMaxHealth = GAME->getPlayer()->getMaxHealth();
+	//while(playerMaxHealth/heartHealthAmt_ > hearts.size())
+	//{
+	//	Heart h = Heart();
+	//	h.sprite = new HeartSprite(heartSize_, heartSize_, GAME->getSpriteSheet("res/HUD.tga"));
+	//	h.x = hearts.size() * heartSize_ + heartStartX_;
+	//	h.y = hearts.size()/10 *heartSize_ + heartStartY_;
+	//	hearts.push_back(h);
+	//}
 
-	int playerHealth = GAME->getPlayer()->getHealth();
-	for(int i=0; i<hearts.size(); ++i)
-	{
-		//full hearts
-		if(i+1 <= playerHealth/heartHealthAmt_)
-		{
-			hearts[i].sprite->setAnimState(ANIM_STATE::DEFAULT);
-		}
+	//int playerHealth = GAME->getPlayer()->getHealth();
+	//for(int i=0; i<hearts.size(); ++i)
+	//{
+	//	//full hearts
+	//	if(i+1 <= playerHealth/heartHealthAmt_)
+	//	{
+	//		hearts[i].sprite->setAnimState(ANIM_STATE::DEFAULT);
+	//	}
 
-		//half heart
-		else if(i <= playerHealth/heartHealthAmt_ && playerHealth % heartHealthAmt_ >= heartHealthAmt_/2)
-		{
-			hearts[i].sprite->setAnimState(ANIM_STATE::IDLE1);
-		}
+	//	//half heart
+	//	else if(i <= playerHealth/heartHealthAmt_ && playerHealth % heartHealthAmt_ >= heartHealthAmt_/2)
+	//	{
+	//		hearts[i].sprite->setAnimState(ANIM_STATE::IDLE1);
+	//	}
 
-		//empty heart
-		else
-		{
-			hearts[i].sprite->setAnimState(ANIM_STATE::IDLE2);
-		}
-	}
+	//	//empty heart
+	//	else
+	//	{
+	//		hearts[i].sprite->setAnimState(ANIM_STATE::IDLE2);
+	//	}
+	//}
 
 }
 

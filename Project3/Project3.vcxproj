@@ -11,8 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Collision\CollideBox.cpp" />
-    <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\Collision\DamageBox.cpp" />
     <ClCompile Include="src\Collision\InvulnerableBox.cpp" />
     <ClCompile Include="src\Collision\Rect.cpp" />
@@ -20,23 +18,18 @@
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Core\Spawner.cpp" />
-    <ClCompile Include="src\Entity\Enemy.cpp" />
-    <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\HUD.cpp" />
-    <ClCompile Include="src\Entity\Item.cpp" />
-    <ClCompile Include="src\Entity\Player.cpp" />
-    <ClCompile Include="src\Entity\Terrain.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteSheet.cpp" />
     <ClCompile Include="src\Graphics\Text.cpp" />
     <ClCompile Include="src\Graphics\TextSprite.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Systems\SpriteSystem.cpp" />
     <ClCompile Include="src\Weapons\MeleeWeapon.cpp" />
     <ClCompile Include="src\Weapons\Weapon.cpp" />
+    <ClCompile Include="src\Graphics\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Collision\CollideBox.h" />
-    <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Collision\DamageBox.h" />
     <ClInclude Include="src\Collision\InvulnerableBox.h" />
     <ClInclude Include="src\Collision\Rect.h" />
@@ -47,18 +40,17 @@
     <ClInclude Include="src\Core\Includes.h" />
     <ClInclude Include="src\Core\Logging.h" />
     <ClInclude Include="src\Core\Spawner.h" />
-    <ClInclude Include="src\Entity\Enemy.h" />
-    <ClInclude Include="src\Entity\Entity.h" />
+    <ClInclude Include="src\Entity\EntityManager.h" />
+    <ClInclude Include="src\Entity\Components.h" />
     <ClInclude Include="src\Entity\HUD.h" />
-    <ClInclude Include="src\Entity\Item.h" />
-    <ClInclude Include="src\Entity\Player.h" />
-    <ClInclude Include="src\Entity\Terrain.h" />
     <ClInclude Include="src\Graphics\Sprite.h" />
     <ClInclude Include="src\Graphics\Spritesheet.h" />
     <ClInclude Include="src\Graphics\Text.h" />
     <ClInclude Include="src\Graphics\TextSprite.h" />
+    <ClInclude Include="src\Systems\SpriteSystem.h" />
     <ClInclude Include="src\Weapons\MeleeWeapon.h" />
     <ClInclude Include="src\Weapons\Weapon.h" />
+    <ClInclude Include="src\Graphics\Tile.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E7398659-F23E-4B66-82D7-16F77DCB1720}</ProjectGuid>
@@ -98,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Matthew\Documents\GitHub\testgame\Project3\src;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Collision;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Core;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Entity;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Graphics;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\res;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Weapons;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Matthew\Documents\GitHub\testgame\Project3\src;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Collision;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Core;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Entity;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Graphics;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\res;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Weapons;C:\Users\Matthew\Documents\GitHub\testgame\Project3\src\Systems;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

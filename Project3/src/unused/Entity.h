@@ -3,7 +3,7 @@
 
 #include "Includes.h"
 #include "Sprite.h"
-#include "CollideBox.h"
+//#include "CollideBox.h"
 #include "DamageBox.h"
 #include "InvulnerableBox.h"
 #include <vector>
@@ -31,7 +31,7 @@ protected:
 	ANIM_STATE animState;
 	DIRECTION direction_;
 
-	std::vector<CollideBox*> collideBoxes;
+	//std::vector<CollideBox*> collideBoxes;
 	std::vector<DamageBox*> damageBoxes;
 	std::vector<InvulnerableBox*> invulnerableBoxes;
 
@@ -84,7 +84,7 @@ public:
 			sprite_->setDirection(dir);
 	}
 
-	virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
+	//virtual void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
 	virtual void updateInput();
 	virtual void updateCollisions();
@@ -96,7 +96,7 @@ public:
 	virtual void onDeath();
 
 	void initCollisionBoxes();
-	std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}
+	//std::vector<CollideBox*> getCollideBoxes() {return collideBoxes;}
 	std::vector<DamageBox*> getDamageBoxes() {return damageBoxes;}
 	std::vector<InvulnerableBox*> getInvulnerableBoxes() {return invulnerableBoxes;}
 

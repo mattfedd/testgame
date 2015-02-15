@@ -43,7 +43,7 @@ public:
 	~Player(void);
 
 	void updateInput();
-	void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
+	//void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 
 	void crouch();
 	void uncrouch();
@@ -63,8 +63,25 @@ public:
 class PlayerSprite : public Sprite
 {
 public:
-	PlayerSprite(int width, int height, SpriteSheet* ss);
-	~PlayerSprite(void);
+	PlayerSprite(int width, int height, SpriteSheet* ss): Sprite(width, height, ss)
+	{
+		
+		totalFrames_ = 0;
+		numAnimations_ = 0;
+		sheetWidth_ = 512;
+		sheetHeight_ = 256;
+		frameWidth_ = 64;
+		frameHeight_ = 64;
+
+		spriteInfo_ = NULL;
+	
+		addAnimInfo(ANIM_STATE::DEFAULT, 8);
+		addAnimInfo(ANIM_STATE::STAND_MOVE, 8);
+		addAnimInfo(ANIM_STATE::CROUCH, 1);
+
+		setAnimState(ANIM_STATE::STAND_MOVE);
+	}
+	~PlayerSprite(void) {}
 };
 
 

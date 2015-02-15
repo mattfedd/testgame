@@ -22,7 +22,7 @@ int initWindow()
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	if (!glfwOpenWindow(SCREEN_WIDTH, SCREEN_HEIGHT, 8, 8, 8, 8, 24, 0, GLFW_WINDOW)) {
+	if (!glfwOpenWindow(SCREEN_WIDTH*2, SCREEN_HEIGHT*2, 8, 8, 8, 8, 24, 0, GLFW_WINDOW)) {
 		fprintf(stderr, "problem with glfwOpenWindow");
 		return -1;
 	}

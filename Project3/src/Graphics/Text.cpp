@@ -154,8 +154,9 @@ void Text::draw()
 		glBindTexture(GL_TEXTURE_2D, spriteArray[i]->getSpriteSheet()->getGLuintTexture());
 
 		glPushMatrix();
-		if(attachable != NULL) glTranslatef((1.0f*(x + textSize*i)/SCREEN_WIDTH) - attachable->getXNorm()-GAME->getCamera()->getXNorm(), (1.0f*y/SCREEN_HEIGHT) - attachable->getYNorm() - GAME->getCamera()->getYNorm(), -0.5);
-		else glTranslatef(1.0f*(x + textSize*i)/SCREEN_WIDTH, 1.0f*y/SCREEN_HEIGHT, 0);
+		//if(attachable != NULL) glTranslatef((1.0f*(x + textSize*i)/SCREEN_WIDTH) - attachable->getXNorm()-GAME->getCamera()->getXNorm(), (1.0f*y/SCREEN_HEIGHT) - attachable->getYNorm() - GAME->getCamera()->getYNorm(), -0.5);
+		//else 
+			glTranslatef(1.0f*(x + textSize*i)/SCREEN_WIDTH, 1.0f*y/SCREEN_HEIGHT, 0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);	
 		

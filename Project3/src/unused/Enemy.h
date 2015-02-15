@@ -15,7 +15,7 @@ public:
 	void updateInput();
 
 	void initCollisionBoxes();
-	void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
+	//void handleCollision(Entity* ent, CollideBox* us, CollideBox* e);
 	Weapon* getWeapon();
 	void setWeapon(Weapon* weapon);
 	virtual void onDeath();

@@ -10,6 +10,7 @@ Sprite::Sprite(int width, int height, SpriteSheet* ss)
 	frameHeight_ = 64;
 	width_ = width;
 	height_ = height;
+	spriteInfo_ = NULL;
 
 	addAnimInfo(ANIM_STATE::DEFAULT, 1);
 

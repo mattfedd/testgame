@@ -1,7 +1,7 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include "Entity.h"
+//#include "Entity.h"
 #include "Sprite.h"
 
 class HeartSprite : public Sprite
@@ -13,7 +13,7 @@ public:
 	~HeartSprite();
 };
 
-class HUD : public Entity
+class HUD 
 {
 private:
 	struct Heart {

@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include "Includes.h"
-#include "Entity.h"
+//#include "Entity.h"
 
 class Entity;
 

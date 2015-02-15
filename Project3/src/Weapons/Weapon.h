@@ -1,14 +1,15 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "Entity.h"
+//#include "Entity.h"
+#include "Includes.h"
 
 class Weapon
 {
 private:
 
 protected:
-	Entity* parent;
+	//Entity* parent;
 	
 	bool inUse;
 
@@ -41,7 +42,7 @@ public:
 	virtual void attackLow() = 0;
 
 	bool isInUse() {return inUse;}
-	void setParent(Entity* p) {parent = p;}
+	//void setParent(Entity* p) {parent = p;}
 };
 
 #endif

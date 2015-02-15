@@ -6,12 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Collision\CollideBox.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Collision\Collision.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\Collision\DamageBox.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -19,15 +13,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Camera.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Entity.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Terrain.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Sprite.cpp">
@@ -56,15 +41,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\Game.cpp" />
     <ClCompile Include="src\Core\Spawner.cpp" />
-    <ClCompile Include="src\Entity\Enemy.cpp" />
     <ClCompile Include="src\Collision\InvulnerableBox.cpp" />
     <ClCompile Include="src\Entity\HUD.cpp" />
-    <ClCompile Include="src\Entity\Item.cpp" />
+    <ClCompile Include="src\Graphics\Tile.cpp" />
+    <ClCompile Include="src\Systems\SpriteSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Collision\CollideBox.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Collision\DamageBox.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -78,15 +60,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Logging.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity\Entity.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity\Player.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Entity\Terrain.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Sprite.h">
@@ -107,16 +80,17 @@
     <ClInclude Include="src\Weapons\Weapon.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Core\Core.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Game.h" />
     <ClInclude Include="src\Core\EntityData.h" />
     <ClInclude Include="src\Core\Spawner.h" />
-    <ClInclude Include="src\Entity\Enemy.h" />
     <ClInclude Include="src\Collision\InvulnerableBox.h" />
     <ClInclude Include="src\Entity\HUD.h" />
-    <ClInclude Include="src\Entity\Item.h" />
+    <ClInclude Include="src\Graphics\Tile.h" />
+    <ClInclude Include="src\Entity\Components.h" />
+    <ClInclude Include="src\Entity\EntityManager.h" />
+    <ClInclude Include="src\Systems\SpriteSystem.h" />
   </ItemGroup>
 </Project>
