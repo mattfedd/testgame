@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Collision\DamageBox.cpp" />
     <ClCompile Include="src\Collision\InvulnerableBox.cpp" />
     <ClCompile Include="src\Collision\Rect.cpp" />
@@ -24,12 +25,15 @@
     <ClCompile Include="src\Graphics\Text.cpp" />
     <ClCompile Include="src\Graphics\TextSprite.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\Systems\PlayerInputSystem.cpp" />
     <ClCompile Include="src\Systems\SpriteSystem.cpp" />
     <ClCompile Include="src\Weapons\MeleeWeapon.cpp" />
     <ClCompile Include="src\Weapons\Weapon.cpp" />
     <ClCompile Include="src\Graphics\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Collision\DamageBox.h" />
     <ClInclude Include="src\Collision\InvulnerableBox.h" />
     <ClInclude Include="src\Collision\Rect.h" />
@@ -47,7 +51,10 @@
     <ClInclude Include="src\Graphics\Spritesheet.h" />
     <ClInclude Include="src\Graphics\Text.h" />
     <ClInclude Include="src\Graphics\TextSprite.h" />
+    <ClInclude Include="src\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Systems\PlayerInputSystem.h" />
     <ClInclude Include="src\Systems\SpriteSystem.h" />
+    <ClInclude Include="src\Systems\System.h" />
     <ClInclude Include="src\Weapons\MeleeWeapon.h" />
     <ClInclude Include="src\Weapons\Weapon.h" />
     <ClInclude Include="src\Graphics\Tile.h" />

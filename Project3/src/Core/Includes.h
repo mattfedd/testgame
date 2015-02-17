@@ -16,57 +16,58 @@
 #define MAX_VECTOR_SIZE 256
 
 /*
-DONE:
-	-basic collision
-	-jumping
-	-text
-	-sideways collision
-	-pausing
-	-tiled textures (terrain)
-	-better platforming collision
-	-basic attacks/hitboxes
-	-collision array
-	-more advanced collision (interpolation, corners, one way collision)
-	-HUD for health etc
-	-enemy/sprite
-	-items
+Time to redo this list
 
-TODO list:
-	-terrain/map/level objects
-	-game states and transitions
-	-death, pause, non-input states and corresponding triggers/transitions
-	-background/parallax
-	-particles (rain, dirt, sparks, ambient float, 
-	-menu screen + manager
-	-level objects
-	-AI
-	-sound/openAL/ogg
-	-weapons/bullets
-	-zones
+Current work:
+	Entity Component System
+		Collision System
+		Physics System
+		Player Input System + States
+		Animation System from States
+	Tile based world
 
-BUGS:
-	-collidingTop triggers on bottom colliding box when both are active - need a way to get topmost one and check that only?
+Coming up:
+	Rename "Object" to "Entity"
+
+	Using components...
+	-Remake HUD
+	-Remake heart drops
+	-Remake enemy
+	-Remake attacks
+
+	Reading level data from files, making tiles and entities on the fly
+	Defining new tiles and entities from files alone
+
+	Creating more entities/assets (art stuff)
+
+	Particles
+
+	Interaction effects
+	-switch weapon
+	-transition to new screen/level
+	-talk
+
+	Text interaction model (Textboxes, scrolling, creating/loading text, responses, state-based text)
+
+	Weapon sprites that attach to entities
+
+	Toggles (F1-12) for various controls
+		Debug draw
+		Full level reset
+		Zoom in/out
+		Display framerate, cpu stats
+		Display player component data
+
+	Mouse recognition/support
+
+	In game level editor
+
+	Sound (OpenAL/ALUT)
+
+	Menu 
+	-Adjustable display properties
+	-Adjustable audio properties
 	
-NOTES:
-	-sprite class could benefit from some container, like the way spritesheet works. Might not be good to allocate a new one for every object.
-
-TODO
-	-fix character control/movement (done)
-	-add health and death (done ish)
-	-add invulnerable boxes (done ish, still need to add functionality to all collision boxes for direction)
-	-add items (done, still need some physics in the update function)
-	-add interaction
-	-add textboxes
-	-improve animations and attacks
-	-add weapon with new animations and hitboxes...
-	
-	-redo terrain objects to have more customizable terrain options
-		-top edge textures
-		-left edge textures
-		-right edge textures
-		-middle randomize pool
-		-etc
-
 */
 
 
@@ -83,6 +84,33 @@ const int IBOX_MAX = 10;
 const int NUM_COMPONENTS = 16;
 const int CONTAINER_SIZE = 32;
 
+struct Vector2d
+{
+	int x;
+	int y;
+};
+
+struct ColorRGB
+{
+	ColorRGB(char r, char g, char b) : R(r), G(g), B(b) {}
+	ColorRGB() {}
+	char R;
+	char G;
+	char B;
+};
+
+enum COLLISION_GROUPS : unsigned int
+{
+	COLLISION_PLAYER = 1,
+	COLLISION_WORLD = 1<<1,
+	COLLISION_ENEMY = 1<<2,
+	COLLISION_PLAYERBULLET = 1<<3,
+	COLLISION_ENEMYBULLET = 1<<4,
+	COLLISION_INTERACTABLE = 1<<5,
+	COLLISION_ITEM = 1<<6,
+	COLLISION_ZONE = 1<<7
+};
+
 enum COMPONENT_ID : unsigned int
 {
 	POSITION_ID = 0,
@@ -94,9 +122,7 @@ enum COMPONENT_ID : unsigned int
 	INTERACTABLE_ID,
 	TEXT_ID,
 	DEATH_TIMER_ID,
-	WORLD_COLLISIONS_ID,
-	ENTITY_COLLISIONS_ID,
-	DAMAGE_COLLISIONS_ID,
+	COLLISION_ID,
 	GRAVITY_ID,
 	PHYSICS_ID
 };

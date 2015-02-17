@@ -2,9 +2,9 @@
 #define SPRITE_SYSTEM_H
 
 //#include "Components.h"
-#include "EntityManager.h"
+#include "System.h"
 
-class SpriteSystem
+class SpriteSystem : public System
 {
 public:
 	SpriteSystem();

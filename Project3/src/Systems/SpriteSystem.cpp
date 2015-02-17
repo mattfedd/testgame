@@ -1,4 +1,5 @@
 #include "SpriteSystem.h"
+#include "Game.h"
 
 SpriteSystem::SpriteSystem()
 {
@@ -38,8 +39,7 @@ void SpriteSystem::update(EntityManager* em)
 			glBindTexture(GL_TEXTURE_2D, s.getSpriteSheet()->getGLuintTexture());
 
 			glPushMatrix();
-			glTranslatef(x/SCREEN_WIDTH, y/SCREEN_HEIGHT, z/Z_CAP);
-//			glTranslatef(x/SCREEN_WIDTH - GAME->getCamera()->getXNorm(), y/SCREEN_HEIGHT - GAME->getCamera()->getYNorm(), z/Z_CAP);
+			glTranslatef(x/SCREEN_WIDTH-GAME->getCamera()->getXNorm(), y/SCREEN_HEIGHT-GAME->getCamera()->getYNorm(), z/Z_CAP);
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glEnableClientState(GL_VERTEX_ARRAY);
 		

@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 Camera::Camera(void)
 {
 	x_ = SCREEN_WIDTH / 2;
@@ -9,7 +8,7 @@ Camera::Camera(void)
 	height_ = SCREEN_HEIGHT;
 	bufX_ = 160;
 	bufY_ = 200;
-	attachable_ = NULL;
+	reference = NULL;
 }
 
 Camera::~Camera(void)
@@ -19,18 +18,19 @@ Camera::~Camera(void)
 
 void Camera::update()
 {
-	if(attachable_ == NULL) return;
+	if(reference == NULL)
+		return;
 
-	//setX(attachable_->getX());
-	//setY(attachable_->getY());
+	setX(reference->x);
+	setY(reference->y);
 }
 
-bool Camera::setAttachable(Entity* entity)
+void Camera::setReference(PositionComponent* ref)
 {
-	if(entity == NULL) return false;
-
-	attachable_ = entity;
+	if(ref == NULL) return;
+	reference = ref;
 }
+
 
 float Camera::getXNorm(){ return 1.0f*x_/SCREEN_WIDTH; }
 float Camera::getYNorm(){ return 1.0f*y_/SCREEN_HEIGHT; }
@@ -47,8 +47,6 @@ void Camera::setX(int playerX)
 	{
 		x_ = playerX + bufX_; // + playerDX
 	}
-	else
-		x_ = playerX;
 }
 
 void Camera::setY(int playerY)
@@ -61,6 +59,4 @@ void Camera::setY(int playerY)
 	{
 		y_ = playerY + bufY_; // + playerDY
 	}
-	else
-		y_ = playerY;
 }

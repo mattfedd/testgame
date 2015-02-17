@@ -15,8 +15,7 @@ private:
 	float textSize;
 	TextSprite** spriteArray;
 	SpriteSheet* ss;
-	bool tiedToCamera;
-	Entity* attachable;
+	ColorRGB color;
 
 	void changeLetter(int index, char c);
 	void init();
@@ -35,7 +34,6 @@ public:
 	float getY();
 	float getTextSize();
 	void setTiedToCamera(bool val);
-	void attachToEntity(Entity* e);
 
 	void draw();
 

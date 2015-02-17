@@ -37,7 +37,6 @@ void Text::init()
 	ss = new SpriteSheet("res/Inconsolata.tga");
 	spriteArray = NULL;
 	text = "";
-	attachable = NULL;
 	textSize = 20;
 }
 
@@ -136,11 +135,6 @@ float Text::getX()
 float Text::getY()
 {
 	return y;
-}
-
-void Text::attachToEntity(Entity* e)
-{
-	attachable = e;
 }
 
 void Text::draw()

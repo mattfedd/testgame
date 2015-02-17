@@ -7,8 +7,20 @@
 #include "Tile.h"
 #include <map>
 #include "SpriteSystem.h"
+#include "CollisionSystem.h"
+#include "PlayerInputSystem.h"
+#include "PhysicsSystem.h"
 
 class HUD;
+
+struct TileWorldData
+{
+	float startX;
+	float startY;
+	int tileWidth;
+	int tileHeight;
+	int arrayWidth;
+};
 
 class BGSprite : public Sprite
 {
@@ -46,7 +58,13 @@ private:
 	HUD* hud_;
 
 	EntityManager* em;
+
 	SpriteSystem spritesys;
+	CollisionSystem collisionsys;
+	PlayerInputSystem playerinputsys;
+	PhysicsSystem physicssys;	
+	
+	TileWorldData tileData;
 
 	Spawner spawner_;
 
@@ -54,21 +72,6 @@ private:
 
 	std::map<std::string, SpriteSheet*> spriteSheets;
 
-	//template <typename T>
-	//struct Container {
-	//	Container() {};
-	//	void add(T item) {};
-	//	void get(int index) {};
-	//	T items[256]; 
-	//};
-
-	//Container<Entity> entities;
-	//Container<Component> components[2];
-
-	//Container<HealthComponent> tempArray;
-	//Container<PositionComponent> posArray;
-
-	int tiles[256]; 	
 	std::map<int, Tile*> tileIdTranslator; //an array might work just as well here
 
 public:
@@ -78,13 +81,15 @@ public:
 		return instance_;
 	}
 	~Game();
+	
+	int getTileIndexByPosition(float x, float y);
 
 	void Setup(); //level, savestate
 	void Run(bool paused);
 
 	void Destroy();
 	void PauseMenu();
-	void AddEntity(Entity* e);
+	void AddEntity(Object* e);
 
 	void setPause(bool p) {paused_ = p;}
 	bool isPaused() {return paused_;}
@@ -97,7 +102,8 @@ public:
 	Spawner* getSpawner() {return &spawner_;};
 
 	static Game* instance_;
-
+	
+	int tiles[256]; 	
 };
 
 

@@ -2,9 +2,7 @@
 #define CAMERA_H
 
 #include "Includes.h"
-//#include "Entity.h"
-
-class Entity;
+#include "Components.h"
 
 class Camera
 {
@@ -19,7 +17,7 @@ private:
 	float dx_;
 	float dy_;
 
-	Entity* attachable_;
+	PositionComponent* reference;
 
 public:
 	Camera(void);
@@ -34,7 +32,7 @@ public:
 	void setY(int playerY);
 
 	void update();
-	bool setAttachable(Entity* actor);
+	void setReference(PositionComponent* pos);
 };
 
 #endif

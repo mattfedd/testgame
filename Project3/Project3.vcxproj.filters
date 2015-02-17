@@ -45,6 +45,9 @@
     <ClCompile Include="src\Entity\HUD.cpp" />
     <ClCompile Include="src\Graphics\Tile.cpp" />
     <ClCompile Include="src\Systems\SpriteSystem.cpp" />
+    <ClCompile Include="src\Systems\PlayerInputSystem.cpp" />
+    <ClCompile Include="src\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Collision\DamageBox.h">
@@ -92,5 +95,9 @@
     <ClInclude Include="src\Entity\Components.h" />
     <ClInclude Include="src\Entity\EntityManager.h" />
     <ClInclude Include="src\Systems\SpriteSystem.h" />
+    <ClInclude Include="src\Systems\PlayerInputSystem.h" />
+    <ClInclude Include="src\Systems\System.h" />
+    <ClInclude Include="src\Systems\CollisionSystem.h" />
+    <ClInclude Include="src\Systems\PhysicsSystem.h" />
   </ItemGroup>
 </Project>

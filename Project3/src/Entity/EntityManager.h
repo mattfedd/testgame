@@ -144,6 +144,8 @@ public:
 		components[HEALTH_ID] = new Container<HealthComponent>();
 		components[VELOCITY_ID] = new Container<VelocityComponent>();
 		components[SPRITE_ID] = new Container<SpriteComponent>();
+		components[COLLISION_ID] = new Container<CollisionComponent>();
+		components[PHYSICS_ID] = new Container<PhysicsComponent>();
 	}
 	~EntityManager() {}
 	
