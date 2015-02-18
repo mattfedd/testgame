@@ -34,23 +34,26 @@ void SpriteSystem::update(EntityManager* em)
 			float y = positions->get(positionIndex).y;
 			float z = positions->get(positionIndex).z;
 
-			s.calcNextFrame();
+			if(GAME->getCamera()->isInBounds(x,y,20))
+			{
+				s.calcNextFrame();
 	
-			glBindTexture(GL_TEXTURE_2D, s.getSpriteSheet()->getGLuintTexture());
+				glBindTexture(GL_TEXTURE_2D, s.getSpriteSheet()->getGLuintTexture());
 
-			glPushMatrix();
-			glTranslatef(x/SCREEN_WIDTH-GAME->getCamera()->getXNorm(), y/SCREEN_HEIGHT-GAME->getCamera()->getYNorm(), z/Z_CAP);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glEnableClientState(GL_VERTEX_ARRAY);
+				glPushMatrix();
+				glTranslatef(x/SCREEN_WIDTH-GAME->getCamera()->getXNorm(), y/SCREEN_HEIGHT-GAME->getCamera()->getYNorm(), z/Z_CAP);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glEnableClientState(GL_VERTEX_ARRAY);
 		
-			glVertexPointer(3, GL_FLOAT, 0, s.getVertexPoints());
-			glTexCoordPointer(2, GL_FLOAT, 0, s.getTexturePoints());
-			glDrawArrays(GL_QUADS, 0, 4);
+				glVertexPointer(3, GL_FLOAT, 0, s.getVertexPoints());
+				glTexCoordPointer(2, GL_FLOAT, 0, s.getTexturePoints());
+				glDrawArrays(GL_QUADS, 0, 4);
 	
-			glDisableClientState(GL_VERTEX_ARRAY);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			glPopMatrix();
+				glPopMatrix();
+			}
 		}
 	}
 }

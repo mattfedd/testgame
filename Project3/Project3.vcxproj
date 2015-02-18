@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Profiler.cpp" />
+    <ClCompile Include="src\Systems\DebugDrawSystem.cpp" />
     <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Collision\DamageBox.cpp" />
     <ClCompile Include="src\Collision\InvulnerableBox.cpp" />
@@ -33,6 +35,8 @@
     <ClCompile Include="src\Graphics\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Profiler.h" />
+    <ClInclude Include="src\Systems\DebugDrawSystem.h" />
     <ClInclude Include="src\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Collision\DamageBox.h" />
     <ClInclude Include="src\Collision\InvulnerableBox.h" />

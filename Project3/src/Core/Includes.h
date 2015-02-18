@@ -82,7 +82,7 @@ const int HBOX_MAX = 10;
 const int IBOX_MAX = 10;
 
 const int NUM_COMPONENTS = 16;
-const int CONTAINER_SIZE = 32;
+const int CONTAINER_SIZE = 1024;
 
 struct Vector2d
 {

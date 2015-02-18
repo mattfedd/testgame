@@ -2,7 +2,7 @@
 
 TextSprite::TextSprite(int width, int height, SpriteSheet* ss) : Sprite(width, height, ss)
 {
-	index = 1; // default to ! so that we know it works.
+	index = 1; // default to 1 so that we know it works.
 
 	sheetWidth_ = 640;
 	sheetHeight_ = 108;

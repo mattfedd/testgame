@@ -146,6 +146,7 @@ public:
 		components[SPRITE_ID] = new Container<SpriteComponent>();
 		components[COLLISION_ID] = new Container<CollisionComponent>();
 		components[PHYSICS_ID] = new Container<PhysicsComponent>();
+		components[TEXT_ID] = new Container<TextComponent>();
 	}
 	~EntityManager() {}
 	

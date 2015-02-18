@@ -48,6 +48,8 @@
     <ClCompile Include="src\Systems\PlayerInputSystem.cpp" />
     <ClCompile Include="src\Systems\CollisionSystem.cpp" />
     <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
+    <ClCompile Include="src\Systems\DebugDrawSystem.cpp" />
+    <ClCompile Include="src\Core\Profiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Collision\DamageBox.h">
@@ -99,5 +101,7 @@
     <ClInclude Include="src\Systems\System.h" />
     <ClInclude Include="src\Systems\CollisionSystem.h" />
     <ClInclude Include="src\Systems\PhysicsSystem.h" />
+    <ClInclude Include="src\Systems\DebugDrawSystem.h" />
+    <ClInclude Include="src\Core\Profiler.h" />
   </ItemGroup>
 </Project>

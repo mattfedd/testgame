@@ -59,6 +59,21 @@ Game::Game()
 	player_ = &em->getEntities().get(0);
 	camera_.setReference(&em->getComponentVector<PositionComponent>()->get(player_->components[POSITION_ID])); //todo : give the camera a position element it can attach to aka the id of the player position element...
 
+	Object& text = em->createEntity();
+	text.addComponent(PositionComponent(-0.8*SCREEN_WIDTH,0.8*SCREEN_HEIGHT,0));
+	text.addComponent(TextComponent("Basic Text", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
+
+	//stress test
+	for(int i=2; i<CONTAINER_SIZE; i++)
+	{
+		Object& e = em->createEntity();
+		e.setId(i+5);
+		e.addComponent(PositionComponent(i*2,0,0));
+		e.addComponent(HealthComponent(10, 20));
+		e.addComponent(SpriteComponent("Player", PlayerSprite(128, 128, getSpriteSheet("res/player.tga"))));
+		e.addComponent(CollisionComponent(CollideBox(40,0,128-80,128), COLLISION_PLAYER, 0xffff));
+		e.addComponent(PhysicsComponent());
+	}
 }
 
 Game::~Game()
@@ -88,10 +103,15 @@ void Game::Run(bool paused)
 
 void Game::Update()
 {
+	profiler.startMeasure("Update");
+	
 	playerinputsys.update(em);
 	physicssys.update(em);
 	collisionsys.update(em);
 	camera_.update();
+
+	profiler.stopMeasure("Update");
+	LOGV("GAME", "Update: %.2f%%", profiler.getPercentage("Update"));
 }
 
 void Game::CheckCollisions()
@@ -105,7 +125,6 @@ void Game::Draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
 	glBindTexture(GL_TEXTURE_2D, bg->getSpriteSheet()->getGLuintTexture()); //just one spritesheet for all tiles
 	bg->calcNextFrame();
 	glPushMatrix();
@@ -126,25 +145,34 @@ void Game::Draw()
 	{
 		if(tiles[i] != 0)
 		{
-			s = tileIdTranslator[tiles[i]]->getSprite();
-			s->calcNextFrame();
-			glPushMatrix();
-			glTranslatef((tileData.startX + i%tileData.arrayWidth*tileData.tileWidth*1.0)/SCREEN_WIDTH-camera_.getXNorm(),(tileData.startY + i/tileData.arrayWidth * -1.0*tileData.tileHeight)/SCREEN_HEIGHT-camera_.getYNorm(), 0);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glEnableClientState(GL_VERTEX_ARRAY);
+			int x = tileData.startX + i%tileData.arrayWidth*tileData.tileWidth;
+			int y = tileData.startY + i/tileData.arrayWidth * -1.0*tileData.tileHeight;
+			if(camera_.isInBounds(x,y,tileData.tileHeight))
+			{
+				s = tileIdTranslator[tiles[i]]->getSprite();
+				s->calcNextFrame();
+				glPushMatrix();
+				glTranslatef((x*1.0)/SCREEN_WIDTH-camera_.getXNorm(),(y*1.0)/SCREEN_HEIGHT-camera_.getYNorm(), 0);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glEnableClientState(GL_VERTEX_ARRAY);
 		
-			glVertexPointer(3, GL_FLOAT, 0, s->getVertexPoints());
-			glTexCoordPointer(2, GL_FLOAT, 0, s->getTexturePoints());
-			glDrawArrays(GL_QUADS, 0, 4);
+				glVertexPointer(3, GL_FLOAT, 0, s->getVertexPoints());
+				glTexCoordPointer(2, GL_FLOAT, 0, s->getTexturePoints());
+				glDrawArrays(GL_QUADS, 0, 4);
 	
-			glDisableClientState(GL_VERTEX_ARRAY);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-			glPopMatrix();
+				glPopMatrix();
+			}
 		}
 	}
 	
+	profiler.startMeasure("Drawing");
 	spritesys.update(em);
+	debugdrawsys.update(em);
+	profiler.stopMeasure("Drawing");
+	LOGV("GAME", "Drawing: %.2f%%", profiler.getPercentage("Drawing"));
 
 	glfwSwapBuffers();
 }

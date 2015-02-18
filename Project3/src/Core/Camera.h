@@ -33,6 +33,7 @@ public:
 
 	void update();
 	void setReference(PositionComponent* pos);
+	bool isInBounds(int x, int y, int buffer);
 };
 
 #endif

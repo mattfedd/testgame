@@ -10,6 +10,8 @@
 #include "CollisionSystem.h"
 #include "PlayerInputSystem.h"
 #include "PhysicsSystem.h"
+#include "DebugDrawSystem.h"
+#include "Profiler.h"
 
 class HUD;
 
@@ -63,6 +65,7 @@ private:
 	CollisionSystem collisionsys;
 	PlayerInputSystem playerinputsys;
 	PhysicsSystem physicssys;	
+	DebugDrawSystem debugdrawsys;
 	
 	TileWorldData tileData;
 
@@ -103,6 +106,7 @@ public:
 
 	static Game* instance_;
 	
+	Profiler profiler;
 	int tiles[256]; 	
 };
 

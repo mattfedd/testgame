@@ -3,6 +3,7 @@
 
 #include "Includes.h"
 #include "Sprite.h"
+#include "TextSprite.h"
 
 struct Component
 {
@@ -15,7 +16,7 @@ struct Component
 struct PositionComponent : Component
 {
 	PositionComponent() : x(0), y(0), z(0), Component(false) {}
-	PositionComponent(int x_, int y_, int z_) : x(x_), y(y_), z(z_),Component(true) {}
+	PositionComponent(int x_, int y_, int z_=0) : x(x_), y(y_), z(z_),Component(true) {}
 
 	static unsigned int getId() { return POSITION_ID; }
 
@@ -62,7 +63,7 @@ struct SpriteComponent : Component
 struct TextComponent : Component
 {
 	TextComponent() : Component(false) {}
-	TextComponent(std::string words, int x, int y, float size = 24.0, ColorRGB color = ColorRGB(0xff,0xff,0xff)) : text(words), offsetX(x), offsetY(y), textSize(size), textColor(color) {}
+	TextComponent(std::string words, TextSprite* ts, int x=0, int y=0, float size = 24.0, ColorRGB color = ColorRGB(0xff,0xff,0xff)) : text(words), sprite(ts), offsetX(x), offsetY(y), textSize(size), textColor(color) {}
 	
 	static unsigned int getId() { return TEXT_ID; }
 
@@ -71,6 +72,7 @@ struct TextComponent : Component
 	float textSize;
 	int offsetX; //the reference is always a PositionComponent
 	int offsetY;
+	TextSprite* sprite;
 	//int charsPerLine; //how many chars to write until a new line
 };
 
