@@ -14,6 +14,8 @@ Game::Game()
 	bg = new BGSprite(3840, 2160, getSpriteSheet("res/bg.tga"));
 	camera_ = Camera();
 
+	score = 0;
+
 	tileData.startX = -100;
 	tileData.startY = 100;
 	tileData.tileHeight = 64;
@@ -74,6 +76,16 @@ Game::Game()
 		debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(i));
 	}
 
+	Entity& scoreText = em->createEntity();
+	scoreText.addComponent(PositionComponent(0.7*SCREEN_WIDTH, 0.8*SCREEN_HEIGHT+30));
+	scoreText.addComponent(TextComponent("Score", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
+	debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(2));
+
+	Entity& helpText = em->createEntity();
+	helpText.addComponent(PositionComponent(-0.5*SCREEN_WIDTH, -0.8*SCREEN_HEIGHT-30));
+	helpText.addComponent(TextComponent("Arrow keys to move, Jump to beep, Esc to exit", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
+	debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(3));
+
 	//stress test
 	//for(int i=5; i<25; i++)
 	//{
@@ -125,6 +137,7 @@ void Game::Update()
 
 	debugTexts[0]->text = "Update: " + std::to_string((int)profiler.getPercentage("Update")) + "%";
 	debugTexts[1]->text = "Draw: " + std::to_string((int)profiler.getPercentage("Drawing")) + "%";
+	debugTexts[2]->text = "Score: " + std::to_string(score);
 }
 
 void Game::CheckCollisions()
@@ -141,7 +154,7 @@ void Game::Draw()
 	glBindTexture(GL_TEXTURE_2D, bg->getSpriteSheet()->getGLuintTexture()); //just one spritesheet for all tiles
 	bg->calcNextFrame();
 	glPushMatrix();
-	glTranslatef(-0.5-camera_.getXNorm()*0.6, -1.5-camera_.getYNorm()*0.6, 0);
+	glTranslatef(-1-camera_.getXNorm()*0.6, -1.75-camera_.getYNorm()*0.6, 0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, bg->getVertexPoints());

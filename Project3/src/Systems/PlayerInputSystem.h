@@ -5,6 +5,9 @@
 
 class PlayerInputSystem : public System
 {
+private:
+	bool spaceDown;
+	ALuint jumpSource, jumpBuffer;
 public:
 	PlayerInputSystem();
 	~PlayerInputSystem();

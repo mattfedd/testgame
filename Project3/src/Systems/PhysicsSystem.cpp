@@ -45,7 +45,7 @@ void PhysicsSystem::update(EntityManager* em)
 			}
 
 			phys.dy = phys.dy * phys.friction;
-			//if(phys.dy <0.1 && phys.dy >-0.1) phys.dy = 0;
+			if(phys.dy <0.1 && phys.dy >-0.1) phys.dy = 0;
 			phys.dx = phys.dx * phys.friction;
 			if(phys.dx <0.1 && phys.dx >-0.1) 
 			{

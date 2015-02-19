@@ -29,7 +29,7 @@ void SpriteSystem::update(EntityManager* em)
 		if(ents.get(i).inUse[SPRITE_ID] && ents.get(i).inUse[POSITION_ID])
 		{
 			//draw that shit
-			Sprite s = sprites->get(spriteIndex).sprite;
+			Sprite& s = sprites->get(spriteIndex).sprite;
 			float x = positions->get(positionIndex).x;
 			float y = positions->get(positionIndex).y;
 			float z = positions->get(positionIndex).z;

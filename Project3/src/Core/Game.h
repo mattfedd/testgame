@@ -71,6 +71,8 @@ private:
 
 	Spawner spawner_;
 
+	unsigned int score;
+
 	bool paused_;
 
 	std::map<std::string, SpriteSheet*> spriteSheets;
@@ -110,6 +112,9 @@ public:
 	static Game* instance_;
 	
 	TileWorldData getTileData() {return tileData;}
+
+	unsigned int getScore() {return score; }
+	void setScore(unsigned int val) {score = val;}
 
 	Profiler profiler;
 	int tiles[NUM_TILES]; 	

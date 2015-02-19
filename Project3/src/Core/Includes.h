@@ -9,6 +9,7 @@
 #include <iterator>
 #include <sstream>
 #include "Logging.h"
+#include "alut.h"
 
 #define GAME Game::instance()
 #define GAME_TITLE "Title"

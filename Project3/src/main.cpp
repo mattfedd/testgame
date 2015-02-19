@@ -3,6 +3,7 @@
 #include "Core.h"
 
 int initWindow();
+int initSound();
 void checkAssets();
 void startCore();
 void GLFWCALL handle_resize(int width,int height);
@@ -11,6 +12,7 @@ void GLFWCALL handle_keypress(int key, int press);
 int main(void)
 {
 	initWindow();
+	initSound();
 	checkAssets();
 	startCore();
 }
@@ -57,6 +59,20 @@ int initWindow()
 	return 0;
 }
 
+int initSound()
+{
+	alutInit(NULL, NULL);
+	ALuint helloBuffer, helloSource;
+
+	helloBuffer = alutCreateBufferFromFile("res/track00.wav");
+	alGenSources (1, &helloSource);
+	alSourcei (helloSource, AL_BUFFER, helloBuffer);
+	alSourcei(helloSource, AL_LOOPING, AL_TRUE);
+	alSourcePlay (helloSource);
+
+	return 0;
+}
+
 void checkAssets()
 {
 	//do nothing for now
@@ -69,6 +85,8 @@ void startCore()
 	LOGVS("MAIN", "Running...");
 	core.Run();
 }
+
+
 
 void GLFWCALL handle_resize(int width,int height)
 {
