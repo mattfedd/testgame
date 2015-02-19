@@ -56,7 +56,7 @@ private:
 	BGSprite* bg;
 
 	Camera camera_;
-	Object* player_;
+	Entity* player_;
 	HUD* hud_;
 
 	EntityManager* em;
@@ -95,7 +95,7 @@ public:
 
 	void Destroy();
 	void PauseMenu();
-	void AddEntity(Object* e);
+	void AddEntity(Entity* e);
 
 	void setPause(bool p) {paused_ = p;}
 	bool isPaused() {return paused_;}
@@ -103,7 +103,7 @@ public:
 	SpriteSheet* getSpriteSheet(std::string filename);
 
 	Camera* getCamera() {return &camera_; }
-	Object* getPlayer() {return player_; }
+	Entity* getPlayer() {return player_; }
 
 	Spawner* getSpawner() {return &spawner_;};
 

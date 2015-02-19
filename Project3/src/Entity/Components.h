@@ -99,7 +99,7 @@ struct CollisionComponent : Component
 
 struct PhysicsComponent : Component
 {
-	PhysicsComponent(bool gravity = true) : useGravity(gravity), dx(0), dy(0), ddx(0), ddy(0), gravity(-0.5), friction(0.85), maxSpeed(30), Component(true) {}
+	PhysicsComponent(bool gravity = true) : useGravity(gravity), dx(0), dy(0), ddx(0), ddy(0), gravity(-0.5), friction(0.9), maxSpeed(30), Component(true) {}
 
 	static unsigned int getId() {return PHYSICS_ID; }
 

@@ -8,21 +8,21 @@
 
 class EntityManager;
 
-class Object
+class Entity
 {
 private:
 	unsigned int ID;
 	EntityManager* em;
 
 public:
-	Object() : em(NULL) {
+	Entity() : em(NULL) {
 	for(int i=0; i<NUM_COMPONENTS; ++i)
 		{
 			components[i] = 0xffff;
 			inUse[i] = false;
 		}
 	}
-	Object(EntityManager* m) : em(m) 
+	Entity(EntityManager* m) : em(m) 
 	{
 		for(int i=0; i<NUM_COMPONENTS; ++i)
 		{
@@ -30,7 +30,7 @@ public:
 			inUse[i] = false;
 		}
 	}
-	~Object() {}
+	~Entity() {}
 
 	void setId(unsigned int i) { ID=i; }
 	unsigned int getId() { return ID; }
@@ -130,7 +130,7 @@ public:
 class EntityManager
 {
 private:
-	Container<Object> entities;
+	Container<Entity> entities;
 
 	std::vector<ContainerBase*> components;
 
@@ -151,16 +151,16 @@ public:
 	~EntityManager() {}
 	
 	//returns reference to created entity
-	Object& createEntity() 
+	Entity& createEntity() 
 	{
-		Object& o = Object(this);
+		Entity& o = Entity(this);
 		unsigned int index = entities.add(o);
 		entities.get(index).setId(index);
 		return entities.get(index);
 	}
 
 	template <typename T>
-	unsigned int addComponent(Object* e, T& t)
+	unsigned int addComponent(Entity* e, T& t)
 	{
 		return static_cast<Container<T> *>(components[T::getId()])->add(t);
 	}
@@ -171,7 +171,7 @@ public:
 		return static_cast<Container<T> *>(components[T::getId()]);
 	}
 
-	Container<Object>& getEntities()
+	Container<Entity>& getEntities()
 	{
 		return entities;
 	}

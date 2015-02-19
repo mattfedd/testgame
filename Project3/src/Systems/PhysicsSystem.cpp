@@ -20,7 +20,7 @@ void PhysicsSystem::update(EntityManager* em)
 	Container<PositionComponent>* positionComps = em->getComponentVector<PositionComponent>();
 
 	//get entities with both physics and collision
-	Container<Object> ents = em->getEntities();
+	Container<Entity> ents = em->getEntities();
 	for(int i=0; i<CONTAINER_SIZE; ++i)
 	{
 		unsigned int physicsIndex = ents.get(i).components[PHYSICS_ID];

@@ -20,7 +20,7 @@ void SpriteSystem::update(EntityManager* em)
 	Container<PositionComponent>* positions = em->getComponentVector<PositionComponent>();
 
 	//filter for all the entities that have both sprite and position components
-	Container<Object> ents = em->getEntities();
+	Container<Entity> ents = em->getEntities();
 	for(int i=0; i<CONTAINER_SIZE; ++i)
 	{
 		unsigned int spriteIndex = ents.get(i).components[SPRITE_ID];

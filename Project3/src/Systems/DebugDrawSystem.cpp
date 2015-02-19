@@ -23,7 +23,7 @@ void DebugDrawSystem::update(EntityManager* em)
 	Container<TextComponent>* textComponents = em->getComponentVector<TextComponent>();
 
 	//get entities with both position and collision
-	Container<Object> ents = em->getEntities();
+	Container<Entity> ents = em->getEntities();
 	for(int i=0; i<CONTAINER_SIZE; ++i)
 	{
 		unsigned int collisionIndex = ents.get(i).components[COLLISION_ID];

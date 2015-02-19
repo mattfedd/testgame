@@ -22,7 +22,7 @@ void CollisionSystem::update(EntityManager* em)
 	Container<PositionComponent>* positionComps = em->getComponentVector<PositionComponent>();
 
 	//get entities with both position and collision
-	Container<Object> ents = em->getEntities();
+	Container<Entity> ents = em->getEntities();
 
 	int sx = GAME->getTileData().startX;
 	int sy = GAME->getTileData().startY;
@@ -63,12 +63,19 @@ void CollisionSystem::update(EntityManager* em)
 			{
 				Vector2d upperLeft = {c.AABB.x+c.AABB.width/4+p.x, c.AABB.y+c.AABB.height+p.y};
 				Vector2d upperRight = {c.AABB.x+3*c.AABB.width/4+p.x, c.AABB.y+c.AABB.height+p.y};
-				Vector2d middleUpperLeft = {c.AABB.x + p.x, p.y+3*c.AABB.height/4};
-				Vector2d middleUpperRight = {c.AABB.x + p.x+c.AABB.width, p.y+3*c.AABB.height/4};
-				Vector2d middleLowerLeft = {c.AABB.x + p.x,p.y+c.AABB.height/4};
-				Vector2d middleLowerRight = {c.AABB.x + p.x+c.AABB.width,p.y+c.AABB.height/4};
+
+				Vector2d middleLowerLeft = {c.AABB.x + p.x, p.y+10};
+				Vector2d middleLowerRight = {c.AABB.x + p.x+c.AABB.width, p.y+10};
+
+				Vector2d middleMiddleLeft = {c.AABB.x + p.x,p.y+c.AABB.height/2};
+				Vector2d middleMiddleRight = {c.AABB.x + p.x+c.AABB.width,p.y+c.AABB.height/2};
+
+				Vector2d middleUpperLeft = {c.AABB.x + p.x,p.y+c.AABB.height-10};
+				Vector2d middleUpperRight = {c.AABB.x + p.x+c.AABB.width,p.y+c.AABB.height-10};
+
 				Vector2d lowerLeft = {c.AABB.x+c.AABB.width/4+p.x, c.AABB.y+p.y};
 				Vector2d lowerRight = {c.AABB.x+3*c.AABB.width/4+p.x, c.AABB.y+p.y};
+
 				int A,B,C,D,E,F,G,H;
 				int depthY = 0;
 				int depthX = 0;
@@ -78,23 +85,26 @@ void CollisionSystem::update(EntityManager* em)
 				{
 					//colliding top
 					c.isCollidingMask |= COLLISION_WORLD;
+					B=GAME->getTileIndexByPosition(upperLeft.x, upperLeft.y);
 					depthY = GAME->getTilePositionByIndex(A).y-upperLeft.y;
 				}
 
 				if( (GAME->tiles[C=GAME->getTileIndexByPosition(middleUpperLeft.x, middleUpperLeft.y)] != 0 ||
-					GAME->tiles[D=GAME->getTileIndexByPosition(middleLowerLeft.x, middleLowerLeft.y)] != 0) && dx <=0)
+					GAME->tiles[D=GAME->getTileIndexByPosition(middleLowerLeft.x, middleLowerLeft.y)] != 0 ||
+					GAME->tiles[D=GAME->getTileIndexByPosition(middleMiddleLeft.x, middleMiddleLeft.y)] != 0) && dx <=0)
 				{
 					//colliding left
 					c.isCollidingMask |= COLLISION_WORLD;
-					depthX = GAME->getTilePositionByIndex(C).x+tileWidth-middleUpperLeft.x;
+					if(!(depthY!=0 && C==B))depthX = GAME->getTilePositionByIndex(C).x+tileWidth-middleUpperLeft.x;
 				}
 
 				if( (GAME->tiles[E=GAME->getTileIndexByPosition(middleUpperRight.x, middleUpperRight.y)] != 0 ||
-					GAME->tiles[F=GAME->getTileIndexByPosition(middleLowerRight.x, middleLowerRight.y)] != 0) && dx >=0)
+					GAME->tiles[F=GAME->getTileIndexByPosition(middleLowerRight.x, middleLowerRight.y)] != 0||
+					GAME->tiles[F=GAME->getTileIndexByPosition(middleMiddleRight.x, middleMiddleRight.y)] != 0) && dx >=0)
 				{
 					//colliding right
 					c.isCollidingMask |= COLLISION_WORLD;
-					depthX = GAME->getTilePositionByIndex(E).x-middleUpperRight.x;
+					if(!(depthY!=0 && A==E)) depthX = GAME->getTilePositionByIndex(E).x-middleUpperRight.x;
 				}
 
 				if( (GAME->tiles[G=GAME->getTileIndexByPosition(lowerLeft.x, lowerLeft.y)] != 0 ||
@@ -107,6 +117,10 @@ void CollisionSystem::update(EntityManager* em)
 
 				p.x += depthX;
 				p.y += depthY;
+				LOGV("COLLISION", "%d, %d, %d, %d, %d", A,C,E,depthX, depthY);
+
+				// isOnGround can be detected by depthY, if it's positive we're on the ground
+				// can set DY=0 when detecting change from depthY from >0 to <=0
 					
 			}
 

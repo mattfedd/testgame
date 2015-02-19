@@ -54,7 +54,7 @@ Game::Game()
 
 	em = new EntityManager();
 
-	Object& o = em->createEntity();
+	Entity& o = em->createEntity();
 	o.setId(4);
 	o.addComponent(PositionComponent(0,-50,0));
 	o.addComponent(HealthComponent(10, 20));
@@ -68,7 +68,7 @@ Game::Game()
 	//debug text stuff
 	for(int i=0; i<2; ++i)
 	{
-		Object& text = em->createEntity();
+		Entity& text = em->createEntity();
 		text.addComponent(PositionComponent(-0.8*SCREEN_WIDTH-80,30+0.8*SCREEN_HEIGHT - i*22,0));
 		text.addComponent(TextComponent("Basic Text", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
 		debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(i));
@@ -77,7 +77,7 @@ Game::Game()
 	//stress test
 	//for(int i=5; i<25; i++)
 	//{
-	//	Object& e = em->createEntity();
+	//	Entity& e = em->createEntity();
 	//	e.setId(i+5);
 	//	e.addComponent(PositionComponent(100+i*4,-200,0));
 	//	e.addComponent(HealthComponent(10, 20));
@@ -199,7 +199,7 @@ void Game::PauseMenu()
 
 }
 
-void Game::AddEntity(Object* e)
+void Game::AddEntity(Entity* e)
 {
 
 }

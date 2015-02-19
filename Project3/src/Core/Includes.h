@@ -20,14 +20,14 @@ Time to redo this list
 
 Current work:
 	Entity Component System
-		Collision System
+		Collision System DONE (for the world+entity collision at least)
 		Physics System
 		Player Input System + States
 		Animation System from States
 	Tile based world
 
 Coming up:
-	Rename "Object" to "Entity"
+	Rename "Entity" to "Entity" DONE
 
 	Using components...
 	-Remake HUD
@@ -140,7 +140,7 @@ enum class COLLIDING_SIDE
 };
 
 //what's under the entity?
-//used to be able to bind the object's base speed with whatever's under it
+//used to be able to bind the Entity's base speed with whatever's under it
 enum class ENTITY_UNDER
 {
 	AIR,
@@ -154,7 +154,7 @@ enum class ENTITY_UNDER
 enum class ENTITY_STATUS
 {
 	NORMAL,
-	INVULNERABLE,		//whenever the object has been hit, it is invulnerable for a short period before allowing another hit to register
+	INVULNERABLE,		//whenever the Entity has been hit, it is invulnerable for a short period before allowing another hit to register
 	DEAD
 };
 
@@ -170,9 +170,9 @@ enum class ATTACK_STATE
 enum class ANIM_STATE
 {
 	NONE,
-	SPAWN,				//plays when creating object, not always necessary
-	DEATH,				//plays when object dies
-	DEFAULT,			//normal animation, generally for objects with one or zero animations	
+	SPAWN,				//plays when creating Entity, not always necessary
+	DEATH,				//plays when Entity dies
+	DEFAULT,			//normal animation, generally for Entitys with one or zero animations	
 	IDLE1,			//standing still for a while
 	IDLE2,
 	PUSH,			//push against walls, boxes, et
