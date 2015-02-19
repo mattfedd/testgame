@@ -7,7 +7,6 @@ Rect::Rect(void)
 	y = 0;
 	width = 0;
 	height = 0;
-	rotationDegs = 0;
 }
 
 Rect::Rect(int x, int y, int width, int height)
@@ -16,7 +15,6 @@ Rect::Rect(int x, int y, int width, int height)
 	this->y = y;
 	this->width = width;
 	this->height = height;
-	this->rotationDegs = 0;
 }
 
 Rect::~Rect(void)

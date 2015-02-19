@@ -77,6 +77,8 @@ private:
 
 	std::map<int, Tile*> tileIdTranslator; //an array might work just as well here
 
+	std::vector<TextComponent*> debugTexts;
+
 public:
 	static Game* instance()
 	{
@@ -86,6 +88,7 @@ public:
 	~Game();
 	
 	int getTileIndexByPosition(float x, float y);
+	Vector2d getTilePositionByIndex(int index);
 
 	void Setup(); //level, savestate
 	void Run(bool paused);
@@ -106,8 +109,10 @@ public:
 
 	static Game* instance_;
 	
+	TileWorldData getTileData() {return tileData;}
+
 	Profiler profiler;
-	int tiles[256]; 	
+	int tiles[NUM_TILES]; 	
 };
 
 

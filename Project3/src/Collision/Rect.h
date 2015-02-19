@@ -5,14 +5,12 @@
 
 class Rect
 {
-private:
+
+public:
 	int x;
 	int y;
 	int width;
 	int height;
-	int rotationDegs;
-
-public:
 	Rect(void);
 	Rect(int x, int y, int width, int height);
 	~Rect(void);
@@ -25,14 +23,10 @@ public:
 	void setHeight(int height) {this->height = height;}
 	void setDimensions(int width, int height) {this->width = width; this->height = height;}
 
-	void setRotationDegs(int degs) {rotationDegs = degs;}
-
 	int getX() {return x;}
 	int getY() {return y;}
 	int getWidth() {return width;}
 	int getHeight() {return height;}
-	int getRotationDegs() {return rotationDegs;}
-	float getRotationRads() {return 3.14159/180 * rotationDegs;}
 
 	bool intersects(Rect* B);
 };

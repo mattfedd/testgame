@@ -84,6 +84,9 @@ const int IBOX_MAX = 10;
 const int NUM_COMPONENTS = 16;
 const int CONTAINER_SIZE = 1024;
 
+const int NUM_TILES = 512;
+
+
 struct Vector2d
 {
 	int x;

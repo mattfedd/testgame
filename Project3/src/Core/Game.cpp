@@ -18,20 +18,26 @@ Game::Game()
 	tileData.startY = 100;
 	tileData.tileHeight = 64;
 	tileData.tileWidth = 64;
-	tileData.arrayWidth = 16;
+	tileData.arrayWidth = 32;
 
-	int temptiles[256] = {
-		1,0,0,0,0,0,0,0,2,2,2,2,1,0,0,1,
-		1,0,0,0,0,0,0,0,2,2,2,2,0,0,0,1,
-		2,0,0,0,0,0,0,1,0,0,2,0,0,0,0,1,
-		1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,
-		2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,
-		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,
-		2,2,2,2,1,0,0,0,0,0,0,0,1,0,0,1,
-		1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,1
+	int temptiles[NUM_TILES] = {
+		1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,
+		1,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		2,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,
+		1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,
+		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,
+		2,2,2,2,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,
+		1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,1
+
 	};
 
-	for(int i=0; i<256; ++i)
+	for(int i=0; i<NUM_TILES; ++i)
 	{
 		tiles[i] = temptiles[i];
 	}
@@ -50,30 +56,35 @@ Game::Game()
 
 	Object& o = em->createEntity();
 	o.setId(4);
-	o.addComponent(PositionComponent(0,0,0));
+	o.addComponent(PositionComponent(0,-50,0));
 	o.addComponent(HealthComponent(10, 20));
 	o.addComponent(SpriteComponent("Player", PlayerSprite(128, 128, getSpriteSheet("res/player.tga"))));
-	o.addComponent(CollisionComponent(CollideBox(40,0,128-80,128), COLLISION_PLAYER, 0xffff));
+	o.addComponent(CollisionComponent(Rect(40,0,128-80,128), COLLISION_PLAYER, 0xffff));
 	o.addComponent(PhysicsComponent());
 
 	player_ = &em->getEntities().get(0);
 	camera_.setReference(&em->getComponentVector<PositionComponent>()->get(player_->components[POSITION_ID])); //todo : give the camera a position element it can attach to aka the id of the player position element...
 
-	Object& text = em->createEntity();
-	text.addComponent(PositionComponent(-0.8*SCREEN_WIDTH,0.8*SCREEN_HEIGHT,0));
-	text.addComponent(TextComponent("Basic Text", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
+	//debug text stuff
+	for(int i=0; i<2; ++i)
+	{
+		Object& text = em->createEntity();
+		text.addComponent(PositionComponent(-0.8*SCREEN_WIDTH-80,30+0.8*SCREEN_HEIGHT - i*22,0));
+		text.addComponent(TextComponent("Basic Text", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
+		debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(i));
+	}
 
 	//stress test
-	for(int i=2; i<CONTAINER_SIZE; i++)
-	{
-		Object& e = em->createEntity();
-		e.setId(i+5);
-		e.addComponent(PositionComponent(i*2,0,0));
-		e.addComponent(HealthComponent(10, 20));
-		e.addComponent(SpriteComponent("Player", PlayerSprite(128, 128, getSpriteSheet("res/player.tga"))));
-		e.addComponent(CollisionComponent(CollideBox(40,0,128-80,128), COLLISION_PLAYER, 0xffff));
-		e.addComponent(PhysicsComponent());
-	}
+	//for(int i=5; i<25; i++)
+	//{
+	//	Object& e = em->createEntity();
+	//	e.setId(i+5);
+	//	e.addComponent(PositionComponent(100+i*4,-200,0));
+	//	e.addComponent(HealthComponent(10, 20));
+	//	e.addComponent(SpriteComponent("Player", PlayerSprite(128, 128, getSpriteSheet("res/player.tga"))));
+	//	e.addComponent(CollisionComponent(Rect(40,0,128-80,128), COLLISION_PLAYER, 0xffff));
+	//	e.addComponent(PhysicsComponent());
+	//}
 }
 
 Game::~Game()
@@ -111,7 +122,9 @@ void Game::Update()
 	camera_.update();
 
 	profiler.stopMeasure("Update");
-	LOGV("GAME", "Update: %.2f%%", profiler.getPercentage("Update"));
+
+	debugTexts[0]->text = "Update: " + std::to_string((int)profiler.getPercentage("Update")) + "%";
+	debugTexts[1]->text = "Draw: " + std::to_string((int)profiler.getPercentage("Drawing")) + "%";
 }
 
 void Game::CheckCollisions()
@@ -141,7 +154,7 @@ void Game::Draw()
 	Sprite* s = tileIdTranslator[tiles[0]]->getSprite();
 	glBindTexture(GL_TEXTURE_2D, s->getSpriteSheet()->getGLuintTexture()); //just one spritesheet for all tiles
 
-	for(int i=0; i<256; ++i)
+	for(int i=0; i<NUM_TILES; ++i)
 	{
 		if(tiles[i] != 0)
 		{
@@ -172,7 +185,6 @@ void Game::Draw()
 	spritesys.update(em);
 	debugdrawsys.update(em);
 	profiler.stopMeasure("Drawing");
-	LOGV("GAME", "Drawing: %.2f%%", profiler.getPercentage("Drawing"));
 
 	glfwSwapBuffers();
 }
@@ -218,4 +230,14 @@ int Game::getTileIndexByPosition(float x, float y)
 	i = (int)(dx/tileData.tileWidth) + (int)(dy/tileData.tileHeight) * tileData.arrayWidth;
 
 	return i;
+}
+
+//gives the lower left corner of the tile position
+//This is just like the other position components, which are lower left corner reference
+Vector2d Game::getTilePositionByIndex(int index)
+{
+	int x = (index%tileData.arrayWidth)*tileData.tileWidth + tileData.startX;
+	int y = -1*(index/tileData.arrayWidth)*tileData.tileHeight + tileData.startY;
+	Vector2d v = {x,y};
+	return v;
 }

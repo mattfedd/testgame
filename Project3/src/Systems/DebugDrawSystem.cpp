@@ -47,11 +47,11 @@ void DebugDrawSystem::update(EntityManager* em)
 				GLfloat tempVerts[4] = 
 				{
 					1.0f*(c.AABB.x)/SCREEN_WIDTH,1.0f*(c.AABB.y)/SCREEN_HEIGHT,
-					1.0f*(c.AABB.right.x1)/SCREEN_WIDTH,1.0f*(c.AABB.top.y1)/SCREEN_HEIGHT
+					1.0f*(c.AABB.x+c.AABB.width)/SCREEN_WIDTH,1.0f*(c.AABB.y + c.AABB.height)/SCREEN_HEIGHT
 				};
 				glBindTexture(GL_TEXTURE_2D, NULL);
 				glLineWidth(1.5); 
-				glColor3f(0.0, 1.0, 0.0);
+				glColor4f(0.0, 1.0, 0.0, 0.3);
 
 				glBegin(GL_LINES);
 				glVertex2f(tempVerts[0], tempVerts[3]);
@@ -73,7 +73,7 @@ void DebugDrawSystem::update(EntityManager* em)
 				glVertex2f(tempVerts[0], tempVerts[3]);
 				glEnd();
 
-				glColor3f(1.0,1.0,1.0);
+				glColor4f(1.0,1.0,1.0, 1.0);
 		
 				glPopMatrix();
 			}
@@ -86,32 +86,30 @@ void DebugDrawSystem::update(EntityManager* em)
 			float y = positionComps->get(positionIndex).y;
 			float z = 0;
 
-			if(GAME->getCamera()->isInBounds(x,y,20))
+			TextComponent t = textComponents->get(textIndex);
+			TextSprite* ts = t.sprite;
+	
+			glBindTexture(GL_TEXTURE_2D, ts->getSpriteSheet()->getGLuintTexture());
+
+			for(int j=0; j<t.text.size(); ++j)
 			{
-				TextComponent t = textComponents->get(textIndex);
-				TextSprite* ts = t.sprite;
-	
-				glBindTexture(GL_TEXTURE_2D, ts->getSpriteSheet()->getGLuintTexture());
-
-				for(int j=0; j<t.text.size(); ++j)
-				{
-					ts->setLetter(t.text.at(j));
-					ts->calcLetter();
-					glPushMatrix();
-					glTranslatef((x+t.textSize*j)/SCREEN_WIDTH, y/SCREEN_HEIGHT, z/Z_CAP);
-					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-					glEnableClientState(GL_VERTEX_ARRAY);
+				ts->setLetter(t.text.at(j));
+				ts->calcLetter();
+				glPushMatrix();
+				glTranslatef((x+t.textSize*j)/SCREEN_WIDTH, y/SCREEN_HEIGHT, z/Z_CAP);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glEnableClientState(GL_VERTEX_ARRAY);
 		
-					glVertexPointer(3, GL_FLOAT, 0, ts->getVertexPoints());
-					glTexCoordPointer(2, GL_FLOAT, 0, ts->getTexturePoints());
-					glDrawArrays(GL_QUADS, 0, 4);
+				glVertexPointer(3, GL_FLOAT, 0, ts->getVertexPoints());
+				glTexCoordPointer(2, GL_FLOAT, 0, ts->getTexturePoints());
+				glDrawArrays(GL_QUADS, 0, 4);
 	
-					glDisableClientState(GL_VERTEX_ARRAY);
-					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-					glPopMatrix();
-				}
+				glPopMatrix();
 			}
+			
 		}
 	}
 }

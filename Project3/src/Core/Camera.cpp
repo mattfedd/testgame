@@ -63,7 +63,7 @@ void Camera::setY(int playerY)
 
 bool Camera::isInBounds(int x, int y, int buffer)
 {
-	if(x_-1.15*SCREEN_WIDTH > x+buffer)
+	if(x_-1.15*SCREEN_WIDTH-55 > x+buffer)
 		return false;
 	if(x_+0.9*SCREEN_WIDTH<x-buffer)
 		return false;

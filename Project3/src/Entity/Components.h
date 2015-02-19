@@ -4,6 +4,7 @@
 #include "Includes.h"
 #include "Sprite.h"
 #include "TextSprite.h"
+#include "Rect.h"
 
 struct Component
 {
@@ -76,52 +77,15 @@ struct TextComponent : Component
 	//int charsPerLine; //how many chars to write until a new line
 };
 
-struct CollideBoxEdge 
-{
-	CollideBoxEdge() {}
-	CollideBoxEdge(float x, float y, float xx, float yy, float dx = 0, float dy = 0) : x1(x), x2(xx), y1(y), y2(yy), dxTolerance(dx), dyTolerance(dy) {}
-
-	float x1;
-	float x2;
-	float y1;
-	float y2;
-
-	//dx and dy triggers basically tell you which side of the object this edge is
-	float dxTolerance; //dx must be less/greater than this value to trigger
-	float dyTolerance; //dy must be less/greater than this value to trigger
-};
-
-struct CollideBox
-{
-	CollideBox() {}
-	CollideBox(float x_, float y_, int width, int height): x(x_), y(y_) 
-	{
-		left = CollideBoxEdge(x_, y_, x_, y_+height);
-		right = CollideBoxEdge(x_+width, y_, x_+width, y_+height);
-		top = CollideBoxEdge(x_, y_+height, x_+width, y_+height);
-		bottom = CollideBoxEdge(x_, y_, x_+width, y_);
-	}
-
-	//x and y reference from the bottom left edge of the entity (aka the position component)
-	//true position in the world is the position component + this position 
-	float x;
-	float y;
-	CollideBoxEdge left;
-	CollideBoxEdge right;
-	CollideBoxEdge top;
-	CollideBoxEdge bottom;
-};
-
-
 struct CollisionComponent : Component
 {
 	CollisionComponent() : Component(false) {}
-	CollisionComponent(CollideBox box, int group, int mask) : AABB(box), collisionGroup(group), collisionMask(mask), Component(true){}
+	CollisionComponent(Rect box, int group, int mask) : AABB(box), collisionGroup(group), collisionMask(mask), Component(true){}
 
 	static unsigned int getId() {return COLLISION_ID;}
 
 	//General world collision box
-	CollideBox AABB;
+	Rect AABB;
 
 	//what group of things does this belong to?
 	int collisionGroup;
@@ -135,7 +99,7 @@ struct CollisionComponent : Component
 
 struct PhysicsComponent : Component
 {
-	PhysicsComponent(bool gravity = true) : useGravity(gravity), dx(0), dy(0), ddx(0), ddy(0), gravity(0), maxSpeed(10), Component(true) {}
+	PhysicsComponent(bool gravity = true) : useGravity(gravity), dx(0), dy(0), ddx(0), ddy(0), gravity(-0.5), friction(0.85), maxSpeed(30), Component(true) {}
 
 	static unsigned int getId() {return PHYSICS_ID; }
 

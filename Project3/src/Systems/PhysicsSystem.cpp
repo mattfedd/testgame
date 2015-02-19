@@ -34,12 +34,23 @@ void PhysicsSystem::update(EntityManager* em)
 
 			if(phys.useGravity)
 			{
-				phys.ddy = gravity;
+				phys.ddy = phys.gravity;
 			}
 
 			phys.dx += phys.ddx;
 			
-			if(phys.dy < phys.maxSpeed && phys.dy > -1*phys.maxSpeed) phys.dy += phys.ddy;
+			if(phys.dy < phys.maxSpeed && phys.dy > -1*phys.maxSpeed) 
+			{
+				phys.dy += phys.ddy;
+			}
+
+			phys.dy = phys.dy * phys.friction;
+			//if(phys.dy <0.1 && phys.dy >-0.1) phys.dy = 0;
+			phys.dx = phys.dx * phys.friction;
+			if(phys.dx <0.1 && phys.dx >-0.1) 
+			{
+				phys.dx = 0;
+			}
 
 			pos.x += phys.dx;
 			pos.y += phys.dy;

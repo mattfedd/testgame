@@ -14,23 +14,25 @@ PlayerInputSystem::~PlayerInputSystem()
 void PlayerInputSystem::update(EntityManager* em)
 {
 	//get player position data
-	PositionComponent& pos =  em->getComponentVector<PositionComponent>()->get(em->getEntities().get(0).components[POSITION_ID]);
+	PhysicsComponent& phys =  em->getComponentVector<PhysicsComponent>()->get(em->getEntities().get(0).components[PHYSICS_ID]);
 
 	if(glfwGetKey(GLFW_KEY_UP))
 	{
-		pos.y+=5;
+		phys.dy = 5;
 	}
-	if(glfwGetKey(GLFW_KEY_DOWN))
-	{
-		pos.y -= 5;
-	}
+	//if(glfwGetKey(GLFW_KEY_DOWN))
+	//{
+	//	
+	//}
 	if(glfwGetKey(GLFW_KEY_RIGHT))
 	{
-		pos.x += 5;
+		phys.dx +=1;
 	}
 	if(glfwGetKey(GLFW_KEY_LEFT))
 	{
-		pos.x -= 5;
+		phys.dx -=1;
 	}
+
+
 
 }
