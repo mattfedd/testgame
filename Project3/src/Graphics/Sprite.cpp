@@ -12,6 +12,9 @@ Sprite::Sprite(int width, int height, SpriteSheet* ss)
 	height_ = height;
 	spriteInfo_ = NULL;
 
+	animating = true;
+	frame = 0;
+
 	addAnimInfo(ANIM_STATE::DEFAULT, 1);
 
 	frameNum_ = 0;
@@ -110,10 +113,32 @@ AnimInfo* Sprite::getAnimInfoById(ANIM_STATE state)
 
 void Sprite::calcNextFrame()
 {
-	AnimInfo* info = getAnimInfoById(animState_);
+	AnimInfo* info;
 
-	if(info == NULL)
+	if(animating)
+	{
+		info = getAnimInfoById(animState_);
+
+		if(info == NULL)
+			return;
+	}
+
+	else 
+	{
+		int x = frame % (sheetWidth_ / frameWidth_) * frameWidth_;
+		int y = frame / (sheetWidth_ / frameWidth_) * frameHeight_;
+
+		GLfloat temp_tex[12] = 
+		{
+			1.0f*x/sheetWidth_,			  1.0f*y/sheetHeight_,
+			1.0f*(x + frameWidth_)/sheetWidth_, 1.0f*y/sheetHeight_,
+			1.0f*(x + frameWidth_)/sheetWidth_, 1.0f*(y+ frameHeight_)/sheetHeight_,
+			1.0f*x/sheetWidth_,			  1.0f*(y+ frameHeight_)/sheetHeight_,
+		};
+		setTexturePoints(temp_tex);
 		return;
+	}
+
 
 	if(counter_ == 0)
 	{
@@ -176,8 +201,6 @@ void Sprite::calcNextFrame()
 
 void Sprite::addAnimInfo(ANIM_STATE state, int length, bool repeats)
 {
-	numAnimations_++;
-
 	AnimInfo* a = new AnimInfo;
 	a->id = state;
 	a->length = length;
@@ -200,6 +223,7 @@ void Sprite::addAnimInfo(ANIM_STATE state, int length, bool repeats)
 	}
 	
 	totalFrames_ += length;
+	numAnimations_++;
 }
 
 void Sprite::setWidth(int w)

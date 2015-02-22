@@ -80,8 +80,8 @@ void CollisionSystem::update(EntityManager* em)
 				int depthY = 0;
 				int depthX = 0;
 
-				if( (GAME->tiles[A=GAME->getTileIndexByPosition(upperRight.x, upperRight.y)] != 0 ||
-					GAME->tiles[B=GAME->getTileIndexByPosition(upperLeft.x, upperLeft.y)] != 0) && dy >=0)
+				if( (GAME->foregroundTiles[A=GAME->getTileIndexByPosition(upperRight.x, upperRight.y)] != -1 ||
+					GAME->foregroundTiles[B=GAME->getTileIndexByPosition(upperLeft.x, upperLeft.y)] != -1) && dy >=0)
 				{
 					//colliding top
 					c.isCollidingMask |= COLLISION_WORLD;
@@ -89,26 +89,26 @@ void CollisionSystem::update(EntityManager* em)
 					depthY = GAME->getTilePositionByIndex(A).y-upperLeft.y;
 				}
 
-				if( (GAME->tiles[C=GAME->getTileIndexByPosition(middleUpperLeft.x, middleUpperLeft.y)] != 0 ||
-					GAME->tiles[D=GAME->getTileIndexByPosition(middleLowerLeft.x, middleLowerLeft.y)] != 0 ||
-					GAME->tiles[D=GAME->getTileIndexByPosition(middleMiddleLeft.x, middleMiddleLeft.y)] != 0) && dx <=0)
+				if( (GAME->foregroundTiles[C=GAME->getTileIndexByPosition(middleUpperLeft.x, middleUpperLeft.y)] != -1 ||
+					GAME->foregroundTiles[D=GAME->getTileIndexByPosition(middleLowerLeft.x, middleLowerLeft.y)] != -1 ||
+					GAME->foregroundTiles[D=GAME->getTileIndexByPosition(middleMiddleLeft.x, middleMiddleLeft.y)] != -1) && dx <=0)
 				{
 					//colliding left
 					c.isCollidingMask |= COLLISION_WORLD;
 					if(!(depthY!=0 && C==B))depthX = GAME->getTilePositionByIndex(C).x+tileWidth-middleUpperLeft.x;
 				}
 
-				if( (GAME->tiles[E=GAME->getTileIndexByPosition(middleUpperRight.x, middleUpperRight.y)] != 0 ||
-					GAME->tiles[F=GAME->getTileIndexByPosition(middleLowerRight.x, middleLowerRight.y)] != 0||
-					GAME->tiles[F=GAME->getTileIndexByPosition(middleMiddleRight.x, middleMiddleRight.y)] != 0) && dx >=0)
+				if( (GAME->foregroundTiles[E=GAME->getTileIndexByPosition(middleUpperRight.x, middleUpperRight.y)] != -1 ||
+					GAME->foregroundTiles[F=GAME->getTileIndexByPosition(middleLowerRight.x, middleLowerRight.y)] != -1||
+					GAME->foregroundTiles[F=GAME->getTileIndexByPosition(middleMiddleRight.x, middleMiddleRight.y)] != -1) && dx >=0)
 				{
 					//colliding right
 					c.isCollidingMask |= COLLISION_WORLD;
 					if(!(depthY!=0 && A==E)) depthX = GAME->getTilePositionByIndex(E).x-middleUpperRight.x;
 				}
 
-				if( (GAME->tiles[G=GAME->getTileIndexByPosition(lowerLeft.x, lowerLeft.y)] != 0 ||
-					GAME->tiles[H=GAME->getTileIndexByPosition(lowerRight.x, lowerRight.y)] != 0) && dy <=0)
+				if( (GAME->foregroundTiles[G=GAME->getTileIndexByPosition(lowerLeft.x, lowerLeft.y)] != -1 ||
+					GAME->foregroundTiles[H=GAME->getTileIndexByPosition(lowerRight.x, lowerRight.y)] != -1) && dy <=0)
 				{
 					//colliding bottom
 					c.isCollidingMask |= COLLISION_WORLD;
@@ -117,7 +117,7 @@ void CollisionSystem::update(EntityManager* em)
 
 				p.x += depthX;
 				p.y += depthY;
-				LOGV("COLLISION", "%d, %d, %d, %d, %d", A,C,E,depthX, depthY);
+				//LOGV("COLLISION", "%d, %d, %d, %d, %d", A,C,E,depthX, depthY);
 
 				// isOnGround can be detected by depthY, if it's positive we're on the ground
 				// can set DY=0 when detecting change from depthY from >0 to <=0

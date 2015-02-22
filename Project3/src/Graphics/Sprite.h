@@ -4,7 +4,6 @@
 #include "Includes.h"
 #include "SpriteSheet.h"
 
-//#include "Game.h"
 struct AnimInfo
 {
 	ANIM_STATE id;
@@ -26,6 +25,9 @@ private:
 protected:
 	void setVertexPoints(GLfloat* source);
 	void setTexturePoints(GLfloat* source);
+	
+	bool animating;
+	int frame;
 
 	int numAnimations_;
 	int width_;
@@ -61,6 +63,9 @@ public:
 	void setDirection(DIRECTION direction);
 	DIRECTION getDirection() {return dir_;}
 
+	void setAnimating(bool val) {animating = val;}
+	bool isAnimating() {return animating;}
+
 	void setAnimState(ANIM_STATE new_state);
 	ANIM_STATE getAnimState() {return animState_;}
 
@@ -68,6 +73,11 @@ public:
 	void setFrameWidth(int f) { frameWidth_ = f;}
 	int getFrameHeight() { return frameHeight_; }
 	void setFrameHeight(int f) { frameHeight_ = f;}
+
+	void setFrame(unsigned int val) 
+	{
+		frame = val;
+	}
 
 	AnimInfo* getAnimInfoById(ANIM_STATE state);
 	void calcNextFrame();

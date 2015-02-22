@@ -6,8 +6,8 @@ Camera::Camera(void)
 	y_ = SCREEN_HEIGHT / 2;
 	width_ = SCREEN_WIDTH;
 	height_ = SCREEN_HEIGHT;
-	bufX_ = 160;
-	bufY_ = 200;
+	bufX_ = 50;
+	bufY_ = 50;
 	reference = NULL;
 }
 

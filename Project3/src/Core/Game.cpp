@@ -10,49 +10,24 @@ Game* Game::instance_;
 Game::Game()
 {
 	//paused_ = false;
+	
+	double time1 = glfwGetTime();
+	loadTiles(1,1);
+	double time2 = glfwGetTime();
+	LOGV("GAME", "Tile Loading took %f seconds", time2-time1);
 
 	bg = new BGSprite(3840, 2160, getSpriteSheet("res/bg.tga"));
 	camera_ = Camera();
 
 	score = 0;
 
-	tileData.startX = -100;
-	tileData.startY = 100;
+	tileData.startX = -200;
+	tileData.startY = 300;
 	tileData.tileHeight = 64;
 	tileData.tileWidth = 64;
-	tileData.arrayWidth = 32;
+	tileData.arrayWidth = 128;
 
-	int temptiles[NUM_TILES] = {
-		1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,
-		1,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		2,0,0,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,
-		1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,
-		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,
-		2,2,2,2,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,
-		1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,1,1,1,1,1,1,1,1,1
-
-	};
-
-	for(int i=0; i<NUM_TILES; ++i)
-	{
-		tiles[i] = temptiles[i];
-	}
-
-	Tile* t = new Tile();
-	t->setSprite(new TerrainGreenSprite(tileData.tileWidth, tileData.tileHeight,getSpriteSheet("res/terrain.tga")));
-	
-	tileIdTranslator[0] = NULL;
-	tileIdTranslator[2] = t;
-
-	t = new Tile();
-	t->setSprite(new TerrainOrangeSprite(tileData.tileWidth, tileData.tileHeight, getSpriteSheet("res/terrain.tga")));
-	tileIdTranslator[1] = t;
+	tileReference = new TerrainSprite(tileData.tileWidth, tileData.tileHeight,getSpriteSheet("res/terrain.tga"));
 
 	em = new EntityManager();
 
@@ -80,7 +55,7 @@ Game::Game()
 	scoreText.addComponent(PositionComponent(0.7*SCREEN_WIDTH, 0.8*SCREEN_HEIGHT+30));
 	scoreText.addComponent(TextComponent("Score", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
 	debugTexts.push_back(&em->getComponentVector<TextComponent>()->get(2));
-
+	
 	Entity& helpText = em->createEntity();
 	helpText.addComponent(PositionComponent(-0.5*SCREEN_WIDTH, -0.8*SCREEN_HEIGHT-30));
 	helpText.addComponent(TextComponent("Arrow keys to move, Jump to beep, Esc to exit", new TextSprite(10,18, getSpriteSheet("res/Inconsolata.tga")), 0,0,10));
@@ -164,28 +139,44 @@ void Game::Draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glPopMatrix();
 
-	Sprite* s = tileIdTranslator[tiles[0]]->getSprite();
-	glBindTexture(GL_TEXTURE_2D, s->getSpriteSheet()->getGLuintTexture()); //just one spritesheet for all tiles
+	glBindTexture(GL_TEXTURE_2D, tileReference->getSpriteSheet()->getGLuintTexture()); //just one spritesheet for all tiles
 
-	for(int i=0; i<NUM_TILES; ++i)
+	for(int i=0; i<backgroundTiles.size(); ++i)
 	{
-		if(tiles[i] != 0)
+		int BG = backgroundTiles[i];
+		int FG = foregroundTiles[i];
+
+		if(!(BG == -1 && FG == -1))
 		{
 			int x = tileData.startX + i%tileData.arrayWidth*tileData.tileWidth;
 			int y = tileData.startY + i/tileData.arrayWidth * -1.0*tileData.tileHeight;
 			if(camera_.isInBounds(x,y,tileData.tileHeight))
 			{
-				s = tileIdTranslator[tiles[i]]->getSprite();
-				s->calcNextFrame();
 				glPushMatrix();
-				glTranslatef((x*1.0)/SCREEN_WIDTH-camera_.getXNorm(),(y*1.0)/SCREEN_HEIGHT-camera_.getYNorm(), 0);
+				
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 				glEnableClientState(GL_VERTEX_ARRAY);
-		
-				glVertexPointer(3, GL_FLOAT, 0, s->getVertexPoints());
-				glTexCoordPointer(2, GL_FLOAT, 0, s->getTexturePoints());
-				glDrawArrays(GL_QUADS, 0, 4);
-	
+
+				glTranslatef((x*1.0)/SCREEN_WIDTH-camera_.getXNorm(),(y*1.0)/SCREEN_HEIGHT-camera_.getYNorm(), 0);
+						
+				if(BG !=-1)
+				{
+					tileReference->setFrame(backgroundTiles[i]);
+					tileReference->calcNextFrame();
+					glVertexPointer(3, GL_FLOAT, 0, tileReference->getVertexPoints());
+					glTexCoordPointer(2, GL_FLOAT, 0, tileReference->getTexturePoints());
+					glDrawArrays(GL_QUADS, 0, 4);
+				}
+
+				if(FG !=-1)
+				{
+					tileReference->setFrame(foregroundTiles[i]);
+					tileReference->calcNextFrame();								
+					glVertexPointer(3, GL_FLOAT, 0, tileReference->getVertexPoints());
+					glTexCoordPointer(2, GL_FLOAT, 0, tileReference->getTexturePoints());
+					glDrawArrays(GL_QUADS, 0, 4);
+				}
+
 				glDisableClientState(GL_VERTEX_ARRAY);
 				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -253,4 +244,155 @@ Vector2d Game::getTilePositionByIndex(int index)
 	int y = -1*(index/tileData.arrayWidth)*tileData.tileHeight + tileData.startY;
 	Vector2d v = {x,y};
 	return v;
+}
+
+void Game::loadTiles(unsigned int level, unsigned int sublevel)
+{
+	std::string fileName = "res/"+std::to_string(level) + "_" + std::to_string(sublevel) + ".lvl";
+
+	std::string line;
+	std::ifstream file(fileName);
+	
+	int parseState = 0;
+	int lineCounter = 0;
+	int height = 0;
+
+	if(file.is_open())
+	{
+		while(std::getline(file, line))
+		{
+			if(parseState == 0) //beginning
+			{
+				if(line.compare("Tile Data " + std::to_string(level) + "_" + std::to_string(sublevel)) != 0)
+				{
+					LOGES("FILE", "Error reading tile data file: header error");
+					return;
+				}
+				else
+				{
+					parseState++;
+				}
+			}
+
+			else if(parseState == 1) //width
+			{
+				std::istringstream ss(line);
+				std::string word;
+				ss >> word;
+				if(word.compare("width") != 0)
+				{
+					LOGES("FILE", "Error reading tile data file: width parameter not found in second line");
+					return;
+				}
+				else
+				{
+					ss>>word;
+					tileData.arrayWidth = std::stoi(word);
+					parseState++;
+				}
+			}
+
+			else if(parseState == 2) //height
+			{
+				std::istringstream ss(line);
+				std::string word;
+				ss >> word;
+				if(word.compare("height") != 0)
+				{
+					LOGES("FILE", "Error reading tile data file: height parameter not found in third line");
+					return;
+				}
+				else
+				{
+					ss>>word;
+					height = std::stoi(word);
+					parseState++;
+				}
+			}
+
+			else if(parseState == 3) //Background
+			{
+				if(line.compare("Background") != 0)
+				{
+					LOGES("FILE", "Error reading tile data file: 'Background' header error");
+					return;
+				}
+				else
+				{
+					parseState++;
+				}
+			}
+
+			else if(parseState == 4) //background data
+			{
+				if(line.compare("Foreground") == 0)
+				{
+					LOGES("FILE", "Error reading tile data file: 'Foreground' data appeared earlier than expected");
+					return;
+				}
+				else
+				{
+					int value = 0;
+					unsigned int pos = 0;
+					std::string token;
+					while ((pos = line.find(',')) != std::string::npos) 
+					{
+						token = line.substr(0, pos);
+						value = std::stoi(token);
+						backgroundTiles.push_back(value);
+						line.erase(0, pos + 1);
+					}
+					value = std::stoi(line);
+					backgroundTiles.push_back(value);
+
+					lineCounter++;
+
+					if(lineCounter == height)
+					{
+						parseState++;
+						lineCounter = 0;
+					}
+				}
+			}
+
+			else if(parseState == 5) //Background
+			{
+				if(line.compare("Foreground") != 0)
+				{
+					LOGES("FILE", "Error reading tile data file: 'Foreground' header error");
+					return;
+				}
+				else
+				{
+					parseState++;
+				}
+			}
+
+			else if(parseState == 6) //foreground data
+			{
+				int value = 0;
+				unsigned int pos = 0;
+				std::string token;
+				while ((pos = line.find(',')) != std::string::npos) 
+				{
+					token = line.substr(0, pos);
+					value = std::stoi(token);
+					foregroundTiles.push_back(value);
+					line.erase(0, pos + 1);
+				}
+				value = std::stoi(line);
+				foregroundTiles.push_back(value);
+
+				lineCounter++;
+
+				if(lineCounter == height)
+				{
+					parseState++;
+				}
+			}
+
+		}
+
+		file.close();
+	}
 }

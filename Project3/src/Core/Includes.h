@@ -8,6 +8,7 @@
 #include <vector>
 #include <iterator>
 #include <sstream>
+#include <fstream>
 #include "Logging.h"
 #include "alut.h"
 

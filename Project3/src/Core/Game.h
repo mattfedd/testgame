@@ -45,6 +45,28 @@ public:
 
 };
 
+class TerrainSprite : public Sprite
+{
+public:
+	TerrainSprite(int width, int height, SpriteSheet* ss): Sprite(width, height, ss)
+	{
+		totalFrames_ = 0;
+		numAnimations_ = 0;
+		sheetWidth_ = 512;
+		sheetHeight_ = 512;
+		frameWidth_ = 32;
+		frameHeight_ = 32;
+		frame = 0;
+		animating = false;
+
+		spriteInfo_ = NULL;
+	
+		addAnimInfo(ANIM_STATE::NONE, 5);
+		addAnimInfo(ANIM_STATE::DEFAULT, 1);
+		setAnimState(ANIM_STATE::DEFAULT);
+	}
+	~TerrainSprite(void) {}
+};
 class Game
 {
 private:
@@ -74,6 +96,8 @@ private:
 	unsigned int score;
 
 	bool paused_;
+
+	TerrainSprite* tileReference;
 
 	std::map<std::string, SpriteSheet*> spriteSheets;
 
@@ -116,30 +140,15 @@ public:
 	unsigned int getScore() {return score; }
 	void setScore(unsigned int val) {score = val;}
 
+	void loadTiles(unsigned int level, unsigned int sublevel);
+
 	Profiler profiler;
-	int tiles[NUM_TILES]; 	
+	std::vector<int> backgroundTiles;
+	std::vector<int> foregroundTiles;
 };
 
 
-class TerrainGreenSprite : public Sprite
-{
-public:
-	TerrainGreenSprite(int width, int height, SpriteSheet* ss): Sprite(width, height, ss)
-	{
-		totalFrames_ = 0;
-		numAnimations_ = 0;
-		sheetWidth_ = 256;
-		sheetHeight_ = 256;
-		frameWidth_ = 64;
-		frameHeight_ = 64;
 
-		spriteInfo_ = NULL;
-	
-		addAnimInfo(ANIM_STATE::DEFAULT, 1);
-		setAnimState(ANIM_STATE::DEFAULT);
-	}
-	~TerrainGreenSprite(void) {}
-};
 
 class TerrainOrangeSprite : public Sprite
 {
@@ -155,7 +164,7 @@ public:
 
 	spriteInfo_ = NULL;
 
-	addAnimInfo(ANIM_STATE::NONE, 1);	
+	addAnimInfo(ANIM_STATE::NONE, 6);	
 	addAnimInfo(ANIM_STATE::DEFAULT, 1);
 	setAnimState(ANIM_STATE::DEFAULT);
 }

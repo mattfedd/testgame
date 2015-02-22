@@ -68,7 +68,7 @@ int initSound()
 	alGenSources (1, &helloSource);
 	alSourcei (helloSource, AL_BUFFER, helloBuffer);
 	alSourcei(helloSource, AL_LOOPING, AL_TRUE);
-	alSourcePlay (helloSource);
+	//alSourcePlay (helloSource);
 
 	return 0;
 }

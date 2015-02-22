@@ -37,7 +37,10 @@ void PhysicsSystem::update(EntityManager* em)
 				phys.ddy = phys.gravity;
 			}
 
-			phys.dx += phys.ddx;
+			if(phys.dx < phys.maxSpeed && phys.dx > -1*phys.maxSpeed) 
+			{
+				phys.dx += phys.ddx;
+			}
 			
 			if(phys.dy < phys.maxSpeed && phys.dy > -1*phys.maxSpeed) 
 			{
